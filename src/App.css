@@ -14,8 +14,10 @@
 }
 
 .App {
+  /* 기본값 전체 크기입니다. */
   width: 1920px;
   height: auto;
-  margin: 0 300px;
+  /* 사이트 양옆에 패딩값입니다. */
+  padding: 0 300px;
   font-family: "fontLight";
 }

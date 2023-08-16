@@ -50,7 +50,7 @@ function CalendarFunc() {
     return <div>{selectedEmoji.emoji}</div>;
   };
   return (
-    <div className="wrap">
+    <div style={{ float: "left" }} className="wrap">
       <div className="EmojiSelection">
         <span style={{ fontSize: 50 }}>
           {selectedEmoji

@@ -4,7 +4,7 @@ import { BiCart, BiHomeAlt, BiSearchAlt2, BiSolidUser } from "react-icons/bi";
 
 function Nav() {
   return (
-    <div className="navWrap">
+    <div style={{ clear: "both" }} className="navWrap">
       <div className="feed">
         <BiHomeAlt></BiHomeAlt>
         <span>피드</span>
