@@ -1,0 +1,23 @@
+section {
+  width: 80%;
+  height: 100vh;
+  margin: auto;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+h2 {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  text-indent: 10px;
+}
+
+.diary-view-btns {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.diary-view-btns button {
+  margin: 0 5px;
+}
