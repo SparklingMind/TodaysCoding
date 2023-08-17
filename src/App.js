@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Header></Header>
       <CalendarFunc></CalendarFunc>
-      <DiaryView></DiaryView>
+      <Diary></Diary>
       <Nav></Nav>
     </div>
   );
