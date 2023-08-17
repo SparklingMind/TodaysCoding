@@ -22,22 +22,25 @@ function CalendarFunc() {
     // date(각 날짜)가  리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘) 추가
     if (dayList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
       EmojiDateAdded.push(
-        <>
-          {/* <div className="dot"></div> */}
-          <img
-            src="https://w7.pngwing.com/pngs/763/925/png-transparent-emojipedia-apple-cronologia-delle-versioni-di-ios-spray-and-psd-file-smiley-apple-color-emoji-emoticon-thumbnail.png"
-            className="todayEmotion"
-            width="26"
-            height="26"
-            alt="오늘의 감정 이모지"
-          />
-        </>
+        <div className="savedEmoji">{selectedEmojiSave}</div>
       );
     }
     return <div>{EmojiDateAdded}</div>;
   };
+  //함수 : 오늘날짜까지 기본 이모지=투명이모지, 이모지에 값이 있으면 {selectedEmojiSave}
+  const emojiByDate = () => {
+    let fixedEmoji = [];
+
+    if (moment(todayDate).isAfter(startOfMonth)) {
+      fixedEmoji.push(<div className="defaultEmoji">🫥</div>);
+    }
+    return <div>{fixedEmoji}</div>;
+  };
   const [value, onChange] = useState(new Date());
   const activeDate = moment(value).format("YYYY-MM-DD"); // 클릭한 날짜 (년-월-일))
+  const todayDate = moment().format("YYYY-MM-DD"); //오늘 날짜
+  const endOfMonth = moment(activeDate).endOf("month").format("YYYY-MM-DD"); //클릭한 날짜 달의 마지막날짜
+  const startOfMonth = moment(activeDate).startOf("month").format("YYYY-MM-DD"); //매월 1일
   const [selectedEmoji, setSelcectedEmoji] = useState();
   const [showPicker, setShowPicker] = useState(false);
 
@@ -49,16 +52,14 @@ function CalendarFunc() {
   const EmojiData = ({ selectedEmoji }) => {
     return <div>{selectedEmoji.emoji}</div>;
   };
+
+  const selectedEmojiSave = selectedEmoji
+    ? selectedEmoji && <EmojiData selectedEmoji={selectedEmoji}></EmojiData>
+    : "🫥";
   return (
     <div className="wrap">
       <div className="EmojiSelection">
-        <span style={{ fontSize: 50 }}>
-          {selectedEmoji
-            ? selectedEmoji && (
-                <EmojiData selectedEmoji={selectedEmoji}></EmojiData>
-              )
-            : "🫥"}
-        </span>
+        <span style={{ fontSize: 50 }}>{selectedEmojiSave}</span>
         <button onClick={() => setShowPicker(!showPicker)}> + </button>
         {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
       </div>
