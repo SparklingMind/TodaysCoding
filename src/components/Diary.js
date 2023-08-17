@@ -4,14 +4,14 @@ import styled from "styled-components";
 function Diary() {
   return (
     <Wrapper>
-      <button type="button">글쓰기</button>
+      <DiaryWriteBtn type="button">글쓰기</DiaryWriteBtn>
       <DiaryList>
         <DiaryListItem>
-          <h3>제목</h3>
+          <DiaryListTitle>제목</DiaryListTitle>
           <p>글 내용 미리보기</p>
         </DiaryListItem>
         <DiaryListItem>
-          <h3>제목</h3>
+          <DiaryListTitle>제목</DiaryListTitle>
           <p>
             We had a good thing going lately Might not have always been a fairy
             tale But you know and I know That they ain't real I'll take the
@@ -31,17 +31,29 @@ const Wrapper = styled.section`
   background: #f1f1f1;
 `;
 
+const DiaryWriteBtn = styled.button`
+  float: right;
+`;
+
 const DiaryList = styled.ul`
   list-style: none;
   padding: 0;
+  margin-top: 50px;
+  overflow: hidden;
 `;
 
 const DiaryListItem = styled.li`
   border: 1px solid #333;
-  border-radius: 10px;
+  border-radius: 15px;
   height: 150px;
-  padding: 0px 20px;
+  padding: 20px;
+  box-sizing: border-box;
   margin-bottom: 20px;
+`;
+
+const DiaryListTitle = styled.h4`
+  font-family: "fontMedium";
+  margin-bottom: 10px;
 `;
 
 export default Diary;

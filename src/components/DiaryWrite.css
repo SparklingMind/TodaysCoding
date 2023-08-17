@@ -1,4 +1,4 @@
-section {
+.diary-write-wrap {
   width: 80%;
   height: 100vh;
   margin: auto;
@@ -6,7 +6,7 @@ section {
   box-sizing: border-box;
 }
 
-input {
+.diary-title {
   display: block;
   width: 100%;
   padding: 10px;

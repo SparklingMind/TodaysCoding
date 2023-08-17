@@ -11,6 +11,7 @@ h2 {
   border-bottom: 1px solid #eee;
   margin-bottom: 20px;
   text-indent: 10px;
+  font-family: "fontBold";
 }
 
 .diary-view-btns {
