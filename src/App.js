@@ -8,7 +8,7 @@ import DiaryWrite from "./components/DiaryWrite";
 function App() {
   return (
     <div className="App">
-      {/* <Header></Header>
+      <Header></Header>
       <CalendarFunc></CalendarFunc>
       <DiaryWrite></DiaryWrite>
       <Nav></Nav>
