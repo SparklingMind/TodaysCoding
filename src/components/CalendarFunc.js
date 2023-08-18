@@ -9,23 +9,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function CalendarFunc() {
   const [value, onChange] = useState(new Date());
-  const activeDate = moment(value).format("YYYY-MM-DD"); // 클릭한 날짜 (년-월-일))
-  const todayDate = moment().format("YYYY-MM-DD"); //오늘 날짜
-  const endOfMonth = moment(activeDate).endOf("month").format("YYYY-MM-DD"); //클릭한 날짜 달의 마지막날짜
-  const startOfMonth = moment(activeDate).startOf("month").format("YYYY-MM-DD"); //매월 1일
+  const activeDate = moment(value).format("YYYYMMDD"); // 클릭한 날짜 (년-월-일))
+  const todayDate = moment().format("YYYYMMDD"); //오늘 날짜
+  const endOfMonth = moment(activeDate).endOf("month").format("YYYYMMDD"); //클릭한 날짜 달의 마지막날짜
+  const startOfMonth = moment(activeDate).startOf("month").format("YYYYMMDD"); //매월 1일
   //나중에 데이터 받을 수 있으면 지울 변수
-  const dayList = [
-    "2023-08-01",
-    "2023-08-02",
-    "2023-08-10",
-    "2023-08-11",
-    "2023-08-13",
-  ];
+  const dayList = ["20230801", "20230802", "20230810", "20230811", "20230813"];
   //각 날짜별로 이모지 추가
   const addEmoji = ({ date }) => {
     const EmojiDateAdded = []; //추가된 이모지 날짜
     // date(각 날짜)가  리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘) 추가
-    if (dayList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
+    if (dayList.find((day) => day === moment(date).format("YYYYMMDD"))) {
       EmojiDateAdded.push(
         <div className="savedEmoji">{selectedEmojiSave}</div>
       );
