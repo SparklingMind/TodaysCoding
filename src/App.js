@@ -1,35 +1,26 @@
-import React from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Nav from "./Nav"
-
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import "./CalendarFunc";
-import CalendarFunc from "./CalendarFunc";
-import Header from "./Header";
-import Nav from "./Nav";
-import DiaryWrite from "./components/DiaryWrite";
-import HomePage from './components/HomePage';
-import LoginPage from './components/LoginPage';
-import SignUpPage from './components/SignUpPage';
-import MyPage from './components/MyPage';
-
-
+import Home from "./routes/Home";
+import Nav from "./components/Nav.js";
+import HomePage from "./components/HomePage";
+import LoginPage from "./components/LoginPage";
+import SignUpPage from "./components/SignUpPage";
+import MyPage from "./components/MyPage";
+import Search from "./routes/Search";
 
 function App() {
   return (
-    <div className="App">
-      <Header></Header>
-      <CalendarFunc></CalendarFunc>
-      <DiaryWrite></DiaryWrite>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+      </Routes>
       <Nav></Nav>
-        <BrowserRouter> 
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-          </Routes>
-        </BrowserRouter>
-    </div>
+    </BrowserRouter>
   );
 }
 

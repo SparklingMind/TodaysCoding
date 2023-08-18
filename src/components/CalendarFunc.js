@@ -8,6 +8,11 @@ import "./CalendarFunc.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function CalendarFunc() {
+  const [value, onChange] = useState(new Date());
+  const activeDate = moment(value).format("YYYY-MM-DD"); // 클릭한 날짜 (년-월-일))
+  const todayDate = moment().format("YYYY-MM-DD"); //오늘 날짜
+  const endOfMonth = moment(activeDate).endOf("month").format("YYYY-MM-DD"); //클릭한 날짜 달의 마지막날짜
+  const startOfMonth = moment(activeDate).startOf("month").format("YYYY-MM-DD"); //매월 1일
   //나중에 데이터 받을 수 있으면 지울 변수
   const dayList = [
     "2023-08-01",
@@ -27,24 +32,11 @@ function CalendarFunc() {
     }
     return <div>{EmojiDateAdded}</div>;
   };
-  //함수 : 오늘날짜까지 기본 이모지=투명이모지, 이모지에 값이 있으면 {selectedEmojiSave}
-  const emojiByDate = () => {
-    let fixedEmoji = [];
 
-    if (moment(todayDate).isAfter(startOfMonth)) {
-      fixedEmoji.push(<div className="defaultEmoji">🫥</div>);
-    }
-    return <div>{fixedEmoji}</div>;
-  };
-  const [value, onChange] = useState(new Date());
-  const activeDate = moment(value).format("YYYY-MM-DD"); // 클릭한 날짜 (년-월-일))
-  const todayDate = moment().format("YYYY-MM-DD"); //오늘 날짜
-  const endOfMonth = moment(activeDate).endOf("month").format("YYYY-MM-DD"); //클릭한 날짜 달의 마지막날짜
-  const startOfMonth = moment(activeDate).startOf("month").format("YYYY-MM-DD"); //매월 1일
   const [selectedEmoji, setSelcectedEmoji] = useState();
   const [showPicker, setShowPicker] = useState(false);
 
-  const onEmojiClick = (e, emojiObject) => {
+  const onEmojiClick = (emojiObject, e) => {
     setSelcectedEmoji(emojiObject);
     setShowPicker(false);
   };
@@ -56,6 +48,7 @@ function CalendarFunc() {
   const selectedEmojiSave = selectedEmoji
     ? selectedEmoji && <EmojiData selectedEmoji={selectedEmoji}></EmojiData>
     : "🫥";
+
   return (
     <div className="wrap">
       <div className="EmojiSelection">
