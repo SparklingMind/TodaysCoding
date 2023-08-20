@@ -44,7 +44,7 @@ function CalendarFunc() {
     : "🫥";
 
   return (
-    <div className="wrap">
+    <div className="wrap" style={{ float: "left" }}>
       <div className="EmojiSelection">
         <span style={{ fontSize: 50 }}>{selectedEmojiSave}</span>
         <button onClick={() => setShowPicker(!showPicker)}> + </button>

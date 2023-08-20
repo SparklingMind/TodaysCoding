@@ -24,7 +24,7 @@ function DiaryWrite() {
   };
 
   return (
-    <section className="diary-write-wrap">
+    <section style={{ float: "right" }} className="diary-write-wrap">
       <input className="diary-title" ref={titleRef}></input>
       <Editor
         height="500px"

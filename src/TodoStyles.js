@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const TodoContainer = styled.div`
   /* TodoContainer 스타일링 */
-  width: 80%;
+  width: 33%;
   max-width: 600px;
   margin: 40px auto;
   background-color: #fff;
@@ -14,7 +14,7 @@ export const TodoContainer = styled.div`
 export const Title = styled.h1`
   /* Title 스타일링 */
   text-align: left;
-  font-family: 'fontBold';
+  font-family: "fontBold";
 `;
 
 export const ModalOverlay = styled.div`
@@ -49,4 +49,3 @@ export const CategoryIcon = styled.img`
   right: 10px;
   z-index: 10;
 `;
-

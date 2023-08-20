@@ -24,7 +24,7 @@ function Diary() {
 }
 
 const Wrapper = styled.section`
-  width: 30%;
+  width: 33%;
   height: 100vh;
   padding: 16px;
   box-sizing: border-box;
