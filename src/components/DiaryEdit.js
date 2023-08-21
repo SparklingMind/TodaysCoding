@@ -1,47 +1,48 @@
 import React, { useEffect, useRef } from "react";
 import "./DiaryWrite.css";
 
-// 마크다운 에디터
-import "@toast-ui/editor/dist/toastui-editor.css";
-import { Editor } from "@toast-ui/react-editor";
+//마크다운 에디터
+import MDEditor from "@uiw/react-md-editor";
 
 function DiaryEdit() {
   //글 제목
   const titleRef = useRef();
 
   //글 내용
-  const contentRef = useRef();
+  const [diaryContent, setdiaryContent] = useState("");
 
-  // 기존 작성 내용 표시
-  useEffect(() => {
-    // 1. DB에서 가져온 HTML이라고 가정
-    const contentHtml = "<h1>글 제목</h1> <p>글 내용</p>";
+  //리액트 라우터 돔
+  const navigate = useNavigate();
 
-    // 2. Editor DOM 내용에 HTML 주입
-    contentRef.current?.getInstance().setHTML(contentHtml);
-  }, []);
+  // [취소] 버튼 클릭 시
+  const handleCancelBtn = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
 
   // [등록] 버튼 클릭 시
   const handleSubmitBtn = (e) => {
     e.preventDefault();
 
     //글 제목을 string으로 저장
-    console.log(titleRef.current?.value);
+    const diaryTitle = titleRef.current?.value;
+    console.log(diaryTitle);
 
-    //글 내용을 HTML 태그 형태로 저장
-    console.log(contentRef.current?.getInstance().getHTML());
+    //글 내용을 string으로 저장
+    console.log(diaryContent);
+
+    //작성 완료한 글로 이동
+    navigate("/DiaryView");
   };
 
   return (
     <section className="diary-write-wrap">
-      <input className="diary-title" ref={titleRef}></input>
-      <Editor
-        height="500px"
-        initialEditType="wysiwyg"
-        ref={contentRef}
-      ></Editor>
+      <input className="diary-write-title" ref={titleRef}></input>
+      <MDEditor height={400} value={diaryContent} onChange={setdiaryContent} />
       <div className="diary-write-btns">
-        <button type="button">취소</button>
+        <button type="button" onClick={handleCancelBtn}>
+          취소
+        </button>
         <button type="submit" onClick={handleSubmitBtn}>
           등록
         </button>

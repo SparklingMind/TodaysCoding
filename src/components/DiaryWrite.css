@@ -6,12 +6,13 @@
   box-sizing: border-box;
 }
 
-.diary-title {
+.diary-write-title {
   display: block;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
   margin-bottom: 30px;
+  border: 1px solid #eee;
 }
 
 .diary-write-btns {

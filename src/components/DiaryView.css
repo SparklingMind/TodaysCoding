@@ -6,12 +6,18 @@ section {
   box-sizing: border-box;
 }
 
-h2 {
+.diary-view-title {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
   margin-bottom: 20px;
-  text-indent: 10px;
-  font-family: "fontBold";
+  font-family: "fontMedium";
+}
+
+.diary-viewer {
+  height: 400px;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .diary-view-btns {

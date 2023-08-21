@@ -1,7 +1,7 @@
 import React from "react";
 import CalendarFunc from "../components/CalendarFunc";
 import Header from "../components/Header.js";
-import DiaryWrite from "../components/DiaryWrite";
+import DiaryHome from "../components/DiaryHome";
 import TodoComponent from "../TodoComponent";
 
 function Home() {
@@ -10,7 +10,7 @@ function Home() {
       <Header></Header>
       <CalendarFunc></CalendarFunc>
       <TodoComponent></TodoComponent>
-      <DiaryWrite></DiaryWrite>
+      <DiaryHome></DiaryHome>
     </div>
   );
 }

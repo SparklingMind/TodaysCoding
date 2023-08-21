@@ -8,6 +8,8 @@ import LoginPage from "./components/LoginPage";
 import SignUpPage from "./components/SignUpPage";
 import MyPage from "./components/MyPage";
 import Search from "./routes/Search";
+import DiaryWrite from "./components/DiaryWrite";
+import DiaryView from "./components/DiaryView";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/search" element={<Search />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/DiaryWrite" element={<DiaryWrite />}></Route>
+          <Route path="/DiaryView" element={<DiaryView />}></Route>
         </Routes>
         <Nav></Nav>
       </div>

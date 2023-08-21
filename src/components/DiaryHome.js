@@ -1,10 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import DiaryWrite from "./DiaryWrite";
 import styled from "styled-components";
 
-function Diary() {
+function DiaryHome() {
   return (
     <Wrapper>
-      <DiaryWriteBtn type="button">글쓰기</DiaryWriteBtn>
+      <Link to="/DiaryWrite">
+        <DiaryWriteBtn type="button">글쓰기</DiaryWriteBtn>
+      </Link>
       <DiaryList>
         <DiaryListItem>
           <DiaryListTitle>제목</DiaryListTitle>
@@ -56,4 +60,4 @@ const DiaryListTitle = styled.h4`
   margin-bottom: 10px;
 `;
 
-export default Diary;
+export default DiaryHome;
