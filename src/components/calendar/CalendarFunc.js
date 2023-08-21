@@ -1,11 +1,11 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import EmojiPicker from "emoji-picker-react";
 import "./CalendarFunc.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { BiMehBlank } from "react-icons/bi";
 
 function CalendarFunc() {
   const [value, onChange] = useState(new Date());
@@ -13,35 +13,43 @@ function CalendarFunc() {
   const todayDate = moment().format("YYYYMMDD"); //오늘 날짜
   const endOfMonth = moment(activeDate).endOf("month").format("YYYYMMDD"); //클릭한 날짜 달의 마지막날짜
   const startOfMonth = moment(activeDate).startOf("month").format("YYYYMMDD"); //매월 1일
-  //나중에 데이터 받을 수 있으면 지울 변수
-  const dayList = ["20230801", "20230802", "20230810", "20230811", "20230813"];
+  const [clickedDate, setClickedDate] = useState(); // 선택한 날짜를 저장할 상태
+  const [selectedEmoji, setSelectedEmoji] = useState(); //선택한 이모지를 저장할 상태
+  const [showPicker, setShowPicker] = useState(false);
+  const [dataToSave, setDataToSave] = useState(); //사용자가 저장한 날짜와 이모지 데이터
+
+  //이모지 클릭하면 나타나게 하는 함수
+  const onEmojiClick = (emojiObject, e) => {
+    setSelectedEmoji(emojiObject.emoji);
+    setShowPicker(false);
+  };
+  //선택된 이모지, 선택이 아무것도 안되었으면 <BiMehBlank />
+  const selectedEmojiSave = selectedEmoji ? selectedEmoji : <BiMehBlank />;
+  //클라이언트가 클릭한 날짜 clickedDate에 저장
+  const saveDate = (date) => {
+    const clickedDate = moment(date).format("YYYYMMDD");
+    setClickedDate(clickedDate);
+  };
+  // 클라이언트에서 선택한 날짜와 이모지를 서버로 전송
+  const sendDataToServer = (clickedDate, selectedEmoji) => {
+    if (clickedDate && selectedEmoji) {
+      const dataToSend = {
+        date: clickedDate,
+        emoji: selectedEmoji,
+      };
+      setDataToSave(dataToSend);
+    }
+    return dataToSave;
+  };
+
   //각 날짜별로 이모지 추가
   const addEmoji = ({ date }) => {
     const EmojiDateAdded = []; //추가된 이모지 날짜
-    // date(각 날짜)가  리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘) 추가
-    if (dayList.find((day) => day === moment(date).format("YYYYMMDD"))) {
-      EmojiDateAdded.push(
-        <div className="savedEmoji">{selectedEmojiSave}</div>
-      );
+    if (dataToSave.date === moment(date).format("YYYYMMDD")) {
+      EmojiDateAdded.push(<div className="savedEmoji">{dataToSave.emoji}</div>);
     }
     return <div>{EmojiDateAdded}</div>;
   };
-
-  const [selectedEmoji, setSelcectedEmoji] = useState();
-  const [showPicker, setShowPicker] = useState(false);
-
-  const onEmojiClick = (emojiObject, e) => {
-    setSelcectedEmoji(emojiObject);
-    setShowPicker(false);
-  };
-
-  const EmojiData = ({ selectedEmoji }) => {
-    return <div>{selectedEmoji.emoji}</div>;
-  };
-
-  const selectedEmojiSave = selectedEmoji
-    ? selectedEmoji && <EmojiData selectedEmoji={selectedEmoji}></EmojiData>
-    : "🫥";
 
   return (
     <div className="wrap" style={{ float: "left" }}>
@@ -51,12 +59,17 @@ function CalendarFunc() {
         {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
       </div>
       <Calendar
+        onClickDay={saveDate}
         onChange={onChange}
         value={value}
         locale="en"
         formatDay={(locale, date) => moment(date).format("D")}
         tileContent={addEmoji}
       />
+      {/* 임시 데이터 전송 버튼 */}
+      <button onClick={() => sendDataToServer(clickedDate, selectedEmoji)}>
+        Send Data to Server
+      </button>
     </div>
   );
 }
