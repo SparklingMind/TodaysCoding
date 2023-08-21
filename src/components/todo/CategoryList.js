@@ -1,5 +1,5 @@
-import React from 'react';
-import CategoryItem from './CategoryItem';
+import React from "react";
+import CategoryItem from "./CategoryItem";
 
 // CategoryList 컴포넌트 정의
 // 카테고리 목록을 표시하고 각 카테고리 항목에 대한 정보를 CategoryItem 컴포넌트에 전달하는 역할을 한다.

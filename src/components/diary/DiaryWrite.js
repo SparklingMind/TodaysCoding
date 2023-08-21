@@ -37,7 +37,7 @@ function DiaryWrite() {
   };
 
   return (
-    <section style={{ float: "right" }} className="diary-write-wrap">
+    <section className="diary-write-wrap">
       <input className="diary-write-title" ref={titleRef}></input>
       <MDEditor height={400} value={diaryContent} onChange={setdiaryContent} />
       <div className="diary-write-btns">
