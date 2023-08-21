@@ -17,7 +17,6 @@ function CalendarFunc() {
   const [selectedEmoji, setSelectedEmoji] = useState(); //선택한 이모지를 저장할 상태
   const [showPicker, setShowPicker] = useState(false);
   const [dataToSave, setDataToSave] = useState(); //사용자가 저장한 날짜와 이모지 데이터
-
   //이모지 클릭하면 나타나게 하는 함수
   const onEmojiClick = (emojiObject, e) => {
     setSelectedEmoji(emojiObject.emoji);
@@ -45,8 +44,12 @@ function CalendarFunc() {
   //각 날짜별로 이모지 추가
   const addEmoji = ({ date }) => {
     const EmojiDateAdded = []; //추가된 이모지 날짜
-    if (dataToSave.date === moment(date).format("YYYYMMDD")) {
-      EmojiDateAdded.push(<div className="savedEmoji">{dataToSave.emoji}</div>);
+    if (dataToSave && dataToSave.date === moment(date).format("YYYYMMDD")) {
+      EmojiDateAdded.push(
+        <div key={dataToSave.date} className="savedEmoji">
+          {dataToSave.emoji}
+        </div>
+      );
     }
     return <div>{EmojiDateAdded}</div>;
   };
