@@ -1,0 +1,22 @@
+.headerWrap {
+  width: 1320px;
+  height: 100px;
+  margin: 0 20px;
+}
+
+.title {
+  font-family: "fontBold";
+  font-size: 20px;
+  margin: 10px 0 10px 0;
+}
+
+.userWrap {
+  font-size: 15px;
+  display: flex;
+}
+
+.personUser .userName {
+  font-family: "fontlight";
+  display: flex;
+  justify-content: center;
+}
