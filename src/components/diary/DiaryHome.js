@@ -28,11 +28,10 @@ function DiaryHome() {
 }
 
 const Wrapper = styled.section`
+  float: right;
   width: 33%;
-  height: 100vh;
   padding: 16px;
   box-sizing: border-box;
-  background: #f1f1f1;
 `;
 
 const DiaryWriteBtn = styled.button`

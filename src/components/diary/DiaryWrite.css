@@ -1,9 +1,14 @@
 .diary-write-wrap {
-  width: 28%;
-  height: 100vh;
-  margin: auto;
-  padding: 20px;
-  box-sizing: border-box;
+  position: relative;
+  height: calc(100vh - 95px);
+}
+
+.diary-write-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
 }
 
 .diary-write-title {
@@ -12,7 +17,7 @@
   padding: 10px;
   box-sizing: border-box;
   margin-bottom: 30px;
-  border: 1px solid #eee;
+  border: 1px solid #d0d7de;
 }
 
 .diary-write-btns {

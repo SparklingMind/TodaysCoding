@@ -1,9 +1,14 @@
-section {
-  width: 33%;
-  height: 100vh;
-  margin: auto;
-  padding: 50px;
-  box-sizing: border-box;
+.diary-view-wrap {
+  position: relative;
+  height: calc(100vh - 95px);
+}
+
+.diary-view-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
 }
 
 .diary-view-title {

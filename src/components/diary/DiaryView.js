@@ -9,13 +9,15 @@ function DiaryView() {
   const diaryContent = `**content**`;
 
   return (
-    <section className="diary-view">
-      <h2 className="diary-view-title">{diaryTitle}</h2>
-      <MDEditor.Markdown className="diary-viewer" source={diaryContent} />
-      <div className="diary-view-btns">
-        <button type="button">목록</button>
-        <button type="submit">수정</button>
-        <button type="submit">삭제</button>
+    <section className="diary-view-wrap">
+      <div className="diary-view-box">
+        <h2 className="diary-view-title">{diaryTitle}</h2>
+        <MDEditor.Markdown className="diary-viewer" source={diaryContent} />
+        <div className="diary-view-btns">
+          <button type="button">목록</button>
+          <button type="submit">수정</button>
+          <button type="submit">삭제</button>
+        </div>
       </div>
     </section>
   );

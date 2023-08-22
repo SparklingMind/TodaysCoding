@@ -38,15 +38,21 @@ function DiaryWrite() {
 
   return (
     <section className="diary-write-wrap">
-      <input className="diary-write-title" ref={titleRef}></input>
-      <MDEditor height={400} value={diaryContent} onChange={setdiaryContent} />
-      <div className="diary-write-btns">
-        <button type="button" onClick={handleCancelBtn}>
-          취소
-        </button>
-        <button type="submit" onClick={handleSubmitBtn}>
-          등록
-        </button>
+      <div className="diary-write-box">
+        <input className="diary-write-title" ref={titleRef}></input>
+        <MDEditor
+          height={400}
+          value={diaryContent}
+          onChange={setdiaryContent}
+        />
+        <div className="diary-write-btns">
+          <button type="button" onClick={handleCancelBtn}>
+            취소
+          </button>
+          <button type="submit" onClick={handleSubmitBtn}>
+            등록
+          </button>
+        </div>
       </div>
     </section>
   );
