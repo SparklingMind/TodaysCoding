@@ -55,7 +55,7 @@ function TodoComponent() {
           </ModalContent>
         </ModalOverlay>
       )}
-      <Title>오늘도 코딩</Title>
+      
       {/* CategoryList 컴포넌트에 카테고리 데이터와 해당 데이터를 수정할 수 있는 함수를 props로 전달 */}
       <CategoryList categories={categories} setCategories={setCategories} />
     </TodoContainer>
