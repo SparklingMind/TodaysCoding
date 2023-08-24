@@ -15,7 +15,7 @@ const UpperContainer = styled.div`
         margin-top: 10px;
         font-weight: 600;
     }
-`;
+`
 
 const LowerContainer = styled.div`
 display: flex;
@@ -108,7 +108,7 @@ const MyPage = () => {
                             <UnderLine />
                             <li>버전</li>
                             <UnderLine />
-                            <li>설정</li>
+                            <li>로그아웃</li>
                         </ul>
                     </ListWrapper>
                     <SplitLine/>

@@ -1,30 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom'; // Import ReactDOM
-
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function DuplicateIdModal(props) {
+
+function SignUpErrorModal(props) {
   return (
     <Modal
       style={{
-        display: "flex"
+        display: "flex",
+        justifyContent:"center"
       }}
       {...props}
-      size="sm"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          아이디 중복
+          회원가입 오류
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p style={{
             margin:"10px auto"
         }}>
-          이미 사용중인 아이디입니다.
+          잠시 후 다시 시도해 주세요.
         </p>
       </Modal.Body>
       <Modal.Footer>
@@ -34,6 +33,6 @@ function DuplicateIdModal(props) {
   );
 }
 
-export default DuplicateIdModal
+export default SignUpErrorModal
 
 

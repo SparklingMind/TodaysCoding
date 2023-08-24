@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const Logo = styled.div`
     display: flex;
     justify-content: center;

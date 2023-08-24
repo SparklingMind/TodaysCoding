@@ -1,11 +1,15 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import SignUpButton from "../components/SignUpButton";
-import DuplicateIdModal from "../components/DuplicateIdModal"
+import IdEmptyModal from "../components/IdEmptyModal";
+import IdCheckedModal from "../components/IdCheckedModal";
+import IdDuplicatedModal from "../components/IdDuplicatedModal"
 import SignUpCompleteModal from "../components/SignUpCompleteModal";
+import SignUpFailModal from "../components/SignUpFailModal"
+import SignUpErrorModal from "../components/SignUpErrorModal"
+import axios from "axios"
 
 const UpperContainer = styled.div`
 display: flex;
@@ -78,6 +82,12 @@ const MainContainer = styled.div`
     .customInput {
       max-width: 100% !important;
     }
+    #SignUpButton {
+      font-size: 16px;
+      margin-top: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      }
 `
 const IdContainer = styled.div`
 display: flex;
@@ -99,39 +109,148 @@ const VerifyPwd = styled.div`
     font-size: 12px;
     margin: 5px 10px auto;
 `
-
-
+const VerifyEmail = styled.div`
+color: red;
+font-size: 12px;
+margin: 5px 10px auto;
+`
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const handleHome= () => {
     navigate("/")
 }
-  const [pwd, setPwd] = useState("")
-  const [confirmPwd, setConfirmPwd] = useState("")
+
+const [userData, setUserData] = useState({
+  success: "true",
+  id: "",
+  password: "",
+  email: ""
+})
+
+  const [id, setId] = useState("")
+  const [idChecked, setIdChecked] = useState(false)
+
+  const idInput = useRef();
+  useEffect(() => {
+      idInput.current.focus()
+  }, [])
+
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [passwordChecked, setPasswordChecked] = useState(false)
+  
   const [email, setEmail] = useState('');
-  const [isEmailValid, setEmailValid] = useState(true);
-  const [idCheckModal, setidCheckModal] = useState(false);
-  const [signUpModal, setsignUpModal] = useState(false);
+  const [emailTested, setEmailTested] = useState(true);
+  const [emailChecked, setEmailChecked] = useState(false);
+  //모달창 상태
+  const [emptyModal, setEmptyModal] = useState(false);
+  const [checkedModal, setCheckedModal] = useState(false);
+  const [duplicatedModal, setDuplicatedModal] = useState(false);
+  const [signUpFailModal, setSignUpFailModal] = useState(false);
+  const [signUpErrorModal, setSignUpErrorModal] = useState(false);
+  const [signUpModal, setSignUpModal] = useState(false);
+
+  const handleIdCheck = () => {
+    const url = "http://34.64.151.119/api/users/register";
+    const requestData = {
+      id: userData.id
+    };
+    if(id.length == 0) {
+      setEmptyModal(true)
+      return
+    }
+    axios.post(url, requestData)
+      .then((response) => {
+        const responseMessage = response.data.message;
+        if (responseMessage === "다른 아이디를 사용해주세요.") {
+          setDuplicatedModal(true);
+          setIdChecked(false)
+        } else {
+          setCheckedModal(true);
+          setIdChecked(true)
+        }
+        })
+      .catch((error) => {
+        setSignUpErrorModal(true)
+        console.error("아이디 중복 확인 오류:", error);
+      });
+  };
+
+
+  const handleId = (event) => {
+    setId(event.target.value)
+  }
 
   const handlePassWord = (event) => {
-    setPwd(event.target.value)
+    setPassword(event.target.value)
+      if(password === confirmPassword) {
+      setPasswordChecked(true)
+    }
   }
 
   const handleConfirmPassWord = (event) => {
-    setConfirmPwd(event.target.value);
+    setConfirmPassword(event.target.value);
+    if(password === confirmPassword) {
+      setPasswordChecked(true)
+    }
   }
-
+ 
   const handleEmailChange = (event) => {
     const inputEmail = event.target.value;
-    setEmail(inputEmail);
-
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    setEmailValid(emailPattern.test(inputEmail));
+  
+    if (inputEmail.length >= 8) {
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      setEmail(inputEmail);
+      setEmailTested(emailPattern.test(inputEmail));
+    } else {
+      setEmail("");
+      setEmailTested(true); 
+      return
+    }
   };
 
- 
-    return (
+  const isEmailChecked = () => {
+    if(email.length >= 8 && emailTested) {
+      setEmailChecked(true)
+    }
+  }
+
+  const handleData = (field, value) => {
+    setUserData((datas) => ({
+      ...datas,
+      [field]: value
+    }));
+  };
+  
+  const signUpCheck = () => {
+    if(idChecked && passwordChecked && emailChecked) {
+      return true
+    } else {
+      return false
+    }
+  }
+  const handleSignUp = () => {
+    const jsonUserData = JSON.stringify(userData);
+    const url = "http://34.64.151.119/api/users/register";
+
+    axios.post(url, jsonUserData, {
+      headers: {  
+        "Content-Type": "application/json",
+      }
+    })
+    .then((res) => {
+      console.log("요청 성공", res.data)
+      setSignUpModal(true)
+    })
+    .catch((err) => {
+      console.error("요청 에러", err)
+      setSignUpErrorModal(true)
+      setSignUpModal(false)
+    })
+  }
+
+     return (
     <div>
         <UpperContainer>
             <h1 onClick={handleHome}>오늘도 코딩</h1>
@@ -145,8 +264,10 @@ const SignUpPage = () => {
                 <Form.Group className="idInput">
                     <Form.Label className="idLabel">아이디</Form.Label>
                     <IdContainer>
-                        <Form.Control id="userIdInput"className="customInput" type="text" placeholder="아이디" />
-                        <Button id="idCheckButton"variant="primary" onClick={() => setidCheckModal(true)}>
+                        <Form.Control id="userIdInput"className="customInput" type="text" placeholder="아이디" ref={idInput} onChange={(event) => {
+                          handleId(event);
+                          handleData("id", event.target.value);}}/>
+                        <Button id="idCheckButton"variant="primary" onClick={handleIdCheck}>
                           중복 확인
                         </Button>
                       </IdContainer>
@@ -154,31 +275,49 @@ const SignUpPage = () => {
                 <Form.Group className="pwdInput">
                     <Form.Label className="pwdLabel">비밀번호</Form.Label>
                     <Form.Control className="customInput" type="password" placeholder="비밀번호" 
-                    onChange={handlePassWord}/>
+                      onChange={(event) => {
+                      handlePassWord(event);
+                      handleData("password", event.target.value);}}/>
                 </Form.Group>
                 <Form.Group className="pwdInput">
                     <Form.Label className="pwdConfirmLabel">비밀번호 확인</Form.Label>
                     <Form.Control className="customInput" type="password" placeholder="비밀번호 확인" 
                     onChange={handleConfirmPassWord}/>
                     {
-                      pwd === confirmPwd? "" : <VerifyPwd>비밀번호가 일치하지 않습니다.</VerifyPwd>
+                      password === confirmPassword? "" : <VerifyPwd>비밀번호가 일치하지 않습니다.</VerifyPwd>
                     }
                 </Form.Group>
                 <Form.Group className="emailInput">
                     <Form.Label className="emailLabel">이메일</Form.Label>
                     <Form.Control className="customInput" type="email" placeholder="이메일" 
-                    onChange={handleEmailChange}/>
+                      onChange={(event) => {
+                      handleEmailChange(event);
+                      isEmailChecked();
+                      handleData("email", event.target.value);}}/>
                     {
-                      isEmailValid? "" : "<VerifyEmail>이메일 형식이 올바르지 않습니다.</VerifyEmail>"
-                    }
+                      emailTested? "" : <VerifyEmail>이메일 형식이 올바르지 않습니다.</VerifyEmail>
+                    } 
                 </Form.Group>
                 <ButtonContainer>
-                <Button id="SignUpButton"variant="primary" onClick={() => setsignUpModal(true)}>가입하기</Button>
+                <Button id="SignUpButton"variant="primary" onClick={() => {
+                  if(!signUpCheck()) {
+                    setSignUpFailModal(true)
+                  } else {
+                    handleSignUp()
+                  }}}>
+                    가입하기
+                </Button>
                </ButtonContainer>
             </Form>
         </MainContainer>
-          <DuplicateIdModal show={idCheckModal} onHide={() => setidCheckModal(false)}/>
-          <SignUpCompleteModal show={signUpModal} onHide={() => setsignUpModal(false)}/>
+        <div>
+          <IdEmptyModal show={emptyModal} onHide={() => setEmptyModal(false)}/>
+          <IdCheckedModal show={checkedModal} onHide={() => setCheckedModal(false)}/>
+          <IdDuplicatedModal show={duplicatedModal} onHide={() => setDuplicatedModal(false)}/>
+          <SignUpFailModal show={signUpFailModal} onHide={() => setSignUpFailModal(false)}/>
+          <SignUpErrorModal show={signUpErrorModal} onHide={() => setSignUpErrorModal(false)}/>
+          <SignUpCompleteModal show={signUpModal} onHide={() => setSignUpModal(false)}/>
+        </div>
     </div>
     )
 }
