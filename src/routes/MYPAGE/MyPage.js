@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const UpperContainer = styled.div`
   margin-top: 10vh;
@@ -85,6 +86,15 @@ const SplitLine = styled.div`
   width: 100%;
   border-top: 1px solid gray;
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;  // 밑줄 제거
+  color: inherit;  // 부모 요소의 색상을 상속받음
+  &:hover {
+    text-decoration: none;  // 마우스 오버 시 밑줄이 나타나지 않도록 설정
+  }
+`;
+
 const MyPage = () => {
   return (
     <div>
@@ -102,7 +112,7 @@ const MyPage = () => {
         <UpperLine></UpperLine>
         <ListWrapper>
           <ul>
-            <li>회원정보</li>
+            <li><StyledLink to="/mypage/userinfo">회원정보</StyledLink></li>
             <UnderLine />
             <li>공지사항</li>
             <UnderLine />
