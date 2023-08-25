@@ -8,21 +8,7 @@ import "./DiaryHome.css";
 //마크다운 에디터
 import MDEditor from "@uiw/react-md-editor";
 
-function DiaryHome({ clickedDate }) {
-  //날짜 설정
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = ("0" + (today.getMonth() + 1)).slice(-2);
-  const day = ("0" + today.getDate()).slice(-2);
-  const formattedToday = year + month + day;
-  const [date, setDate] = useState(formattedToday);
-
-  useEffect(() => {
-    if (clickedDate !== undefined) {
-      setDate(clickedDate);
-    }
-  }, [clickedDate]);
-
+function DiaryHome({ date }) {
   //목록
   const [diaryList, setDiaryList] = useState([]);
 
