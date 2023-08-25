@@ -1,62 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import DiaryWrite from "./DiaryWrite";
-import styled from "styled-components";
+import DiaryList from "./DiaryList";
+import "./DiaryHome.css";
 
-function DiaryHome() {
+//마크다운 에디터
+import MDEditor from "@uiw/react-md-editor";
+
+function DiaryHome({ clickedDate }) {
+  //날짜 설정
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = ("0" + (today.getMonth() + 1)).slice(-2);
+  const day = ("0" + today.getDate()).slice(-2);
+  const formattedToday = year + month + day;
+  const [date, setDate] = useState(formattedToday);
+
+  useEffect(() => {
+    if (clickedDate !== undefined) {
+      setDate(clickedDate);
+    }
+  }, [clickedDate]);
+
+  //목록
+  const [diaryList, setDiaryList] = useState([]);
+
+  //임시 토큰
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww";
+
+  const viewDiaryList = async () => {
+    const res = await axios.get(
+      `http://34.64.151.119/api/posts/?date=${date}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    setDiaryList(res.data);
+  };
+
+  //목록 조회 함수 호출
+  useEffect(() => {
+    viewDiaryList();
+  }, [date]);
+
   return (
-    <Wrapper>
+    <section className="wrapper">
       <Link to="/DiaryWrite">
-        <DiaryWriteBtn type="button">글쓰기</DiaryWriteBtn>
+        <button className="diary-write-btn" type="button">
+          글쓰기
+        </button>
       </Link>
-      <DiaryList>
-        <DiaryListItem>
-          <DiaryListTitle>제목</DiaryListTitle>
-          <p>글 내용 미리보기</p>
-        </DiaryListItem>
-        <DiaryListItem>
-          <DiaryListTitle>제목</DiaryListTitle>
-          <p>
-            We had a good thing going lately Might not have always been a fairy
-            tale But you know and I know That they ain't real I'll take the
-            truth over the story
-          </p>
-        </DiaryListItem>
-      </DiaryList>
-    </Wrapper>
+      <ul className="diary-list">
+        <DiaryList listItemData={diaryList}></DiaryList>
+      </ul>
+    </section>
   );
 }
-
-const Wrapper = styled.section`
-  float: right;
-  width: 33%;
-  padding: 16px;
-  box-sizing: border-box;
-`;
-
-const DiaryWriteBtn = styled.button`
-  float: right;
-`;
-
-const DiaryList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin-top: 50px;
-  overflow: hidden;
-`;
-
-const DiaryListItem = styled.li`
-  border: 1px solid #333;
-  border-radius: 15px;
-  height: 150px;
-  padding: 20px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-`;
-
-const DiaryListTitle = styled.h4`
-  font-family: "fontMedium";
-  margin-bottom: 10px;
-`;
 
 export default DiaryHome;
