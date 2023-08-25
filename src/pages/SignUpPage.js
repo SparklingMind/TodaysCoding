@@ -66,8 +66,8 @@ const MainContainer = styled.div`
     
     #userIdInput {
       display: flex;
-      width: 75%;
-      margin-right: 10px;
+      width: 70%;
+      margin-right: 15px;
     }
 
     .customInput::placeholder {
@@ -122,15 +122,16 @@ const SignUpPage = () => {
 }
 
 const [userData, setUserData] = useState({
-  success: "true",
+  name: "",
   id: "",
-  password: "",
-  email: ""
+  email: "",
+  password: ""
 })
 
+  const [name, setName] = useState("")
+  const [nameCheck, setNameChecked] = useState(false)
   const [id, setId] = useState("")
   const [idChecked, setIdChecked] = useState(false)
-
   const idInput = useRef();
   useEffect(() => {
       idInput.current.focus()
@@ -151,8 +152,16 @@ const [userData, setUserData] = useState({
   const [signUpErrorModal, setSignUpErrorModal] = useState(false);
   const [signUpModal, setSignUpModal] = useState(false);
 
+  const handleNameCheck = (event) => {
+    setName(event.target.value)
+
+    if(name.length >= 2) {
+      setNameChecked(true)
+    }
+  }
+
   const handleIdCheck = () => {
-    const url = "http://34.64.151.119/api/users/register";
+    const url = `http://34.64.151.119/api/users/register/${id}`;
     const requestData = {
       id: userData.id
     };
@@ -176,7 +185,7 @@ const [userData, setUserData] = useState({
         console.error("아이디 중복 확인 오류:", error);
       });
   };
-
+  
 
   const handleId = (event) => {
     setId(event.target.value)
@@ -232,23 +241,28 @@ const [userData, setUserData] = useState({
   }
   const handleSignUp = () => {
     const jsonUserData = JSON.stringify(userData);
+    console.log(jsonUserData)
     const url = "http://34.64.151.119/api/users/register";
-
-    axios.post(url, jsonUserData, {
-      headers: {  
-        "Content-Type": "application/json",
-      }
-    })
-    .then((res) => {
-      console.log("요청 성공", res.data)
-      setSignUpModal(true)
-    })
-    .catch((err) => {
-      console.error("요청 에러", err)
-      setSignUpErrorModal(true)
-      setSignUpModal(false)
-    })
-  }
+  
+    axios
+      .post(url, jsonUserData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.data.success === true) {
+          setSignUpModal(true);
+        } else {
+          setSignUpErrorModal(true);
+        }
+      })
+      .catch((err) => {
+        console.error("요청 에러", err);
+        setSignUpErrorModal(true);
+        setSignUpModal(false);
+      });
+  };
 
      return (
     <div>
@@ -261,6 +275,14 @@ const [userData, setUserData] = useState({
         </LowerContainer>
         <MainContainer>
             <Form className="form">
+            <Form.Group className="idInput">
+                    <Form.Label className="idLabel">이름</Form.Label>
+                    <IdContainer>
+                        <Form.Control id="userNameInput"className="customInput" type="text" placeholder="이름" ref={idInput} onChange={(event) => {
+                          handleNameCheck(event);
+                          handleData("name", event.target.value);}}/>
+                      </IdContainer>
+                </Form.Group>
                 <Form.Group className="idInput">
                     <Form.Label className="idLabel">아이디</Form.Label>
                     <IdContainer>

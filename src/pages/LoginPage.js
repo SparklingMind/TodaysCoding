@@ -63,27 +63,45 @@ useEffect(() => {
 const [failModal, setFailModal] = useState(false);
 const [errorModal, setErrorModal] = useState(false);
 
-const handleLogin = () => {
+const handleId = (event) => {
+    setId(event.target.value)
+}
 
-    const url = "http://34.64.151.119/api/auth/login"
-    const requestData = {
-        id: id,
-        password: "password"
-    }
-    
-    axios.post(url, requestData)
-    .then((response) => {
-        if(!response.data.errorMessage)
-        setId("")
-        setPassword("")
-        setFailModal(false)
-        setErrorModal(false)
-        console.log("로그인 성공:", response.data)
-    })
-    .catch((error) => {
-        setErrorModal(true)
-    })
-  }
+const handlePassword = (event) => {
+    setPassword(event.target.value)
+}
+
+const handleLogin = () => {
+    const url = "http://34.64.151.119/api/auth/login";
+    const data = {
+      id: id,
+      password: password
+    };
+    const requestData = JSON.stringify(data);
+    axios
+      .post(url, requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.data.accessToken) {
+          const token = response.data.accessToken;
+          localStorage.setItem("token", token);          
+          setFailModal(false);
+          setErrorModal(false);
+          navigate("/home")
+          console.log("로그인 성공:", response.data);
+        } else {
+            console.log(requestData, "아이디 또는 비밀번호가 일치하지 않습니다.");
+            setFailModal(true);
+        }
+      })
+      .catch((error) => {
+        console.error(requestData, error);
+        setErrorModal(true);
+      });
+  };
 
 
     return(
@@ -94,10 +112,10 @@ const handleLogin = () => {
             </UpperContainer>
             <LowerContainer>
             <FloatingLabel controlId="floatingInput" label="아이디" className="mb-3">
-                <Form.Control type="text" placeholder="" ref={idInput} />
+                <Form.Control type="text" placeholder="" ref={idInput} onChange={handleId} />
             </FloatingLabel>
             <FloatingLabel controlId="floatingPassword" label="비밀번호">
-                <Form.Control type="password" placeholder="" />
+                <Form.Control type="password" placeholder="" onChange={handlePassword} />
             </FloatingLabel>
             </LowerContainer>
             <ButtonContainer>
