@@ -20,8 +20,8 @@
   border-radius: 15px;
   height: 150px;
   padding: 20px;
-  box-sizing: border-box;
   margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .diary-list-title {
