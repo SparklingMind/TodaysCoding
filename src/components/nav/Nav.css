@@ -1,6 +1,8 @@
 .navWrap {
   position: fixed;
   bottom: 0;
+  left: 50%; /* 화면의 중앙에 위치 */
+  transform: translateX(-50%); /* 실제 중앙에 위치하도록 조정 */
   width: 1300px;
   height: 95px;
   padding: 20px 20px 25px;
@@ -8,6 +10,7 @@
   align-items: flex-end;
   justify-content: center;
 }
+
 .navWrap div {
   display: flex;
   flex-direction: column;
