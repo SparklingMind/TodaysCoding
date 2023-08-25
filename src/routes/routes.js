@@ -6,6 +6,8 @@ import MyPage from "./MYPAGE/MyPage";
 import Search from "./SEARCH/Search";
 import DiaryWrite from "../components/diary/DiaryWrite";
 import DiaryView from "../components/diary/DiaryView";
+import UserInfo from "./MYPAGE/UserInfo/UserInfo"; 
+import Profile from "./MYPAGE/UserInfo/Profile/Profile";
 
 export const ROUTE = {
   HOMEPAGE: {
@@ -47,6 +49,16 @@ export const ROUTE = {
     path: "/DiaryView",
     link: "/DiaryView",
     element: DiaryView,
+  },
+  USERINFO : {
+    path: "/mypage/userInfo",
+    link: "/mypage/userInfo",
+    element: UserInfo,
+  },
+  PROFILE: {
+    path: "/mypage/userInfo/profile",
+    link: "/mypage/userInfo/profile",
+    element: Profile,
   },
 };
 
