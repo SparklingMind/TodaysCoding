@@ -29,9 +29,11 @@ function Home() {
     <div>
       <Header></Header>
       {/* 하위 컴포넌트에 함수를 props로 전달 */}
-      <CalendarFunc sendDataToParent={handleDataFromCalendarFunc} />
-      <TodoComponent></TodoComponent>
-      <DiaryHome></DiaryHome>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <CalendarFunc sendDataToParent={handleDataFromCalendarFunc} style={{ flex: 1 }} />
+        <TodoComponent style={{ flex: 1 }} />
+        <DiaryHome style={{ flex: 1.2 }} />
+      </div>
     </div>
   );
 }
