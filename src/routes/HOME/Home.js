@@ -34,7 +34,7 @@ function Home() {
           sendDataToParent={handleDataFromCalendarFunc}
           style={{ flex: 1 }}
         />
-        <TodoComponent style={{ flex: 1 }} />
+        <TodoComponent clickedDate={clickedDate} style={{ flex: 1 }} />
         <DiaryHome clickedDate={clickedDate} style={{ flex: 1.2 }} />
       </div>
     </div>
