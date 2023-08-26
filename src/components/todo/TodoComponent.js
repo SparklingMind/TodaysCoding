@@ -10,12 +10,12 @@ import {
 import axios from "axios";
 
 const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww";
 
 function TodoComponent({ clickedDate }) {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  console.log("tododata",categories);
+  console.log("tododata", categories);
   useEffect(() => {
     const fetchData = async () => {
       if (clickedDate) {
@@ -35,10 +35,9 @@ function TodoComponent({ clickedDate }) {
         }
       }
     };
-  
+
     fetchData();
   }, [clickedDate]);
-  
 
   //   {
   //     // 카테고리와 할 일(todo) 데이터의 초기 상태 설정
@@ -79,11 +78,12 @@ function TodoComponent({ clickedDate }) {
               categories={categories}
               setCategories={setCategories}
               onClose={() => setIsCategoryModalOpen(false)}
+              accessToken={accessToken}
+              clickedDate={clickedDate}
             />
           </ModalContent>
         </ModalOverlay>
       )}
-      
       {/* CategoryList 컴포넌트에 카테고리 데이터와 해당 데이터를 수정할 수 있는 함수를 props로 전달 */}
       <CategoryList categories={categories} setCategories={setCategories} />
     </TodoContainer>
