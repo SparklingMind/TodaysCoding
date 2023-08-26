@@ -5,6 +5,7 @@ import "./DiaryWrite.css";
 
 //마크다운 에디터
 import MDEditor from "@uiw/react-md-editor";
+// import { FileDrop } from 'react-file-drop'
 
 function DiaryWrite() {
   //글 제목
@@ -34,6 +35,10 @@ function DiaryWrite() {
     //글 내용을 string으로 저장
     console.log(diaryContent);
 
+    //임시 토큰
+    const accessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww";
+
     async function writeDiary() {
       try {
         // POST 요청은 body에 실어 보냄
@@ -46,7 +51,7 @@ function DiaryWrite() {
           },
           {
             headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww`,
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
