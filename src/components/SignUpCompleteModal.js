@@ -36,10 +36,10 @@ function SignUpCompleteModal(props) {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={
-
-          props.onHide
-          }>확인</Button>
+        <Button onClick={() => {
+        props.onHide(); // 모달 닫기
+        nav('/home'); // /home 페이지로 이동
+        }}>확인</Button>
       </Modal.Footer>
     </Modal>
   );
