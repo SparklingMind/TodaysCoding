@@ -9,8 +9,12 @@ function DiaryHome({ date }) {
   const [diaryList, setDiaryList] = useState([]);
 
   const viewDiaryList = async () => {
-    const res = await apiInstance.get(`/api/posts/?date=${date}`);
-    setDiaryList(res.data);
+    try {
+      const res = await apiInstance.get(`/api/posts/?date=${date}`);
+      setDiaryList(res.data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   //목록 조회 함수 호출
@@ -20,7 +24,7 @@ function DiaryHome({ date }) {
 
   return (
     <section className="wrapper">
-      <Link to="/DiaryWrite">
+      <Link to={`/DiaryWrite`} state={{ date: date }}>
         <button className="diary-write-btn" type="button">
           글쓰기
         </button>

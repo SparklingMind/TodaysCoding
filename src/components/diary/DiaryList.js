@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "./DiaryHome.css";
 
 //마크다운 에디터
@@ -12,13 +11,15 @@ function DiaryList({ listItemData }) {
   } else {
     return listItemData.map((diaryListItem) => (
       // map 함수로 데이터 출력
-      <li className="diary-list-item" key={diaryListItem.idx}>
-        <h4 className="diary-list-title">{diaryListItem.title}</h4>
-        <MDEditor.Markdown
-          className="diary-list-content"
-          source={diaryListItem.content}
-        />
-      </li>
+      <Link to={`/DiaryView`} state={{ postId: diaryListItem._id }}>
+        <li className="diary-list-item" key={diaryListItem.idx}>
+          <h4 className="diary-list-title">{diaryListItem.title}</h4>
+          <MDEditor.Markdown
+            className="diary-list-content"
+            source={diaryListItem.content}
+          />
+        </li>
+      </Link>
     ));
   }
 }
