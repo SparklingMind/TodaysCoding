@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TodoInput from "./TodoInput";
 import styled from "styled-components";
+import axios from 'axios';
 
 // styled-components를 사용해 각 UI 요소의 스타일 정의
 const CategoryItemContainer = styled.div`
@@ -53,7 +54,7 @@ const TodoItem = styled.li`
 `;
 
 // CategoryItem 컴포넌트 정의
-function CategoryItem({ category, categories, setCategories }) {
+function CategoryItem({ category, categories, setCategories, accessToken}) {
   // 할 일 입력 부분을 보여줄지 결정하는 변수
   const [isInputVisible, setInputVisible] = useState(false);
   // 수정 중인 할 일의 인덱스와 텍스트를 저장하는 상태 변수
@@ -61,10 +62,11 @@ function CategoryItem({ category, categories, setCategories }) {
   const [editingText, setEditingText] = useState("");
 
   // 체크박스를 클릭했을 때 할 일의 완료 상태를 바꾸는 함수
-  const handleCheck = (index) => {
+  const handleCheck = async (index) => {
+    let updatedTodos;
     setCategories((prevCategories) => {
       return prevCategories.map((cat) => {
-        if (cat.name === category.name) {
+        if (cat._id === category._id) {
           const updatedTodos = cat.todos.map((todo, todoIndex) => {
             if (todoIndex === index) {
               return { ...todo, completed: !todo.completed };
@@ -76,7 +78,6 @@ function CategoryItem({ category, categories, setCategories }) {
             if (a.completed !== b.completed) {
               return a.completed ? 1 : -1;
             }
-            // 원래 순서대로 정렬 (undefined 값 처리 추가)
             return (a.originalIndex || 0) - (b.originalIndex || 0);
           });
 
@@ -86,6 +87,24 @@ function CategoryItem({ category, categories, setCategories }) {
         }
       });
     });
+
+    // API 요청을 통해 변경된 데이터를 서버에 업데이트
+    try {
+      const response = await axios.patch(`http://34.64.151.119/api/todos/${category._id}`, 
+        { todos: updatedTodos },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      if (response.status !== 200) {
+        throw new Error("Failed to update todos on server");
+      }
+    } catch (error) {
+      console.error("Error updating todos:", error.response.data);
+    }
   };
 
   // "수정" 버튼 클릭시 수정 모드로 진입
@@ -100,7 +119,7 @@ function CategoryItem({ category, categories, setCategories }) {
     setEditingIndex(null);
     setCategories((prevCategories) => {
       return prevCategories.map((cat) => {
-        if (cat.name === category.name) {
+        if (cat._id === category._id) {
           const updatedTodos = [...cat.todos];
           updatedTodos[index].text = editingText;
           return { ...cat, todos: updatedTodos };
@@ -116,7 +135,7 @@ function CategoryItem({ category, categories, setCategories }) {
   const handleDelete = (index) => {
     setCategories((prevCategories) => {
       return prevCategories.map((cat) => {
-        if (cat.name === category.name) {
+        if (cat._id === category._id) {
           const updatedTodos = [...cat.todos];
           updatedTodos.splice(index, 1);
           return { ...cat, todos: updatedTodos };
