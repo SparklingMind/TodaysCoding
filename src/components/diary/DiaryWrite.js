@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import { apiInstance } from "../../utils/api";
 import "./DiaryWrite.css";
 
 //마크다운 에디터
@@ -8,6 +8,9 @@ import MDEditor from "@uiw/react-md-editor";
 // import { FileDrop } from 'react-file-drop'
 
 function DiaryWrite() {
+  //날짜
+  const date = useLocation().state.date;
+
   //글 제목
   const titleRef = useRef();
 
@@ -26,36 +29,18 @@ function DiaryWrite() {
   // [등록] 버튼 클릭 시
   const handleSubmitBtn = (e) => {
     e.preventDefault();
-    //달력 연동한 날짜 받아야 함
 
     //글 제목을 string으로 저장
     const diaryTitle = titleRef.current?.value;
-    console.log(diaryTitle);
-
-    //글 내용을 string으로 저장
-    console.log(diaryContent);
-
-    //임시 토큰
-    const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww";
 
     async function writeDiary() {
       try {
         // POST 요청은 body에 실어 보냄
-        await axios.post(
-          "http://34.64.151.119/api/posts",
-          {
-            date: "20230821",
-            title: diaryTitle,
-            content: diaryContent,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        console.log("성공");
+        await apiInstance.post("/api/posts", {
+          date: date,
+          title: diaryTitle,
+          content: diaryContent,
+        });
       } catch (e) {
         console.error(e);
       }
@@ -64,7 +49,7 @@ function DiaryWrite() {
     writeDiary();
 
     //작성 완료한 글로 이동
-    navigate("/DiaryView");
+    // navigate("/DiaryView");
   };
 
   return (
