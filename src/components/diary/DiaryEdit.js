@@ -1,10 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { apiInstance } from "../../utils/api";
 import "./DiaryWrite.css";
 
 //마크다운 에디터
 import MDEditor from "@uiw/react-md-editor";
+// import { FileDrop } from 'react-file-drop'
 
-function DiaryEdit() {
+function DiaryWrite() {
+  //날짜
+  const date = useLocation().state.date;
+
   //글 제목
   const titleRef = useRef();
 
@@ -26,29 +32,46 @@ function DiaryEdit() {
 
     //글 제목을 string으로 저장
     const diaryTitle = titleRef.current?.value;
-    console.log(diaryTitle);
 
-    //글 내용을 string으로 저장
-    console.log(diaryContent);
+    async function writeDiary() {
+      try {
+        // POST 요청은 body에 실어 보냄
+        await apiInstance.post("/api/posts", {
+          date: date,
+          title: diaryTitle,
+          content: diaryContent,
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
 
-    //작성 완료한 글로 이동
-    navigate("/DiaryView");
+    writeDiary();
+
+    //수정 완료한 글로 이동
+    // navigate("/DiaryView");
   };
 
   return (
     <section className="diary-write-wrap">
-      <input className="diary-write-title" ref={titleRef}></input>
-      <MDEditor height={400} value={diaryContent} onChange={setdiaryContent} />
-      <div className="diary-write-btns">
-        <button type="button" onClick={handleCancelBtn}>
-          취소
-        </button>
-        <button type="submit" onClick={handleSubmitBtn}>
-          등록
-        </button>
+      <div className="diary-write-box">
+        <input className="diary-write-title" ref={titleRef}></input>
+        <MDEditor
+          height={400}
+          value={diaryContent}
+          onChange={setdiaryContent}
+        />
+        <div className="diary-write-btns">
+          <button type="button" onClick={handleCancelBtn}>
+            취소
+          </button>
+          <button type="submit" onClick={handleSubmitBtn}>
+            등록
+          </button>
+        </div>
       </div>
     </section>
   );
 }
 
-export default DiaryEdit;
+export default DiaryWrite;

@@ -43,7 +43,13 @@ function Home() {
     <div>
       <Header></Header>
       {/* 하위 컴포넌트에 함수를 props로 전달 */}
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "100px",
+        }}
+      >
         <CalendarFunc
           sendDataToParent={handleDataFromCalendarFunc}
           style={{ flex: 1 }}
