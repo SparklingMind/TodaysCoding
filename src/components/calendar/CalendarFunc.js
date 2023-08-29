@@ -13,8 +13,6 @@ function CalendarFunc({ sendDataToParent }) {
   const [clickedDate, setClickedDate] = useState(); // 선택한 날짜를 저장할 상태
   const [selectedEmoji, setSelectedEmoji] = useState(); //선택한 이모지를 저장할 상태
   const [showPicker, setShowPicker] = useState(false);
-  const [dateList, setDateList] = useState([]);
-  const [emojiList, setEmojiList] = useState([]);
   const endOfMonth = moment(clickedDate).endOf("month").format("YYYYMMDD"); //클릭한 날짜 달의 마지막날짜
   const startOfMonth = moment(clickedDate).startOf("month").format("YYYYMMDD"); //매월 1일
   const [loading, setLoading] = useState(false);
@@ -53,24 +51,20 @@ function CalendarFunc({ sendDataToParent }) {
       .catch((error) => {
         console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
       });
-  }, []); // 컴포넌트가 마운트될 때만 실행
+  }, [fetchedData]); //sendDataToServer함수 호출을 통해 변경된 fetchedData 값이 변하면 실행
 
   // 클라이언트에서 선택한 날짜와 이모지를 서버로 전송
   const sendDataToServer = async (clickedDate, selectedEmoji) => {
     setLoading(true);
     setError(null);
-
     if (clickedDate && selectedEmoji) {
-      // setDateList((prevDateList) => [...prevDateList, clickedDate]); //중복값 저장 가능
-      // setEmojiList((prevEmojiList) => [...prevEmojiList, selectedEmoji]);
-
       // patch 요청 전송
-      const test = {
+      const patch = {
         date: clickedDate,
         emoji: selectedEmoji,
       };
       try {
-        const response = await apiInstance.patch("/api/days", test, {});
+        const response = await apiInstance.patch("/api/days", patch, {});
 
         if (response.status >= 200 && response.status < 300) {
           // 서버 응답이 성공인 경우
@@ -89,27 +83,27 @@ function CalendarFunc({ sendDataToParent }) {
       console.error(error);
     }
   };
-  // sendDataToServer()를 원하는 시점에 호출하여 데이터를 받아옵니다.
+  // sendDataToServer()를 원하는 시점에 호출하여 데이터를 받아오기.
   useEffect(() => {
     sendDataToServer(clickedDate, selectedEmoji);
-  }, [selectedEmoji]); // data가 변경될 때마다 호출
+  }, [selectedEmoji]); // 이모지를 새로 선택할 때 마다 호출.
 
   // 각 날짜별로 이모지 추가
-  // const addEmoji = ({ date }) => {
-  //   const EmojiDateAdded = []; //추가된 이모지 날짜
-  //   for (let i = 0; i < data.length; i++) {
-  //     if (data[i].date === moment(date).format("YYYYMMDD")) {
-  //       EmojiDateAdded.push(
-  //         <div key={data[i].date} className="savedEmoji">
-  //           {data[i].emoji}
-  //         </div>
-  //       );
-  //     }
-  //   }
-  //   return <div>{EmojiDateAdded}</div>;
-  // };
-  console.log(data);
+  const addEmoji = ({ date }) => {
+    const EmojiDateAdded = []; //추가된 이모지 날짜
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].date === moment(date).format("YYYYMMDD") && data[i].emoji) {
+        EmojiDateAdded.push(
+          <div key={`${data[i].date}-${i}`} className="savedEmoji">
+            {data[i].emoji}
+          </div>
+        );
+      }
+    }
 
+    return <div>{EmojiDateAdded}</div>;
+  };
+  console.log(data.emoji);
   return (
     <div className="wrap" style={{ float: "left" }}>
       <div className="EmojiSelection">
@@ -123,12 +117,8 @@ function CalendarFunc({ sendDataToParent }) {
         value={value}
         locale="en"
         formatDay={(locale, date) => moment(date).format("D")}
-        // tileContent={fetchedData.emoji}
+        tileContent={addEmoji}
       />
-      {/* 임시 데이터 전송 버튼 */}
-      {/* <button onClick={() => sendDataToServer(clickedDate, selectedEmoji)}>
-        Send Data to Server
-      </button> */}
     </div>
   );
 }
