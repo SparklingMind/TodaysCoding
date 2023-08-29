@@ -1,7 +1,8 @@
 import styled from "styled-components"
 
 const UpperContainer = styled.div`
-    margin-top: 10vh;
+    margin: 10vh auto;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,9 +12,11 @@ const UpperContainer = styled.div`
         height: 50px;
     }
     
-    span {
+    h1 {
         margin-top: 10px;
         font-weight: 600;
+        font-size: 30px;
+        cursor: pointer;
     }
 `
 
@@ -27,7 +30,8 @@ const ProfileWrapper = styled.div`
     display: flex;
     align-items: center;
     border: 1px ridge gray;
-    width: 100%;
+    width: 70%;
+    margin: 0 auto;
     height: 120px;
 
     #profileImage {
@@ -39,12 +43,13 @@ const ProfileWrapper = styled.div`
         margin-left: 30px;
         font-weight: 600;
     }
+
 `
 const MainContainer = styled.div`
 display: flex;
 margin: 0 auto;
 flex-direction: column;
-width: 50%;
+width: 35%;
 `
 
 const UpperLine = styled.div`
@@ -72,12 +77,15 @@ height: 250px;
         list-style: none;
         text-align: left;
     }
+    li {
+        cursor: pointer;
+    }
 `
 
 const UnderLine = styled.div`
     border-bottom: 1px solid #D5D5D5;
     height: 10px;
-    width: 48vw;
+    width: 32vw;
 `
 
 const SplitLine = styled.div`
