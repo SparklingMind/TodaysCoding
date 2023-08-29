@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { apiInstance } from "../../utils/api";
 import "./DiaryView.css";
 
@@ -38,7 +38,9 @@ function DiaryView() {
         />
         <div className="diary-view-btns">
           <button type="button">목록</button>
-          <button type="submit">수정</button>
+          <Link to={`/DiaryEdit`} state={{ postId: postId }}>
+            <button type="submit">수정</button>
+          </Link>
           <button type="submit">삭제</button>
         </div>
       </div>

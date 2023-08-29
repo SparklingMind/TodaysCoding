@@ -15,7 +15,7 @@ function DiaryWrite() {
   const titleRef = useRef();
 
   //글 내용
-  const [diaryContent, setdiaryContent] = useState("");
+  const [diaryContent, setDiaryContent] = useState("");
 
   //리액트 라우터 돔
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function DiaryWrite() {
   // [취소] 버튼 클릭 시
   const handleCancelBtn = (e) => {
     e.preventDefault();
-    navigate(-1);
+    navigate("/home", { state: { listDate: date } });
   };
 
   // [등록] 버튼 클릭 시
@@ -35,21 +35,18 @@ function DiaryWrite() {
 
     async function writeDiary() {
       try {
-        // POST 요청은 body에 실어 보냄
-        await apiInstance.post("/api/posts", {
+        const res = await apiInstance.post("/api/posts", {
           date: date,
           title: diaryTitle,
           content: diaryContent,
         });
+        navigate("/DiaryView", { state: { postId: res.data._id } });
       } catch (e) {
         console.error(e);
       }
     }
 
     writeDiary();
-
-    //작성 완료한 글로 이동
-    // navigate("/DiaryView");
   };
 
   return (
@@ -59,7 +56,7 @@ function DiaryWrite() {
         <MDEditor
           height={400}
           value={diaryContent}
-          onChange={setdiaryContent}
+          onChange={setDiaryContent}
         />
         <div className="diary-write-btns">
           <button type="button" onClick={handleCancelBtn}>
