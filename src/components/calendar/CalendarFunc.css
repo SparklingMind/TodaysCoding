@@ -1,6 +1,6 @@
 .wrap {
-  margin: 15px 20px 0;
-  width: 400px;
+  padding: 15px 20px 0;
+  width: 33%;
   height: auto;
 }
 
@@ -111,6 +111,15 @@
   background: none;
   text-align: center;
   line-height: 16px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  font-size: 14px;
+}
+
+.savedEmoji {
+  height: 26px;
+  font-size: 26px;
 }
 
 .react-calendar__tile:disabled {
