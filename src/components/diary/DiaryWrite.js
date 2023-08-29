@@ -1,15 +1,14 @@
 import React, { useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiInstance } from "../../utils/api";
 import "./DiaryWrite.css";
 
 //마크다운 에디터
 import MDEditor from "@uiw/react-md-editor";
-// import { FileDrop } from 'react-file-drop'
 
 function DiaryWrite() {
   //날짜
-  const date = useLocation().state.date;
+  const date = localStorage.getItem("clickedDate");
 
   //글 제목
   const titleRef = useRef();
@@ -23,7 +22,7 @@ function DiaryWrite() {
   // [취소] 버튼 클릭 시
   const handleCancelBtn = (e) => {
     e.preventDefault();
-    navigate("/home", { state: { listDate: date } });
+    navigate("/home");
   };
 
   // [등록] 버튼 클릭 시
