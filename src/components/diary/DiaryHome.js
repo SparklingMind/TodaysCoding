@@ -24,7 +24,7 @@ function DiaryHome({ date }) {
 
   return (
     <section className="wrapper">
-      <Link to={`/DiaryWrite`} state={{ date: date }}>
+      <Link to={`/DiaryWrite`}>
         <button className="diary-write-btn" type="button">
           글쓰기
         </button>
