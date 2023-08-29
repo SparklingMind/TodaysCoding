@@ -14,6 +14,7 @@ function CategoryList({ categories, setCategories }) {
         // 각 카테고리의 id를 React에서 요구하는 고유 키로 사용한다.
         // 이 키는 React가 각 항목을 식별하고, 재렌더링을 효율적으로 수행하기 위한 목적으로 사용된다.
         <CategoryItem
+          key={category.name}
           category={category}
           categories={categories}
           setCategories={setCategories}
