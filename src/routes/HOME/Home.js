@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "../../components/header/Header";
 import CalendarFunc from "../../components/calendar/CalendarFunc.js";
 import DiaryHome from "../../components/diary/DiaryHome";
@@ -38,7 +39,6 @@ function Home() {
     },
   });
 
-  console.log(clickedDate);
   return (
     <div>
       <Header></Header>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { apiInstance } from "../../utils/api";
 import "./DiaryWrite.css";
@@ -7,18 +7,34 @@ import "./DiaryWrite.css";
 import MDEditor from "@uiw/react-md-editor";
 // import { FileDrop } from 'react-file-drop'
 
-function DiaryWrite() {
-  //날짜
-  const date = useLocation().state.date;
+function DiaryEdit() {
+  //리액트 라우터 돔
+  const navigate = useNavigate();
+
+  //게시글 아이디
+  const postId = useLocation().state.postId;
 
   //글 제목
   const titleRef = useRef();
+  const [writtenDiaryTitle, setWrittenDiaryTitle] = useState("");
 
   //글 내용
-  const [diaryContent, setdiaryContent] = useState("");
+  const [diaryContent, setDiaryContent] = useState("");
 
-  //리액트 라우터 돔
-  const navigate = useNavigate();
+  //글 불러오기
+  const viewDiary = async () => {
+    try {
+      const res = await apiInstance.get(`/api/posts/${postId}`);
+      setWrittenDiaryTitle(res.data.title);
+      setDiaryContent(res.data.content);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    viewDiary();
+  }, []);
 
   // [취소] 버튼 클릭 시
   const handleCancelBtn = (e) => {
@@ -33,33 +49,33 @@ function DiaryWrite() {
     //글 제목을 string으로 저장
     const diaryTitle = titleRef.current?.value;
 
-    async function writeDiary() {
+    async function editDiary() {
       try {
-        // POST 요청은 body에 실어 보냄
-        await apiInstance.post("/api/posts", {
-          date: date,
+        const res2 = await apiInstance.patch(`/api/posts/${postId}`, {
           title: diaryTitle,
           content: diaryContent,
         });
+        navigate("/DiaryView", { state: { postId: res2.data.id } });
       } catch (e) {
         console.error(e);
       }
     }
 
-    writeDiary();
-
-    //수정 완료한 글로 이동
-    // navigate("/DiaryView");
+    editDiary();
   };
 
   return (
     <section className="diary-write-wrap">
       <div className="diary-write-box">
-        <input className="diary-write-title" ref={titleRef}></input>
+        <input
+          className="diary-write-title"
+          defaultValue={writtenDiaryTitle}
+          ref={titleRef}
+        ></input>
         <MDEditor
           height={400}
           value={diaryContent}
-          onChange={setdiaryContent}
+          onChange={setDiaryContent}
         />
         <div className="diary-write-btns">
           <button type="button" onClick={handleCancelBtn}>
@@ -74,4 +90,4 @@ function DiaryWrite() {
   );
 }
 
-export default DiaryWrite;
+export default DiaryEdit;
