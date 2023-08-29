@@ -3,6 +3,7 @@ import { MyPageStyle } from "./MyPage.style";
 import { ROUTE } from "../../routes/routes";
 import { Link } from "react-router-dom";
 import { apiInstance } from "../../utils/api";
+import Nav from "../../components/nav/Nav";
 
 const MyPage = () => {
   const [data, setData] = useState(); //사용자 정보 데이터 상태(이름, 아이디, 비밀번호, 이메일 등등)
@@ -49,6 +50,7 @@ const MyPage = () => {
           </ul>
         </MyPageStyle.ListWrapper>
       </MyPageStyle.MainContainer>
+      <Nav></Nav>
     </div>
   );
 };
