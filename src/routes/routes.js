@@ -6,8 +6,9 @@ import MyPage from "./MYPAGE/MyPage";
 import Search from "./SEARCH/Search";
 import DiaryWrite from "../components/diary/DiaryWrite";
 import DiaryView from "../components/diary/DiaryView";
-import UserInfo from "./MYPAGE/UserInfo/UserInfo"; 
-import Profile from "./MYPAGE/UserInfo/Profile/Profile";
+import UserInfoPage from "./MYPAGE/UserInfoPage/UserInfoPage"; 
+import ProfilePage from "./MYPAGE/UserInfoPage/ProfilePage/ProfilePage";
+import WithdrawPage from "./MYPAGE/UserInfoPage/WithdrawPage/WithdrawPage"
 
 export const ROUTE = {
   HOMEPAGE: {
@@ -51,15 +52,20 @@ export const ROUTE = {
     element: DiaryView,
   },
   USERINFO : {
-    path: "/mypage/userInfo",
-    link: "/mypage/userInfo",
-    element: UserInfo,
+    path: "/mypage/userinfo",
+    link: "/mypage/userinfo",
+    element: UserInfoPage,
   },
   PROFILE: {
-    path: "/mypage/userInfo/profile",
-    link: "/mypage/userInfo/profile",
-    element: Profile,
+    path: "/mypage/userinfo/profile",
+    link: "/mypage/userinfo//profile",
+    element: ProfilePage,
   },
+  WITHDRAW: {
+    path: "/mypage/userinfo/withdraw",
+    link: "/mypage/userinfo/withdraw",
+    element: WithdrawPage,
+  }
 };
 
 export const ROUTE_ARR = Object.values(ROUTE);

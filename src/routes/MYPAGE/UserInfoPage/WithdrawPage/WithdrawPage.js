@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import WithdrawPageStyles from "./WithdrawPage.styles"
-import WithdrawCheckModal from "../components/WithdrawCheckModal"
-import WithdrawFailModal from "../components/WithdrawFailModal"
-import WithdrawCompleteModal from "../components/WithdrawCompleteModal";
+import WithdrawCheckModal from "../../../../components/modal/WithdrawCheckModal"
+import WithdrawFailModal from "../../../../components/modal/WithdrawFailModal"
+import WithdrawCompleteModal from "../../../../components/modal/WithdrawCompleteModal";
 import axios from "axios"
 
 const WithdrawPage = () => {
@@ -53,7 +53,7 @@ const WithdrawPage = () => {
   return (
     <WithdrawPageStyles.Container>
         <WithdrawPageStyles.Logo>
-          <img src="logo.jpg" />
+          <img src="/logo.jpg" />
           <h1>오늘도 코딩</h1>
         </WithdrawPageStyles.Logo>
         <WithdrawPageStyles.Message>
@@ -61,7 +61,7 @@ const WithdrawPage = () => {
             <span>회원탈퇴를 진행하기 전에 아래 항목을 꼭 확인해주세요.</span>
         </WithdrawPageStyles.Message>
         <WithdrawPageStyles.Terms>
-            <img src="check_black.png" />
+            <img src="/check_black.png" alt="확인"/>
             <span>탈퇴 후 개인정보는 모두 삭제됩니다.</span>
         </WithdrawPageStyles.Terms>
         <WithdrawPageStyles.MainContents>

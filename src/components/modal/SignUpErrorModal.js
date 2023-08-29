@@ -16,6 +16,11 @@ function SignUpErrorModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
+        <img src="/!.png" style={{
+            width:"30px",
+            marginBottom:"5px",
+            marginRight:"10px"
+        }}/>
           회원가입 오류
         </Modal.Title>
       </Modal.Header>

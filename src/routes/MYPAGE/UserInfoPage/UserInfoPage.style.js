@@ -1,6 +1,4 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from "styled-components"
 
 const Container = styled.div`
   display: flex;
@@ -69,8 +67,8 @@ const UpperLine = styled.div`
 
 
 const ListWrapper = styled.div`
-  
   height: 180px;
+  
   ul {
     line-height: 3.5;
     flex-direction: column;
@@ -80,6 +78,13 @@ const ListWrapper = styled.div`
     padding: 0;
     margin: 0 auto;
     width: 100%;
+  }
+  li {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    &:hover {
+      text-decoration: none; 
   }
 `;
 
@@ -92,47 +97,28 @@ const SplitLine = styled.div`
   height: 1px;
   width: 100%;
   border-top: 1px solid gray;
-`;
+`
+const Withdraw = styled.div`
+text-decoration: none;
+color: red;
+cursor: pointer;
+font-weight: 600;
+&:hover {
+  text-decoration: none;
+`
 
-const StyledLink = styled(Link)`
-  text-decoration: none;  // 밑줄 제거
-  color: inherit;  // 부모 요소의 색상을 상속받음
-  &:hover {
-    text-decoration: none;  // 마우스 오버 시 밑줄이 나타나지 않도록 설정
-  }
-`;
+export const UserInfoPageStyle = {
+    Container,
+    Header,
+    Button,
+    Title,
+    Spacer,
+    UpperContainer,
+    MainContainer,
+    UpperLine,
+    ListWrapper,
+    UnderLine,
+    SplitLine,
+    Withdraw
+}
 
-const UserInfo = () => {
-  return (
-    <Container>
-      <Header>
-      <Link to="/mypage">
-        <Button>뒤로가기</Button>
-      </Link>
-        <Title>회원정보</Title>
-        <Spacer />
-      </Header>
-      <UpperContainer>
-        <img id="logoImage" src="/logo.jpg" alt="로고" />
-        <span>오늘도 코딩</span>
-      </UpperContainer>
-     
-      <MainContainer>
-        <UpperLine></UpperLine>
-        <ListWrapper>
-          <ul>
-            <li><StyledLink to="/mypage/userInfo/profile">프로필</StyledLink></li>
-            <UnderLine />
-            <li>비밀번호 재설정</li>
-            <UnderLine />
-            <li style = {{color: "red",}}>계정 삭제하기</li>
-          </ul>
-        </ListWrapper>
-        <SplitLine />
-      </MainContainer>
-      </Container>
-    
-  );
-};
-
-export default UserInfo;

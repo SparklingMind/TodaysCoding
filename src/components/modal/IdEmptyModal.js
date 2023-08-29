@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function IdDuplicatedModal(props) {
+function IdEmptyModal(props) {
   return (
     <Modal
       style={{
@@ -15,14 +15,19 @@ function IdDuplicatedModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          아이디 중복
+        <img src="/!.png" style={{
+            width:"30px",
+            marginBottom:"5px",
+            marginRight:"10px"
+        }}/>
+          회원가입 오류
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p style={{
             margin:"10px auto"
         }}>
-          이미 사용중인 아이디입니다.
+          아이디를 입력해주세요.
         </p>
       </Modal.Body>
       <Modal.Footer>
@@ -32,6 +37,6 @@ function IdDuplicatedModal(props) {
   );
 }
 
-export default IdDuplicatedModal
+export default IdEmptyModal
 
 
