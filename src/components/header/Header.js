@@ -4,7 +4,7 @@ import { VscAccount } from "react-icons/vsc";
 function Header() {
   return (
     <div className="headerWrap">
-      <div className="title">오늘도 코딩</div>
+      <div className="logo">오늘도 코딩</div>
       <div className="userWrap">
         <div className="personUser">
           <VscAccount style={{ fontSize: 40 }} />

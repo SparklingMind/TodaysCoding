@@ -6,9 +6,10 @@ import MyPage from "./MYPAGE/MyPage";
 import Search from "./SEARCH/Search";
 import DiaryWrite from "../components/diary/DiaryWrite";
 import DiaryView from "../components/diary/DiaryView";
-import UserInfoPage from "./MYPAGE/UserInfoPage/UserInfoPage"; 
+import UserInfoPage from "./MYPAGE/UserInfoPage/UserInfoPage";
 import ProfilePage from "./MYPAGE/UserInfoPage/ProfilePage/ProfilePage";
-import WithdrawPage from "./MYPAGE/UserInfoPage/WithdrawPage/WithdrawPage"
+import WithdrawPage from "./MYPAGE/UserInfoPage/WithdrawPage/WithdrawPage";
+import DiaryEdit from "../components/diary/DiaryEdit";
 
 export const ROUTE = {
   HOMEPAGE: {
@@ -51,10 +52,15 @@ export const ROUTE = {
     link: "/DiaryView",
     element: DiaryView,
   },
-  USERINFO : {
+  USERINFO: {
     path: "/mypage/userinfo",
     link: "/mypage/userinfo",
     element: UserInfoPage,
+  },
+  DIARYEDIT: {
+    path: "/DiaryEdit",
+    link: "/DiaryEdit",
+    element: DiaryEdit,
   },
   PROFILE: {
     path: "/mypage/userinfo/profile",
@@ -65,7 +71,7 @@ export const ROUTE = {
     path: "/mypage/userinfo/withdraw",
     link: "/mypage/userinfo/withdraw",
     element: WithdrawPage,
-  }
+  },
 };
 
 export const ROUTE_ARR = Object.values(ROUTE);
