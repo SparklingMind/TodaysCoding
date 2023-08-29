@@ -84,7 +84,7 @@ const ListWrapper = styled.div`
 const UnderLine = styled.div`
   border-bottom: 1px solid #d5d5d5;
   height: 10px;
-  width: 48vw;
+  width: 45vw;
 `;
 
 const SplitLine = styled.div`

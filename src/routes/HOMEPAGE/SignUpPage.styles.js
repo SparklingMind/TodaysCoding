@@ -44,7 +44,7 @@ const MainContainer = styled.div`
     flex-direction: column;
     margin: 0 auto;
 
-    .idLabel, .pwdLabel, .pwdConfirmLabel, .emailLabel {
+    .idLabel, .pwdLabel, .pwdConfirmLabel, .emailLabel, .birthLabel, .genderLabel {
         display: flex;
         margin-left: 10px;
         margin-top: 20px;
@@ -68,14 +68,20 @@ const MainContainer = styled.div`
       width: 20%;
       position: relative;
     }
+
     .customInput {
       max-width: 100% !important;
     }
+
     #SignUpButton {
       font-size: 16px;
       margin-top: 20px;
       padding-left: 20px;
       padding-right: 20px;
+      }
+
+      .birthLabel {
+        margin-top: 10px;
       }
 `
 const IdContainer = styled.div`
