@@ -4,6 +4,7 @@ import { ROUTE } from "../../routes/routes";
 import { Link } from "react-router-dom";
 import { apiInstance } from "../../utils/api";
 import Nav from "../../components/nav/Nav";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const [data, setData] = useState(); //사용자 정보 데이터 상태(이름, 아이디, 비밀번호, 이메일 등등)
@@ -20,6 +21,17 @@ const MyPage = () => {
       });
   }, []);
 
+
+  const nav = useNavigate()
+  const handleHome = () => {
+    nav("/")
+  }
+  
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    handleHome()
+  };
+  
   return (
     <div>
       <MyPageStyle.UpperContainer>
@@ -46,6 +58,8 @@ const MyPage = () => {
             <li>버전</li>
             <MyPageStyle.UnderLine />
             <li>설정</li>
+            <MyPageStyle.UnderLine />
+            <li onClick={handleLogout}>로그아웃</li>
           </ul>
         </MyPageStyle.ListWrapper>
         <MyPageStyle.SplitLine />

@@ -62,7 +62,7 @@ const LowerLine = styled.div`
 
 const ListWrapper = styled.div`
   display: flex;
-  height: 250px;
+  height: 300px;
   ul {
     margin-top: 30px;
     line-height: 3;

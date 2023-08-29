@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SignUpPageStyles from "./SignUpPage.styles";
 import { Button } from "react-bootstrap";
+import Select from "react-select"
 import Form from 'react-bootstrap/Form';
 import IdEmptyModal from "../../components/modal/IdEmptyModal";
 import IdCheckedModal from "../../components/modal/IdCheckedModal";
@@ -35,11 +36,11 @@ const SignUpPage = () => {
     name: "",
     id: "",
     email: "",
-    password: "",
     nickname: "",
     gender: "",
-    birth: "",
-    introduce: ""
+    birthDate: "",
+    aboutMe: "자기소개를 입력해보세요.",
+    password: ""
   });
 
   const [userInfo, setUserInfo] = useState({
@@ -185,19 +186,28 @@ const SignUpPage = () => {
     }
   };
 
-  const handleGender = (event) => {
-    const selectedGender = event.target.value;
-    setUserData((prevUserData) => ({
+  const handleGender = (selectedOption) => {
+    if (selectedOption) {
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        gender: selectedOption.value
+      }));
+    }
+  };
+  const handleBirth = (event) => {
+    const selectedBirth = event.target.value;
+    const birthWithoutHyphens = selectedBirth.replace(/-/g, '');
+    setUserData((prevUserData) => ({ 
       ...prevUserData,
-      gender: selectedGender
+      birthDate: birthWithoutHyphens
     }));
   }
 
-  const handleBirth = (event) => {
-    const selectedBirth = event.target.value
-    setUserData((prevUserData) => ({ 
-      ...prevUserData,
-      birth: selectedBirth
+  const handleNickname = (event) => {
+    const newNickname = event.target.value;
+    setUserData((prevData) => ({
+      ...prevData,
+      nickname:newNickname
     }))
   }
   const signUpCheck = () => {
@@ -279,25 +289,26 @@ const SignUpPage = () => {
           <Form.Group className="nicknameInput">
             <Form.Label className="nicknameLabel">닉네임</Form.Label>
             <SignUpPageStyles.IdContainer>
-              <Form.Control id="userNickNameInput" className="customInput" type="text" placeholder="닉네임" />
+              <Form.Control id="userNickNameInput" className="customInput" type="text" placeholder="닉네임" 
+              onChange={handleNickname}/>
             </SignUpPageStyles.IdContainer>
           </Form.Group>
           <Form.Group className="genderInput">
-           <Form.Label className="genderLabel">성별</Form.Label>
-           <Form.Control as="select" className="customInput" onChange={handleGender}>
-             <option value="">성별을 선택해주세요.</option>
-             <option value="남성">남성</option>
-             <option value="여성">여성</option>
-          </Form.Control>
-        </Form.Group>
-
+            <Form.Label className="genderLabel">성별</Form.Label>
+              <SignUpPageStyles.IdContainer>
+                <Select className="customSelect" onChange={handleGender} options={[
+                { value: "", label: "성별을 선택해주세요." },
+                { value: "남성", label: "남성" },
+                { value: "여성", label: "여성" } ]} />
+              </SignUpPageStyles.IdContainer>
+          </Form.Group>
           <Form.Group className="birthInput">
-          <Form.Label className="birthLabel">생년월일</Form.Label>
-            <Form.Control className="customInput" type="date" placeholder="생년월일" onChange={handleBirth} />
+            <Form.Label className="birthLabel">생년월일</Form.Label>
+            <Form.Control className="birthInput" type="date" placeholder="생년월일" onChange={handleBirth} />
           </Form.Group>
             <Form.Label className="emailLabel">이메일</Form.Label>
             <Form.Control className="customInput" type="email" placeholder="이메일" onChange={handleEmailChange} />
-            {userInfo.emailTested ? "" : <SignUpPageStyles.VerifyEmail>이메일 형식이 올바르지 않습니다.</SignUpPageStyles.VerifyEmail>}
+             {userInfo.emailTested ? "" : <SignUpPageStyles.VerifyEmail>이메일 형식이 올바르지 않습니다.</SignUpPageStyles.VerifyEmail>}
           </Form.Group>
           <SignUpPageStyles.ButtonContainer>
             <Button id="SignUpButton" variant="primary" onClick={() => {
