@@ -108,9 +108,13 @@ function CalendarFunc({ sendDataToParent }) {
     <div className="wrap" style={{ float: "left" }}>
       <div className="EmojiSelection">
         <span style={{ fontSize: 50 }}>{selectedEmojiSave}</span>
-        <button onClick={() => setShowPicker(!showPicker)}> + </button>
-        {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+        <button className="openEmojiPicker" onClick={() => setShowPicker(!showPicker)}> + </button>
       </div>
+      {showPicker && (
+        <div className="EmojiPickerContainer">
+          <EmojiPicker onEmojiClick={onEmojiClick} />
+        </div>
+      )}
       <Calendar
         onClickDay={saveDate}
         onChange={onChange}
@@ -121,6 +125,7 @@ function CalendarFunc({ sendDataToParent }) {
       />
     </div>
   );
+  
 }
 
 export default CalendarFunc;

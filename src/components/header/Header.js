@@ -1,13 +1,13 @@
 import React from "react";
 import "./Header.css";
-import { VscAccount } from "react-icons/vsc";
+// import { VscAccount } from "react-icons/vsc";
 function Header() {
   return (
     <div className="headerWrap">
-      <div className="logo">오늘도 코딩</div>
+      <img className="logo" src="/feed-logo.png" alt="logo" />
       <div className="userWrap">
-        <div className="personUser">
-          <VscAccount style={{ fontSize: 40 }} />
+      <div className="personUser">
+        <img className="profile-icon" src="profile-icon.png" alt="profile-icon" />
           <span className="userName">me</span>
         </div>
       </div>

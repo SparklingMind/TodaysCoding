@@ -22,8 +22,7 @@ const MyPage = () => {
   return (
     <div>
       <MyPageStyle.UpperContainer>
-        <img id="logoImage" src="/logo.jpg" alt="로고" />
-        <span>오늘도 코딩</span>
+        <img id="logoImage" src="/main-logo.png" alt="로고" />
       </MyPageStyle.UpperContainer>
       <MyPageStyle.LowerContainer>
         <MyPageStyle.ProfileWrapper>
@@ -45,9 +44,10 @@ const MyPage = () => {
             <li>버전</li>
             <MyPageStyle.UnderLine />
             <li>설정</li>
+            <MyPageStyle.UnderLine />
+            <MyPageStyle.SplitLine />
           </ul>
         </MyPageStyle.ListWrapper>
-        <MyPageStyle.SplitLine />
       </MyPageStyle.MainContainer>
     </div>
   );

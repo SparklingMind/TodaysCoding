@@ -22,7 +22,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Title = styled.h2`
+const Title = styled.h3`
   text-align: center;
   flex-grow: 2;
   font-family: fontMedium;
@@ -40,8 +40,8 @@ const UpperContainer = styled.div`
   align-items: center;
 
   #logoImage {
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 130px;
   }
 
   span {
