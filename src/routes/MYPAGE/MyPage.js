@@ -1,8 +1,24 @@
+import React, { useState, useEffect } from "react";
 import { MyPageStyle } from "./MyPage.style";
 import { ROUTE } from "../../routes/routes";
 import { Link } from "react-router-dom";
+import { apiInstance } from "../../utils/api";
 
 const MyPage = () => {
+  const [data, setData] = useState(); //사용자 정보 데이터 상태(이름, 아이디, 비밀번호, 이메일 등등)
+  // GET 요청을 보내고 데이터를 받아옴
+  useEffect(() => {
+    //사용자 정보 조회 get 요청
+    apiInstance
+      .get("/api/users", {})
+      .then((response) => {
+        setData(response.data); // get 데이터를 상태에 저장
+      })
+      .catch((error) => {
+        console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
+      });
+  }, []);
+
   return (
     <div>
       <MyPageStyle.UpperContainer>
@@ -11,8 +27,9 @@ const MyPage = () => {
       </MyPageStyle.UpperContainer>
       <MyPageStyle.LowerContainer>
         <MyPageStyle.ProfileWrapper>
-          <img id="profileImage" src="/profile.jpg" />
-          <span id="userName">홍길동(아무개)</span>
+          <img id="profileImage" src={"/profile.jpg"} />
+          {/* 데이터가 있으면 name표시 */}
+          <span id="userName">{data?.name}</span>
         </MyPageStyle.ProfileWrapper>
       </MyPageStyle.LowerContainer>
       <MyPageStyle.MainContainer>
