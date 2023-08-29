@@ -1,16 +1,8 @@
 import { MyPageStyle } from "./MyPage.style";
-import { useNavigate } from "react-router-dom";
+import { ROUTE } from "../../routes/routes";
+import { Link } from "react-router-dom";
 
 const MyPage = () => {
-
-  const nav = useNavigate()
-  const handleUserInfo = () => {
-    nav("/mypage/userinfo")
-  }
-  
-
-
-
   return (
     <div>
       <MyPageStyle.UpperContainer>
@@ -27,7 +19,9 @@ const MyPage = () => {
         <MyPageStyle.UpperLine />
         <MyPageStyle.ListWrapper>
           <ul>
-            <li onClick={handleUserInfo}>회원정보</li>
+            <Link to={ROUTE.USERINFO.link}>
+              <li>회원정보</li>
+            </Link>
             <MyPageStyle.UnderLine />
             <li>공지사항</li>
             <MyPageStyle.UnderLine />
