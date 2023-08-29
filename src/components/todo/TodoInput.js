@@ -40,7 +40,7 @@ function TodoInput({ category, categories, setCategories, setInputVisible }) {
       // map 함수를 사용하여 각 카테고리를 순회하며,
       // 현재 선택된 카테고리와 일치하는 경우 해당 카테고리의 할 일 목록을 업데이트한다.
       return prevCategories.map(cat => {
-        if (cat._id === category._id) {
+        if (cat.name === category.name) {
           const updatedTodos = [
             ...cat.todos, 
             { 
