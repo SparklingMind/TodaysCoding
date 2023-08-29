@@ -5,7 +5,7 @@ import DiaryHome from "../../components/diary/DiaryHome";
 import TodoComponent from "../../components/todo/TodoComponent";
 import Nav from "../../components/nav/Nav";
 
-import axios from "axios";
+import { apiInstance } from "../../utils/api";
 
 function Home() {
   //날짜 초깃값(오늘) 불러오기
@@ -29,14 +29,9 @@ function Home() {
     }
   }, [clickedDate]);
 
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww";
-  axios.get("http://34.64.151.119/api/days/records", {
+  apiInstance.get("/api/days/records", {
     params: {
       date: clickedDate,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
