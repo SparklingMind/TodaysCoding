@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import CalendarFunc from "../../components/calendar/CalendarFunc.js";
 import DiaryHome from "../../components/diary/DiaryHome";
 import TodoComponent from "../../components/todo/TodoComponent";
 import Nav from "../../components/nav/Nav";
-
-import { apiInstance } from "../../utils/api";
 
 function Home() {
   //날짜 초깃값(오늘) 불러오기
@@ -14,26 +12,19 @@ function Home() {
   const month = ("0" + (today.getMonth() + 1)).slice(-2);
   const day = ("0" + today.getDate()).slice(-2);
   const formattedToday = year + month + day;
-  const [date, setDate] = useState(formattedToday);
 
-  // 상위 컴포넌트의 상태와 상태 변경 함수
-  const [clickedDate, setClickedDate] = useState();
+  //선택한 날짜 로컬스토리지에 저장
+  const dateInLocalStorage = localStorage.getItem("clickedDate");
+  const [date, setDate] = useState(
+    dateInLocalStorage ? dateInLocalStorage : formattedToday
+  );
+  console.log(`날짜 ${dateInLocalStorage}`);
+
   // 하위 컴포넌트로 전달할 함수
   const handleDataFromCalendarFunc = (data) => {
-    setClickedDate(data); // 받은 데이터를 상태에 업데이트
+    setDate(data); // 받은 데이터를 상태에 업데이트
+    localStorage.setItem("clickedDate", data);
   };
-
-  useEffect(() => {
-    if (clickedDate !== undefined) {
-      setDate(clickedDate);
-    }
-  }, [clickedDate]);
-
-  apiInstance.get("/api/days/records", {
-    params: {
-      date: clickedDate,
-    },
-  });
 
   return (
     <div>
