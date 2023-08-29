@@ -4,6 +4,8 @@ import Header from "../../components/header/Header";
 import CalendarFunc from "../../components/calendar/CalendarFunc.js";
 import DiaryHome from "../../components/diary/DiaryHome";
 import TodoComponent from "../../components/todo/TodoComponent";
+import Nav from "../../components/nav/Nav";
+
 import axios from "axios";
 
 function Home() {
@@ -57,6 +59,7 @@ function Home() {
         <TodoComponent clickedDate={date} style={{ flex: 1 }} />
         <DiaryHome date={date} style={{ flex: 1.2 }} />
       </div>
+      <Nav></Nav>
     </div>
   );
 }
