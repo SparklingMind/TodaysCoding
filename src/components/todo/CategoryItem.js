@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TodoInput from "./TodoInput";
 import styled from "styled-components";
-
+import TodoItem from "./TodoItem";
 // styled-components를 사용해 각 UI 요소의 스타일 정의
 const CategoryItemContainer = styled.div`
   margin-top: 20px;
@@ -38,39 +38,23 @@ const Button = styled.button`
   }
 `;
 
-const TodoContent = styled.div`
-  display: flex;
-  align-items: center;
-`;
+function CategoryItem({ name, todos }) {
+  console.log("이건뭐지", name, todos);
 
-const TodoItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
-  font-family: "fontMedium";
-`;
-
-function CategoryItem({ name }) {
+  const newTodo = () => {
+    <TodoItem></TodoItem>;
+  };
   return (
     <CategoryItemContainer>
       <CategoryHeader>
         <CategoryTitle>{name}</CategoryTitle>
-        <Button>➕</Button>
+        <Button onClick={newTodo}>➕</Button>
       </CategoryHeader>
 
       <ul style={{ paddingLeft: "20px" }}>
-        <TodoContent>
-          <input type="checkbox" style={{ marginRight: "20px" }} />
-        </TodoContent>
-        <TodoItem>
-          <span>
-            <Button>저장</Button>
-            <Button>수정</Button>
-            <Button>삭제</Button>
-          </span>
-        </TodoItem>
+        {todos.map((todo) => (
+          <TodoItem key={todo._id} text={todo.text} />
+        ))}
       </ul>
     </CategoryItemContainer>
   );
