@@ -3,7 +3,10 @@ import styled from "styled-components"
 const Logo = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 20vh;
+    margin:20vh auto 3vh auto;
+    width: 20vh;
+    height: 20vh;
+    cursor: pointer;
 `
 const UpperContainer = styled.div`
     display: flex;
