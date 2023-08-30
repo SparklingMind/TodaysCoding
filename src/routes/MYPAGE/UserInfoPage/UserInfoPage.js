@@ -14,7 +14,9 @@ const UserInfo = () => {
   const handleBack = () => {
     nav("/mypage");
   };
-
+  const handlePassword = () => {
+    nav("/mypage/userinfo/changepassword");
+  };
   return (
     <UserInfoPageStyle.Container>
       <UserInfoPageStyle.Header>
@@ -33,7 +35,7 @@ const UserInfo = () => {
           <ul>
             <li onClick={handleProfile}>프로필 설정</li>
             <UserInfoPageStyle.UnderLine />
-            <li>비밀번호 변경</li>
+            <li onClick={handlePassword}>비밀번호 변경</li>
             <UserInfoPageStyle.UnderLine />
             <UserInfoPageStyle.Withdraw onClick={handleWithdraw}>
               회원 탈퇴
