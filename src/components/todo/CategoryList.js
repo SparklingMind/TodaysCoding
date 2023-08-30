@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CategoryItem from "./CategoryItem";
 
 function CategoryList({ data }) {
+  console.log("data", data);
+
   return (
     <div>
       {data.map((category, index) => (
