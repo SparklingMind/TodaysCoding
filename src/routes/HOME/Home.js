@@ -48,7 +48,7 @@ function Home() {
   };
 
   return (
-    <div>
+    <div style={{ paddingBottom: "150px" }}>
       <Header></Header>
       {/* 하위 컴포넌트에 함수를 props로 전달 */}
       <AppSections>
