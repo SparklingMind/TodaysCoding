@@ -7,7 +7,7 @@ import {
   ModalOverlay,
   ModalContent,
   CategoryIcon,
-} from "./TodoStyles";
+} from "./Styles/TodoStyles";
 
 function TodoComponent() {
   const [data, setData] = useState([]); // get으로 받아온 데이터(카테고리 조회)
@@ -64,6 +64,7 @@ function TodoComponent() {
           <ModalContent>
             <CategoryModal
               sendDataToParent={handleDataFromChild}
+              categoryName={_name}
             ></CategoryModal>
           </ModalContent>
         </ModalOverlay>
