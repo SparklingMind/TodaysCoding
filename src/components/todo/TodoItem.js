@@ -1,9 +1,48 @@
-import React from 'react';
+import React from "react";
+import styled from "styled-components";
 
-function TodoItem({ todo }) {
-  // todo prop을 통해 전달받은 할 일 항목의 내용을 화면에 표시한다.
-  // 해당 컴포넌트는 리스트의 각 항목을 대표하며, 각 항목의 내용을 div 요소 안에 출력한다.
-  return <div>{todo.text}</div>;
+const TodoContent = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const TodoFunc = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
+  font-family: "fontMedium";
+`;
+
+const Button = styled.button`
+  background-color: transparent;
+  font-faminly: "fontLight";
+  margin-left: 5px;
+  font-size: 10pt;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  &:hover {
+    color: #555;
+  }
+`;
+
+function TodoItem({ text }) {
+  return (
+    <div>
+      <TodoContent>
+        <input type="checkbox" style={{ marginRight: "20px" }} />
+        <input type="text" value={text} />
+      </TodoContent>
+      <TodoFunc>
+        <span>
+          <Button>수정</Button>
+          <Button>삭제</Button>
+        </span>
+      </TodoFunc>
+    </div>
+  );
 }
 
 export default TodoItem;

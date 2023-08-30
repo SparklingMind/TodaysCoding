@@ -7,7 +7,6 @@ export const apiInstance = axios.create({
 // 요청 인터셉터 추가하기
 apiInstance.interceptors.request.use(
   function (config) {
-    // 요청이 전달되기 전에 작업 수행
     const token = localStorage.getItem("token");
 
     //임시 토큰
