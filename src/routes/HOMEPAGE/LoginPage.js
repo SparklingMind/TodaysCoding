@@ -70,10 +70,7 @@ const handleLogin = () => {
 
     return(
         <div>
-            <LoginPageStyles.Logo><img src="/logo.jpg" /></LoginPageStyles.Logo>
-            <LoginPageStyles.UpperContainer>
-                <h1 onClick={handleHome}>오늘도 코딩</h1>
-            </LoginPageStyles.UpperContainer>
+            <LoginPageStyles.Logo><img src="/main-logo.png" onClick={handleHome} /></LoginPageStyles.Logo>
             <LoginPageStyles.LowerContainer>
             <FloatingLabel controlId="floatingInput" label="아이디" className="mb-3">
                 <Form.Control type="text" placeholder="" ref={idInput} onChange={handleId} />
