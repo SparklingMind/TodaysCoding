@@ -25,26 +25,31 @@ const UpperContainer = styled.div`
 const LowerContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 50%;
+  min-width: 400px;
+  max-width: 500px;
+  margin: 0 auto;
 `;
 
-const Sign = styled.span`
+const Sign = styled.div`
   display: flex;
-  justify-content: center;
-  width: 70%;
   font-size: 20px;
   font-weight: 600;
 `;
 
 const Underline = styled.div`
   border-top: 2px solid gray;
-  width: 40%;
-  margin: 20px auto;
+  width: 100%;
+  margin: 20px 0;
 `;
 
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 0 auto 150px;
+  width: 45%;
+  min-width: 380px;
+  max-width: 480px;
 
   .idLabel,
   .pwdLabel,
@@ -73,9 +78,9 @@ const MainContainer = styled.div`
   }
 
   .form {
-    margin: 0 auto 200px;
-    width: 20%;
+    margin: 0 auto;
     position: relative;
+    width: 100%;
   }
 
   .customInput {

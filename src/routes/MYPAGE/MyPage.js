@@ -33,7 +33,7 @@ const MyPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ paddingBottom: "150px" }}>
       <MyPageStyle.UpperContainer>
         <img id="logoImage" src="/main-logo.png" alt="로고" />
       </MyPageStyle.UpperContainer>

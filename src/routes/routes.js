@@ -4,6 +4,7 @@ import LoginPage from "./HOMEPAGE/LoginPage";
 import SignUpPage from "./HOMEPAGE/SignUpPage";
 import MyPage from "./MYPAGE/MyPage";
 import Search from "./SEARCH/Search";
+import Store from "./STORE/Store";
 import DiaryWrite from "../components/diary/DiaryWrite";
 import DiaryView from "../components/diary/DiaryView";
 import UserInfoPage from "./MYPAGE/UserInfoPage/UserInfoPage";
@@ -37,6 +38,11 @@ export const ROUTE = {
     path: "/search",
     link: "/search",
     element: Search,
+  },
+  STORE:{
+    path: "/store",
+    link: "/store",
+    element: Store,
   },
   MYPAGE: {
     path: "/mypage",
