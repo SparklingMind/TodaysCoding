@@ -1,59 +1,65 @@
 import React, { useState } from "react";
 import TodoInput from "./TodoInput";
-import styled from "styled-components";
 import TodoItem from "./TodoItem";
-// styled-components를 사용해 각 UI 요소의 스타일 정의
-const CategoryItemContainer = styled.div`
-  margin-top: 20px;
-`;
-
-const CategoryHeader = styled.div`
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 10px;
-  background-color: #eee;
-  border-radius: 15px;
-  margin-bottom: 10px;
-`;
-
-const CategoryTitle = styled.h2`
-  margin: 0;
-  padding: 0;
-  font-size: 1.5em;
-  font-family: "fontMedium";
-  font-weight: 600;
-`;
-
-const Button = styled.button`
-  background-color: transparent;
-  font-faminly: "fontLight";
-  margin-left: 5px;
-  font-size: 10pt;
-  border: none;
-  cursor: pointer;
-  color: #888;
-  &:hover {
-    color: #555;
-  }
-`;
-
+import { apiInstance } from "../../utils/api";
+import {
+  CategoryItemContainer,
+  CategoryHeader,
+  CategoryTitle,
+  Button,
+} from "./Styles/CategoryItemStyles";
 function CategoryItem({ name, todos }) {
-  console.log("이건뭐지", name, todos);
+  console.log("zsdf", todos);
+  const [clickedCheck, setClickedCheck] = useState(false); //+버튼 클릭할때 값 상태
+  const [todos_id, setTodos_id] = useState(); //todos의 id 값만 내보낼 값
 
+  //+버튼 클릭하면 TodoInput 창 띄우고, todos에 있는 _id 값 props로 내보내기
   const newTodo = () => {
-    <TodoItem></TodoItem>;
+    setClickedCheck(!clickedCheck);
+    for (let i = 0; i < todos.length; i++) {
+      setTodos_id(todos[i]._id);
+    }
   };
+
+  //-버튼 클릭하면 경고창 띄우고 카테고리 뭉텅이 삭제
+  const deleteCategory = () => {
+    if (window.confirm("카테고리 목록을 삭제하시겠습니까?")) {
+      alert("삭제되었습니다.");
+      //del요청 카테고리 삭제
+      apiInstance
+        .delete("/api/todos/20230809", {})
+        .then((response) => {
+          console.log(response);
+          setData(response.data); // get 데이터를 상태에 저장
+        })
+        .catch((error) => {
+          console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
+        });
+    } else {
+      alert("취소합니다.");
+    }
+  };
+
+  //사용자가 투두 새 등록을 하고 저장을 누르면 !clickedCheck
+  // 하위 컴포넌트로 전달할 함수
+  const handleDataFromChild = (data) => {
+    // 받은 데이터를 상태에 업데이트
+    setClickedCheck(data);
+  };
+
   return (
     <CategoryItemContainer>
       <CategoryHeader>
         <CategoryTitle>{name}</CategoryTitle>
         <Button onClick={newTodo}>➕</Button>
+        <Button onClick={deleteCategory}>➖</Button>
       </CategoryHeader>
-
+      {clickedCheck === true ? (
+        <TodoInput sendDataToParent={handleDataFromChild} _id={todos_id} />
+      ) : null}
       <ul style={{ paddingLeft: "20px" }}>
         {todos.map((todo) => (
-          <TodoItem key={todo._id} text={todo.text} />
+          <TodoItem _id={todo._id} text={todo.text} />
         ))}
       </ul>
     </CategoryItemContainer>

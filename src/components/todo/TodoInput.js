@@ -1,39 +1,53 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import { InputContainer, Input, SaveButton } from "./Styles/TodoInputStyles";
+import { apiInstance } from "../../utils/api";
 
-// 입력 필드와 저장 버튼을 포함하는 컨테이너의 스타일 설정
-const InputContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-`;
+function TodoInput({ _id, sendDataToParent }) {
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(); //카테고리 아이템으로 넘길 값
+  const [addTodoList, setAddTodoList] = useState();
+  const [fetchedTodo, setFetchedTodo] = useState(); //투두 추가 요청을 통해 받아온 데이터 저장할 상태
+  const [error, setError] = useState(null);
 
-// 할 일을 입력하는 텍스트 필드의 스타일 설정
-const Input = styled.input`
-  flex: 1;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
+  //새로운 등록 input 닫기
+  const handleButtonClick = () => {
+    // 하위 컴포넌트에서 상위 컴포넌트로 데이터 전달
+    setIsCategoryModalOpen(!isCategoryModalOpen);
+    sendDataToParent(isCategoryModalOpen);
 
-// 저장 버튼의 스타일 설정
-const SaveButton = styled.button`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: #888;
-  margin-left: 10px;
-  &:hover {
-    color: #555;
-  }
-`;
+    //post 요청 보내는 함수
+    const addTodoListToServer = async () => {
+      // todo 추가
+      const todoAdd = {
+        date: "20230806",
+        completed: false,
+        text: addTodoList,
+        originalIndex: 0,
+      };
+      try {
+        const response = await apiInstance.post(`/api/todos/${_id}`, todoAdd);
+        if (response.status >= 200 && response.status < 300) {
+          // 서버 응답이 성공인 경우
+          setFetchedTodo(response.data); // 받아온 데이터를 상태에 업데이트
+        } else {
+          // 서버 응답이 실패인 경우
+          setError("Failed to fetch data");
+        }
+        console.log(fetchedTodo); //응답 데이터를 설정
+      } catch (error) {
+        console.error("에러발생:", error);
+      }
+    };
+    addTodoListToServer();
+  };
 
-function TodoInput() {
   return (
     <InputContainer>
-      <Input type="text" placeholder="새로운 할 일을 입력하세요" />
-      <SaveButton>저장</SaveButton>
+      <Input
+        onChange={(e) => setAddTodoList(e.target.value)}
+        type="text"
+        placeholder="새로운 할 일을 입력하세요"
+      />
+      <SaveButton onClick={handleButtonClick}>저장</SaveButton>
     </InputContainer>
   );
 }
