@@ -3,7 +3,29 @@ import Header from "../../components/header/Header";
 import CalendarFunc from "../../components/calendar/CalendarFunc.js";
 import DiaryHome from "../../components/diary/DiaryHome";
 import TodoComponent from "../../components/todo/TodoComponent";
+import styled from 'styled-components';
+import axios from "axios";
 import Nav from "../../components/nav/Nav";
+
+
+
+const AppSections = styled.div`
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  gap: 16px;  // 간격 조절
+
+  > div {
+    flex: 1;
+    background: #fff;  // 배경색
+
+    &:not(:last-child) {
+      border-right: 1px solid #ccc;  // 구분선
+    }
+  }
+`;
+
+
 
 function Home() {
   //날짜 초깃값(오늘) 불러오기
@@ -29,23 +51,21 @@ function Home() {
     <div>
       <Header></Header>
       {/* 하위 컴포넌트에 함수를 props로 전달 */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "100px",
-        }}
-      >
+      <AppSections>
         <CalendarFunc
           sendDataToParent={handleDataFromCalendarFunc}
           style={{ flex: 1 }}
         />
-        <TodoComponent clickedDate={date} style={{ flex: 1 }} />
+        <CalendarFunc
+          sendDataToParent={handleDataFromCalendarFunc}
+          style={{ flex: 1 }}
+        />
+        {/* <TodoComponent clickedDate={date} style={{ flex: 1 }} /> */}
         <DiaryHome date={date} style={{ flex: 1.2 }} />
-      </div>
-      <Nav></Nav>
+      </AppSections>
+      
+      <Nav/>
     </div>
   );
 }
-
 export default Home;

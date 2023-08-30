@@ -1,5 +1,14 @@
 import styled from "styled-components"
 
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  align-items: center;
+  
+`;
+
 const UpperContainer = styled.div`
   margin-top: 10vh;
   display: flex;
@@ -7,8 +16,8 @@ const UpperContainer = styled.div`
   align-items: center;
 
   #logoImage {
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 130px;
   }
 
   span {
@@ -40,6 +49,7 @@ const ProfileWrapper = styled.div`
     font-weight: 600;
   }
 `;
+
 const MainContainer = styled.div`
   display: flex;
   margin: 0 auto;
@@ -61,16 +71,17 @@ const LowerLine = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  display: flex;
-  height: 250px;
+  height: 180px;
+  
   ul {
-    margin-top: 30px;
-    line-height: 3;
-    display: flex;
+    line-height: 3.5;
     flex-direction: column;
     align-items: flex-start;
     list-style: none;
     text-align: left;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
   }
   li {
     text-decoration: none;
@@ -83,15 +94,14 @@ const ListWrapper = styled.div`
 
 const UnderLine = styled.div`
   border-bottom: 1px solid #d5d5d5;
-  height: 10px;
-  width: 48vw;
+  width: 100%;
 `;
 
 const SplitLine = styled.div`
   height: 1px;
   width: 100%;
   border-top: 1px solid gray;
-`;
+`
 
 
 
