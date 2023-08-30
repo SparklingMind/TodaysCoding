@@ -1,22 +1,28 @@
 .headerWrap {
   width: 1320px;
-  height: 100px;
   margin: 0 20px;
+  padding: 0;
 }
 
 .logo {
-  font-family: "fontBold";
-  font-size: 20px;
-  margin: 10px 0 10px 0;
+  width: 220px;
+  height: 50px;
+  margin: 20px 0px;
 }
 
-.userWrap {
-  font-size: 15px;
-  display: flex;
+.personUser {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  text-align: center;
+
+}
+.profile-icon {
+  width: 80%;
+  height: 80%;
 }
 
 .personUser .userName {
   font-family: "fontlight";
-  display: flex;
-  justify-content: center;
 }
+

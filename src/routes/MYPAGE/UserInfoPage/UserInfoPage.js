@@ -24,8 +24,8 @@ const UserInfo = () => {
         <UserInfoPageStyle.Spacer />
       </UserInfoPageStyle.Header>
       <UserInfoPageStyle.UpperContainer>
-        <img id="logoImage" src="/logo.jpg" alt="로고" />
-        <span>오늘도 코딩</span>
+        <img id="logoImage" src="/main-logo.png" alt="로고" />
+        
       </UserInfoPageStyle.UpperContainer>
      
       <UserInfoPageStyle.MainContainer>
@@ -38,8 +38,8 @@ const UserInfo = () => {
             <UserInfoPageStyle.UnderLine />
             <UserInfoPageStyle.Withdraw onClick={handleWithdraw}>회원 탈퇴</UserInfoPageStyle.Withdraw>
           </ul>
+          <UserInfoPageStyle.SplitLine />
         </UserInfoPageStyle.ListWrapper>
-        <UserInfoPageStyle.SplitLine />
       </UserInfoPageStyle.MainContainer>
       </UserInfoPageStyle.Container>
     

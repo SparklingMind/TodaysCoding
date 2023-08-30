@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
-import { VscAccount } from "react-icons/vsc";
 import { apiInstance } from "../../utils/api";
 
 function Header() {
@@ -19,10 +18,10 @@ function Header() {
   }, []);
   return (
     <div className="headerWrap">
-      <div className="logo">오늘도 코딩</div>
+      <img className="logo" src="/feed-logo.png" alt="logo" />
       <div className="userWrap">
         <div className="personUser">
-          <VscAccount style={{ fontSize: 40 }} />
+        <img className="profile-icon" src="profile-icon.png" alt="profile-icon" />
           {/* 데이터가 있으면 name표시 */}
           <span className="userName">{data?.name}</span>
         </div>
