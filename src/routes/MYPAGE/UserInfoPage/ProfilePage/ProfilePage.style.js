@@ -31,18 +31,31 @@ const ProfileImageContainer = styled.div`
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  background-color: #e0e0e0;
-  position: relative;
+  background-color: white;
   left: 15px;
   margin-bottom: 30px;
-`;
 
-const CameraIcon = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  cursor: pointer;
-`;
+  #profileImage {
+    width: 130px;
+    height: 130px;
+  }
+
+  label {
+    display: flex; 
+    cursor: pointer;
+    margin-top: 20px;
+    justify-content: center;
+    border: 1px groove #E0E0E0;
+    border-radius: 16px;
+    background: #E0E0E0;
+  }
+  `;
+
+  const ImageInput = styled.input`
+  margin-top: 20px;
+  font-size: 12px;
+   display: none;
+  `
 
 const Input = styled.input`
   width: 40%;
@@ -66,7 +79,7 @@ export const ProfilePageStyle = {
     Title,
     Button,
     ProfileImageContainer,
-    CameraIcon,
     Input,
-    Textarea
+    Textarea,
+    ImageInput
 }

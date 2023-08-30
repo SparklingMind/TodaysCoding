@@ -34,7 +34,7 @@ const UserInfo = () => {
           <ul>
             <li onClick={handleProfile}>프로필 설정</li>
             <UserInfoPageStyle.UnderLine />
-            <li>유저 정보 변경</li>
+            <li>비밀번호 변경</li>
             <UserInfoPageStyle.UnderLine />
             <UserInfoPageStyle.Withdraw onClick={handleWithdraw}>회원 탈퇴</UserInfoPageStyle.Withdraw>
           </ul>
