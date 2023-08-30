@@ -5,7 +5,6 @@ import "./DiaryWrite.css";
 
 //마크다운 에디터
 import MDEditor from "@uiw/react-md-editor";
-// import { FileDrop } from 'react-file-drop'
 
 function DiaryEdit() {
   //리액트 라우터 돔
@@ -39,7 +38,7 @@ function DiaryEdit() {
   // [취소] 버튼 클릭 시
   const handleCancelBtn = (e) => {
     e.preventDefault();
-    navigate(-1);
+    navigate("/home");
   };
 
   // [등록] 버튼 클릭 시

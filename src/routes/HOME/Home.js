@@ -14,16 +14,15 @@ function Home() {
   const formattedToday = year + month + day;
 
   //선택한 날짜 로컬스토리지에 저장
-  const dateInLocalStorage = localStorage.getItem("clickedDate");
+  const dateInSessionStorage = sessionStorage.getItem("clickedDate");
   const [date, setDate] = useState(
-    dateInLocalStorage ? dateInLocalStorage : formattedToday
+    dateInSessionStorage ? dateInSessionStorage : formattedToday
   );
-  console.log(`날짜 ${dateInLocalStorage}`);
 
   // 하위 컴포넌트로 전달할 함수
   const handleDataFromCalendarFunc = (data) => {
     setDate(data); // 받은 데이터를 상태에 업데이트
-    localStorage.setItem("clickedDate", data);
+    sessionStorage.setItem("clickedDate", data);
   };
 
   return (
