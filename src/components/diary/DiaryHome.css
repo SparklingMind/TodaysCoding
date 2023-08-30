@@ -5,6 +5,12 @@
 
 .diary-write-btn {
   float: right;
+  background-color: #4f4f4f; /* 무채색 배경 */
+  border: none; /* 테두리 제거 */
+  color: #ffffff; /* 글자 색 */
+  padding: 10px 20px; /* 패딩 */
+  border-radius: 12px; /* 둥근 모서리 */
+  transition: background-color 0.3s, color 0.3s; /* 애니메이션 효과 */
 }
 
 .diary-list {
