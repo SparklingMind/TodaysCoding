@@ -26,17 +26,17 @@ function CategoryItem({ name, todos }) {
     if (window.confirm("카테고리 목록을 삭제하시겠습니까?")) {
       alert("삭제되었습니다.");
       //del요청 카테고리 삭제
-      apiInstance
-        .delete("/api/todos/20230809", {})
-        .then((response) => {
-          console.log(response);
-          setData(response.data); // get 데이터를 상태에 저장
-        })
-        .catch((error) => {
-          console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
-        });
-    } else {
-      alert("취소합니다.");
+      //     apiInstance
+      //       .delete("/api/todos/20230809", {})
+      //       .then((response) => {
+      //         console.log(response);
+      //         setData(response.data); // get 데이터를 상태에 저장
+      //       })
+      //       .catch((error) => {
+      //         console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
+      //       });
+      //   } else {
+      //     alert("취소합니다.");
     }
   };
 
