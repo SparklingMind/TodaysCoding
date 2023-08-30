@@ -58,19 +58,16 @@ const MainContainer = styled.div`
 const UpperLine = styled.div`
   disply: flex;
   border: 1px solid black;
-  height: 1px;
   width: 100%;
 `;
 const LowerLine = styled.div`
   disply: flex;
   border: 1px solid black;
-  height: 1px;
   width: 100%;
 `;
 
 const ListWrapper = styled.div`
   display: flex;
-  height: 300px;
   ul {
     line-height: 3.5;
     flex-direction: column;
@@ -92,14 +89,12 @@ const ListWrapper = styled.div`
 
 const UnderLine = styled.div`
   border-bottom: 1px solid #d5d5d5;
-  height: 10px;
-  width: 45vw;
+  width: 100%;
 `;
 
 const SplitLine = styled.div`
-  height: 1px;
   width: 100%;
-  border-top: 1px solid gray;
+  border-bottom: 2px solid black;
 `;
 
 export const MyPageStyle = {

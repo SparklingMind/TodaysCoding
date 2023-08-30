@@ -62,7 +62,9 @@ const MyPage = () => {
             <MyPageStyle.UnderLine />
             <li onClick={handleLogout}>로그아웃</li>
           </ul>
+          
         </MyPageStyle.ListWrapper>
+        <MyPageStyle.SplitLine />
       </MyPageStyle.MainContainer>
       <Nav></Nav>
     </div>
