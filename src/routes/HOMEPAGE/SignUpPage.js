@@ -56,6 +56,8 @@ const SignUpPage = () => {
     emailChecked: false,
   });
   
+  const { emptyModal, checkedModal, duplicatedModal, signUpFailModal, signUpErrorModal, signUpModal } = modals;
+  
   const handleNameCheck = (event) => {
     const newName = event.target.value;
   
@@ -248,7 +250,7 @@ const SignUpPage = () => {
       });
   };
 
-  const { emptyModal, checkedModal, duplicatedModal, signUpFailModal, signUpErrorModal, signUpModal } = modals;
+  
 
   return (
     <div>

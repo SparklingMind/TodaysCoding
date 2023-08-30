@@ -4,9 +4,11 @@ import CalendarFunc from "../../components/calendar/CalendarFunc.js";
 import DiaryHome from "../../components/diary/DiaryHome";
 import TodoComponent from "../../components/todo/TodoComponent";
 import styled from "styled-components";
+import axios from "axios";
 import Nav from "../../components/nav/Nav";
 
 const AppSections = styled.div`
+  margin-bottom: 100px;
   display: flex;
   padding: 10px;
   justify-content: space-between;
@@ -51,11 +53,11 @@ function Home() {
           sendDataToParent={handleDataFromCalendarFunc}
           style={{ flex: 1 }}
         />
-        <CalendarFunc
+        {/* <CalendarFunc
           sendDataToParent={handleDataFromCalendarFunc}
           style={{ flex: 1 }}
-        />
-        {/* <TodoComponent clickedDate={date} style={{ flex: 1 }} /> */}
+        /> */}
+        <TodoComponent clickedDate={date} style={{ flex: 1 }} />
         <DiaryHome date={date} style={{ flex: 1.2 }} />
       </AppSections>
 

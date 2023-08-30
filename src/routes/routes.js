@@ -9,6 +9,7 @@ import DiaryView from "../components/diary/DiaryView";
 import UserInfoPage from "./MYPAGE/UserInfoPage/UserInfoPage";
 import ProfilePage from "./MYPAGE/UserInfoPage/ProfilePage/ProfilePage";
 import WithdrawPage from "./MYPAGE/UserInfoPage/WithdrawPage/WithdrawPage";
+import ChangePasswordPage from "./MYPAGE/UserInfoPage/ChangePasswordPage/ChangePasswordPage";
 import DiaryEdit from "../components/diary/DiaryEdit";
 
 export const ROUTE = {
@@ -71,6 +72,12 @@ export const ROUTE = {
     path: "/mypage/userinfo/withdraw",
     link: "/mypage/userinfo/withdraw",
     element: WithdrawPage,
+  },
+
+  CHANGEPASSWORD: {
+    path: "/mypage/userinfo/changepassword",
+    link: "/mypage/userinfo/changepassword",
+    element: ChangePasswordPage,
   },
 };
 
