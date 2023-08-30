@@ -42,7 +42,7 @@ const MyPage = () => {
         <MyPageStyle.ProfileWrapper>
           <img id="profileImage" src={"/profile.jpg"} />
           {/* 데이터가 있으면 name표시 */}
-          <span id="userName">{data?.name}</span>
+          <span id="userName">{data?.name}({data?.nickname})</span>
         </MyPageStyle.ProfileWrapper>
       </MyPageStyle.LowerContainer>
       <MyPageStyle.MainContainer>
