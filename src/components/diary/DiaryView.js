@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { apiInstance } from "../../utils/api";
 import "./DiaryView.css";
 
 //마크다운 에디터
 import MDEditor from "@uiw/react-md-editor";
+import DiaryDelete from "./DiaryDelete";
 
 function DiaryView() {
   //게시글 아이디
   const postId = useLocation().state.postId;
+
+  //날짜
+  const date = sessionStorage.getItem("clickedDate");
+
+  // 삭제 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
+  //리액트 라우터 돔
+  const navigate = useNavigate();
 
   const [post, setPost] = useState({
     diaryTitle: "",
@@ -28,6 +43,12 @@ function DiaryView() {
     viewDiary();
   }, []);
 
+  // [목록] 버튼 클릭 시
+  const handleListBtn = (e) => {
+    e.preventDefault();
+    navigate("/home");
+  };
+
   return (
     <section className="diary-view-wrap">
       <div className="diary-view-box">
@@ -37,11 +58,18 @@ function DiaryView() {
           source={post.diaryContent}
         />
         <div className="diary-view-btns">
-          <button type="button">목록</button>
+          <button type="button" onClick={handleListBtn}>
+            목록
+          </button>
           <Link to={`/DiaryEdit`} state={{ postId: postId }}>
-            <button type="submit">수정</button>
+            <button type="button">수정</button>
           </Link>
-          <button type="submit">삭제</button>
+          <button type="button" onClick={showModal}>
+            삭제
+          </button>
+          {modalOpen && (
+            <DiaryDelete setModalOpen={setModalOpen} postId={postId} />
+          )}
         </div>
       </div>
     </section>

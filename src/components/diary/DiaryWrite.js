@@ -8,7 +8,7 @@ import MDEditor from "@uiw/react-md-editor";
 
 function DiaryWrite() {
   //날짜
-  const date = localStorage.getItem("clickedDate");
+  const date = sessionStorage.getItem("clickedDate");
 
   //글 제목
   const titleRef = useRef();
