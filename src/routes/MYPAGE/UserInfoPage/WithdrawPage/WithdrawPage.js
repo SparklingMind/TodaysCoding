@@ -53,8 +53,7 @@ const WithdrawPage = () => {
   return (
     <WithdrawPageStyles.Container>
         <WithdrawPageStyles.Logo>
-          <img src="/logo.jpg" />
-          <h1>오늘도 코딩</h1>
+          <img src="/feed-logo.png" />
         </WithdrawPageStyles.Logo>
         <WithdrawPageStyles.Message>
             <h2>탈퇴 안내</h2>

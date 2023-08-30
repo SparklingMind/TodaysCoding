@@ -14,14 +14,10 @@ const Logo = styled.div`
   width: 40%; 
   margin: 10vh auto;
   align-items: center;
-
+  position: relative;
+  right: 3vh;
   img {
-    width: 40px;
-    margin-right: 10px;
-  }
-  h1 {
-    font-size: 24px;
-    font-weight: 700;
+    width: 300px;
   }
 `;
 
