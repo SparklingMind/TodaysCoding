@@ -1,12 +1,10 @@
-import styled from "styled-components"
-
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 40px;
   align-items: center;
-  
 `;
 
 const UpperContainer = styled.div`
@@ -71,8 +69,8 @@ const LowerLine = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  height: 180px;
-  
+  display: flex;
+  height: 300px;
   ul {
     line-height: 3.5;
     flex-direction: column;
@@ -94,25 +92,24 @@ const ListWrapper = styled.div`
 
 const UnderLine = styled.div`
   border-bottom: 1px solid #d5d5d5;
-  width: 100%;
+  height: 10px;
+  width: 45vw;
 `;
 
 const SplitLine = styled.div`
   height: 1px;
   width: 100%;
   border-top: 1px solid gray;
-`
-
-
+`;
 
 export const MyPageStyle = {
-    UpperContainer,
-    LowerContainer,
-    ProfileWrapper,
-    MainContainer,
-    UpperLine,
-    LowerLine,
-    ListWrapper,
-    UnderLine,
-    SplitLine
-}
+  UpperContainer,
+  LowerContainer,
+  ProfileWrapper,
+  MainContainer,
+  UpperLine,
+  LowerLine,
+  ListWrapper,
+  UnderLine,
+  SplitLine,
+};

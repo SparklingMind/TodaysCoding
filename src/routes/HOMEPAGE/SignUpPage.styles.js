@@ -21,10 +21,12 @@ const UpperContainer = styled.div`
     color: inherit;
   }
 `;
+
 const LowerContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const Sign = styled.span`
   display: flex;
   justify-content: center;
@@ -47,7 +49,11 @@ const MainContainer = styled.div`
   .idLabel,
   .pwdLabel,
   .pwdConfirmLabel,
-  .emailLabel {
+  .emailLabel,
+  .genderLabel,
+  .birthLabel,
+  .nicknameLabel,
+  .custom-option {
     display: flex;
     margin-left: 10px;
     margin-top: 20px;
@@ -71,14 +77,22 @@ const MainContainer = styled.div`
     width: 20%;
     position: relative;
   }
+
   .customInput {
     max-width: 100% !important;
   }
+
   #SignUpButton {
     font-size: 16px;
     margin-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
+  }
+  .customSelect {
+    width: 170px;
+  }
+  .birthInput::placeholder {
+    font-size: 12px;
   }
 `;
 const IdContainer = styled.div`
