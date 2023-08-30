@@ -11,9 +11,6 @@ function DiaryView() {
   //게시글 아이디
   const postId = useLocation().state.postId;
 
-  //날짜
-  const date = sessionStorage.getItem("clickedDate");
-
   // 삭제 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
