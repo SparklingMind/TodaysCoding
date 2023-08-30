@@ -1,35 +1,34 @@
 import React from "react";
 import { UserInfoPageStyle } from "./UserInfoPage.style";
-import { useNavigate } from "react-router-dom"
-
+import { useNavigate } from "react-router-dom";
+import Nav from "../../../components/nav/Nav";
 
 const UserInfo = () => {
-
-  const nav = useNavigate()
+  const nav = useNavigate();
   const handleProfile = () => {
-    nav("/mypage/userinfo/profile")
-  }
+    nav("/mypage/userinfo/profile");
+  };
   const handleWithdraw = () => {
-    nav("/mypage/userinfo/withdraw")
-  }
+    nav("/mypage/userinfo/withdraw");
+  };
   const handleBack = () => {
-    nav("/mypage")
-  }
+    nav("/mypage");
+  };
   const handlePassword = () => {
-    nav("/mypage/userinfo/changepassword")
-  }
+    nav("/mypage/userinfo/changepassword");
+  };
   return (
     <UserInfoPageStyle.Container>
       <UserInfoPageStyle.Header>
-        <UserInfoPageStyle.Button onClick={handleBack}>뒤로가기</UserInfoPageStyle.Button>
+        <UserInfoPageStyle.Button onClick={handleBack}>
+          뒤로가기
+        </UserInfoPageStyle.Button>
         <UserInfoPageStyle.Title>회원정보</UserInfoPageStyle.Title>
         <UserInfoPageStyle.Spacer />
       </UserInfoPageStyle.Header>
       <UserInfoPageStyle.UpperContainer>
         <img id="logoImage" src="/main-logo.png" alt="로고" />
-        
       </UserInfoPageStyle.UpperContainer>
-     
       <UserInfoPageStyle.MainContainer>
         <UserInfoPageStyle.UpperLine />
         <UserInfoPageStyle.ListWrapper>
@@ -38,13 +37,15 @@ const UserInfo = () => {
             <UserInfoPageStyle.UnderLine />
             <li onClick={handlePassword}>비밀번호 변경</li>
             <UserInfoPageStyle.UnderLine />
-            <UserInfoPageStyle.Withdraw onClick={handleWithdraw}>회원 탈퇴</UserInfoPageStyle.Withdraw>
+            <UserInfoPageStyle.Withdraw onClick={handleWithdraw}>
+              회원 탈퇴
+            </UserInfoPageStyle.Withdraw>
           </ul>
           <UserInfoPageStyle.SplitLine />
         </UserInfoPageStyle.ListWrapper>
       </UserInfoPageStyle.MainContainer>
-      </UserInfoPageStyle.Container>
-    
+      <Nav></Nav>
+    </UserInfoPageStyle.Container>
   );
 };
 
