@@ -64,7 +64,7 @@ function TodoItem({ _id, text }) {
   }, [checked]);
 
   return (
-    <div>
+    <div style = {{display:"flex", justifyContent: "space-between", alignItems: "center"}}>
       <TodoContent>
         <input
           type="checkbox"

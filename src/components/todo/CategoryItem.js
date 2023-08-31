@@ -66,7 +66,7 @@ function CategoryItem({ name, todos, categroyId, clickedDate }) {
           clickedDate={clickedDate}
         />
       ) : null}
-      <ul style={{ paddingLeft: "20px" }}>
+      <ul style={{ paddingLeft: "10px" }}>
         {todos.map((todo) => (
           <TodoItem clickedDate={clickedDate} _id={todo._id} text={todo.text} />
         ))}

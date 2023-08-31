@@ -10,7 +10,7 @@ export const CategoryHeader = styled.div`
   align-items: center;
   padding: 7px 10px;
   background-color: #eee;
-  border-radius: 1px;
+  border-radius: 5px;
   margin-bottom: 10px;
 `;
 
