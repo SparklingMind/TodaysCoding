@@ -4,10 +4,7 @@ export const TodoContainer = styled.div`
   /* TodoContainer 스타일링 */
   width: 33%;
   max-width: 600px;
-  margin: 40px auto;
-  background-color: #fff;
   padding: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   position: relative;
 `;
 
@@ -44,8 +41,4 @@ export const CategoryIcon = styled.img`
   height: 30px;
   border: none;
   cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
 `;
