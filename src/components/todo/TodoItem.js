@@ -36,9 +36,9 @@ function TodoItem({ _id, text }) {
 
   //del요청 보내는 함수
   const deleteTodoListToServer = () => {
-    if (window.confirm("카테고리 목록을 삭제하시겠습니까?")) {
+    if (window.confirm("할 일 목록을 삭제하시겠습니까?")) {
       alert("삭제되었습니다.");
-      // del요청 카테고리 삭제
+      // del요청 할 일 삭제
       apiInstance
         .delete(`/api/todos/${_id}`, {})
         .then((response) => {
@@ -64,7 +64,13 @@ function TodoItem({ _id, text }) {
   }, [checked]);
 
   return (
-    <div style = {{display:"flex", justifyContent: "space-between", alignItems: "center"}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
       <TodoContent>
         <input
           type="checkbox"

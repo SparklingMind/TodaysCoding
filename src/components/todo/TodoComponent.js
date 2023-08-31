@@ -28,7 +28,7 @@ function TodoComponent({ clickedDate }) {
     };
 
     fetchData(); // 비동기 함수 실행
-  }, [data]);
+  }, [clickedDate]);
 
   //모달창
   // 하위 컴포넌트로 전달할 함수
@@ -39,13 +39,13 @@ function TodoComponent({ clickedDate }) {
 
   return (
     <TodoContainer style={{ float: "left" }}>
-      <div style = {{textAlign:"right"}}>
-      <CategoryIcon
-        src="/CategorySetting.png"
-        onClick={() => setIsCategoryModalOpen(true)}
-      />
+      <div style={{ textAlign: "right" }}>
+        <CategoryIcon
+          src="/CategorySetting.png"
+          onClick={() => setIsCategoryModalOpen(true)}
+        />
       </div>
-      
+
       {isCategoryModalOpen && (
         <ModalOverlay>
           <ModalContent>
@@ -57,7 +57,7 @@ function TodoComponent({ clickedDate }) {
         </ModalOverlay>
       )}
 
-      {data === [] ? (
+      {data.length === 0 ? (
         <div>추가한 카테고리가 없습니다.</div>
       ) : (
         <CategoryList clickedDate={clickedDate} data={data} categoryId={_id} />
