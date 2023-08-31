@@ -32,7 +32,7 @@ function Home() {
   const day = ("0" + today.getDate()).slice(-2);
   const formattedToday = year + month + day;
 
-  //선택한 날짜 로컬스토리지에 저장
+  //선택한 날짜 세션스토리지에 저장
   const dateInSessionStorage = sessionStorage.getItem("clickedDate");
   const [date, setDate] = useState(
     dateInSessionStorage ? dateInSessionStorage : formattedToday
