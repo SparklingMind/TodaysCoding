@@ -73,26 +73,36 @@ const ChangePasswordPage = () => {
   });
 
   const { successModal, errorModal } = modals
-  
-    useEffect(() => {
-      const url = `http://34.64.151.119/api/users`
-      const requestData = {
-        currentPassword: currentData.currentPassword
-      };
-      const jsonRequestData = JSON.stringify(requestData)
 
-      axios.post(url, jsonRequestData)
+    const passwordChange = () => {
+      const url = `http://34.64.151.119/api/users/password`
+      const requestData = {
+        currentPassword: currentData.currentPassword,
+        newPassword: currentData.newPassword
+      };
+      const token = localStorage.getItem("token")
+      const jsonUserData = JSON.stringify(requestData)
+
+      axios.patch(url, jsonUserData, ({
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }))
       .then((response) => {
-      
-        console.log(response.data)
+        setModals((prevData) => ({
+            ...prevData,
+            successModal: true
+        }))
       })
       .catch((error) => {
-        console.error("error", error)
+        setModals((prevData) => ({
+          ...prevData,
+          errorModal: true
+        }))
+        console.error("에러", error)
       })
-    },[])
-
-
-
+    }
 
   const handlePassword = (event) => {
     setCurrentData((prevData) => ({
@@ -114,16 +124,6 @@ const ChangePasswordPage = () => {
       newPassword: event.target.value
     }))
   }
-
-  const passwordChange = () => {
-  
-    if (
-      currentData.currentPassword === currentData.confirmCurrentPassword &&
-      currentData.currentPassword !== currentData.newPassword
-    ) 
-    return;
-  };
-
   return (
     <div>
       <UpperContainer>
