@@ -9,6 +9,7 @@ function CategoryList({ data }) {
       {data.map((category, index) => (
         <CategoryItem
           key={category.categoryId}
+          categroyId={category.categoryId}
           name={category.categoryName}
           todos={category.todos}
         />

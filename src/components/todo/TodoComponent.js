@@ -70,7 +70,7 @@ function TodoComponent() {
         </ModalOverlay>
       )}
 
-      <CategoryList data={data} />
+      <CategoryList data={data} categoryId={_id} />
     </TodoContainer>
   );
 }
