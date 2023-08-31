@@ -267,7 +267,7 @@ const SignUpPage = () => {
             <Form.Label className="idLabel">아이디</Form.Label>
             <SignUpPageStyles.IdContainer>
               <Form.Control id="userIdInput" className="customInput" type="text" placeholder="아이디" ref={idInput} onChange={handleId} />
-              <Button id="idCheckButton" variant="primary" onClick={handleIdCheck}>
+              <Button id="idCheckButton" style={{width: "90px", height: "40px"}} variant="primary" onClick={handleIdCheck}>
                 중복 확인
               </Button>
             </SignUpPageStyles.IdContainer>
@@ -313,7 +313,7 @@ const SignUpPage = () => {
              {userInfo.emailTested ? "" : <SignUpPageStyles.VerifyEmail>이메일 형식이 올바르지 않습니다.</SignUpPageStyles.VerifyEmail>}
           </Form.Group>
           <SignUpPageStyles.ButtonContainer>
-            <Button id="SignUpButton" variant="primary" onClick={() => {
+            <Button style={{width: "100px", height: "50px"}} id="SignUpButton" variant="primary" onClick={() => {
               if (!signUpCheck()) {
                 setModals((prevModals) => ({
                   ...prevModals,
