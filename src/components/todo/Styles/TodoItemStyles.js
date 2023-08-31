@@ -16,7 +16,7 @@ export const TodoFunc = styled.li`
 
 export const Button = styled.button`
   background-color: transparent;
-  font-faminly: "fontLight";
+  font-family: "fontLight";
   margin-left: 5px;
   font-size: 10pt;
   border: none;
