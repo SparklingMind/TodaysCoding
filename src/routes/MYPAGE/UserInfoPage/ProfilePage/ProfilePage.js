@@ -91,7 +91,7 @@ const ProfilePage = () => {
         <Col xs={6} md={4}>
           <Image id="profileImage" src={
              uploadedImage||data.profileImgUrl||"/profile.jpg"
-            } roundedCircle alt="프로필 이미지" />
+            } roundedCircle alt="/profile.jpg" />
         </Col>
       </ProfilePageStyle.ProfileImageContainer>
       <ProfilePageStyle.Temp>

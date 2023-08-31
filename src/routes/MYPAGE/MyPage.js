@@ -7,13 +7,17 @@ import Nav from "../../components/nav/Nav";
 import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
-  const [data, setData] = useState(); //사용자 정보 데이터 상태(이름, 아이디, 비밀번호, 이메일 등등)
-  // GET 요청을 보내고 데이터를 받아옴
+  const [data, setData] = useState({
+    name: "",
+    nickname: "",
+    profileImgUrl: ""
+  }); 
+
   useEffect(() => {
-    //사용자 정보 조회 get 요청
     apiInstance
       .get("/api/users", {})
       .then((response) => {
+        const { name, nickname, profileImgUrl } = response.data
         setData(response.data); // get 데이터를 상태에 저장
       })
       .catch((error) => {
@@ -39,7 +43,7 @@ const MyPage = () => {
       </MyPageStyle.UpperContainer>
       <MyPageStyle.LowerContainer>
         <MyPageStyle.ProfileWrapper>
-          <img id="profileImage" src={"/profile.jpg"} />
+          <img id="profileImage" src={data.profileImgUrl || "/profile.jpg"} />
           {/* 데이터가 있으면 name표시 */}
           <span id="userName">
             {data?.name}({data?.nickname})
