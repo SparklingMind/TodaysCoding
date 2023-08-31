@@ -71,11 +71,14 @@ function DiaryEdit() {
           defaultValue={writtenDiaryTitle}
           ref={titleRef}
         ></input>
-        <MDEditor
-          height={400}
-          value={diaryContent}
-          onChange={setDiaryContent}
-        />
+        <div data-color-mode="light">
+          <div className="wmde-markdown-var"> </div>
+          <MDEditor
+            height={400}
+            value={diaryContent}
+            onChange={setDiaryContent}
+          />
+        </div>
         <div className="diary-write-btns">
           <button type="button" onClick={handleCancelBtn}>
             취소

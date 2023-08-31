@@ -58,11 +58,12 @@ const MyPage = () => {
             <MyPageStyle.UnderLine />
             <li>버전</li>
             <MyPageStyle.UnderLine />
-            <li>설정</li>
+            <Link to={`/mypage/setting/darkmode`}>
+              <li>설정</li>
+            </Link>
             <MyPageStyle.UnderLine />
             <li onClick={handleLogout}>로그아웃</li>
           </ul>
-          
         </MyPageStyle.ListWrapper>
         <MyPageStyle.SplitLine />
       </MyPageStyle.MainContainer>
