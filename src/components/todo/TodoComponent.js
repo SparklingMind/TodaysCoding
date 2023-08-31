@@ -55,10 +55,13 @@ function TodoComponent() {
 
   return (
     <TodoContainer style={{ float: "left" }}>
+      <div style = {{textAlign:"right"}}>
       <CategoryIcon
         src="/CategorySetting.png"
         onClick={() => setIsCategoryModalOpen(true)}
       />
+      </div>
+      
       {isCategoryModalOpen && (
         <ModalOverlay>
           <ModalContent>
