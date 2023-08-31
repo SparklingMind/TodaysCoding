@@ -1,8 +1,13 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from "react-router-dom"
+
+
 
 function PwdChangeSuccessModal(props) {
+  const nav = useNavigate()
+  
   return (
     <Modal
       style={{
@@ -31,7 +36,10 @@ function PwdChangeSuccessModal(props) {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>확인</Button>
+      <Button onClick={() => {
+        props.onHide(); 
+        nav('/mypage'); 
+        }}>확인</Button>
       </Modal.Footer>
     </Modal>
   );

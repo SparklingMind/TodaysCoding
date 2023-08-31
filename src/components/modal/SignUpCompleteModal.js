@@ -5,9 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 
 function SignUpCompleteModal(props) {
   const nav = useNavigate()
-  const home = () => {
-    nav()
-  }
+  
   return (
     <Modal
       style={{
@@ -38,7 +36,7 @@ function SignUpCompleteModal(props) {
       <Modal.Footer>
         <Button onClick={() => {
         props.onHide(); // 모달 닫기
-        nav('/home'); // /home 페이지로 이동
+        nav('/'); // /home 페이지로 이동
         }}>확인</Button>
       </Modal.Footer>
     </Modal>
