@@ -8,7 +8,7 @@ import {
   CategoryTitle,
   Button,
 } from "./Styles/CategoryItemStyles";
-function CategoryItem({ name, todos, categroyId }) {
+function CategoryItem({ name, todos, categroyId, clickedDate }) {
   console.log("categoryItems", todos);
   const [clickedCheck, setClickedCheck] = useState(false); //+버튼 클릭할때 값 상태
   const [todos_id, setTodos_id] = useState(); //todos의 id 값만 내보낼 값
@@ -24,7 +24,11 @@ function CategoryItem({ name, todos, categroyId }) {
 
   //-버튼 클릭하면 경고창 띄우고 카테고리 뭉텅이 삭제
   const deleteCategory = () => {
-    if (window.confirm("카테고리 목록을 삭제하시겠습니까?")) {
+    if (
+      window.confirm(
+        "카테고리 목록을 삭제하시겠습니까?\n포함되어 있던 할일들은 모두 사라집니다."
+      )
+    ) {
       alert("삭제되었습니다.");
       // del요청 카테고리 삭제
       apiInstance
@@ -56,11 +60,15 @@ function CategoryItem({ name, todos, categroyId }) {
         <Button onClick={deleteCategory}>목록삭제➖</Button>
       </CategoryHeader>
       {clickedCheck === true ? (
-        <TodoInput sendDataToParent={handleDataFromChild} _id={todos_id} />
+        <TodoInput
+          sendDataToParent={handleDataFromChild}
+          categroyId={categroyId}
+          clickedDate={clickedDate}
+        />
       ) : null}
       <ul style={{ paddingLeft: "20px" }}>
         {todos.map((todo) => (
-          <TodoItem _id={todo._id} text={todo.text} />
+          <TodoItem clickedDate={clickedDate} _id={todo._id} text={todo.text} />
         ))}
       </ul>
     </CategoryItemContainer>
