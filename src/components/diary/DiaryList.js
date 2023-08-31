@@ -14,10 +14,13 @@ function DiaryList({ listItemData }) {
       <Link to={`/DiaryView`} state={{ postId: diaryListItem._id }}>
         <li className="diary-list-item" key={diaryListItem.idx}>
           <h4 className="diary-list-title">{diaryListItem.title}</h4>
-          <MDEditor.Markdown
-            className="diary-list-content"
-            source={diaryListItem.content}
-          />
+          <div data-color-mode="light">
+            <div className="wmde-markdown-var"></div>
+            <MDEditor.Markdown
+              className="diary-list-content"
+              source={diaryListItem.content}
+            />
+          </div>
         </li>
       </Link>
     ));

@@ -50,10 +50,13 @@ function DiaryView() {
     <section className="diary-view-wrap">
       <div className="diary-view-box">
         <h2 className="diary-view-title">{post.diaryTitle}</h2>
-        <MDEditor.Markdown
-          className="diary-viewer"
-          source={post.diaryContent}
-        />
+        <div data-color-mode="light">
+          <div className="wmde-markdown-var"></div>
+          <MDEditor.Markdown
+            className="diary-viewer"
+            source={post.diaryContent}
+          />
+        </div>
         <div className="diary-view-btns">
           <button type="button" onClick={handleListBtn}>
             목록
