@@ -5,7 +5,7 @@ import {
   ModalContentStyles,
 } from "./Styles/CategoryModalStyles";
 
-function CategoryModal({ sendDataToParent, categoryName }) {
+function CategoryModal({ sendDataToParent }) {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(); //TodoComponent로 넘길 값
   const [newCategory, setNewCategory] = useState(""); //사용자가 추가하는 새 카테고리 input 값
   const [error, setError] = useState();
