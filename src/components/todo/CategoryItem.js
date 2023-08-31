@@ -6,7 +6,8 @@ import {
   CategoryItemContainer,
   CategoryHeader,
   CategoryTitle,
-  Button,
+  PlusButton,
+  DeleteCategoryButton,
 } from "./Styles/CategoryItemStyles";
 function CategoryItem({ name, todos, categroyId, clickedDate }) {
   console.log("categoryItems", todos);
@@ -55,9 +56,10 @@ function CategoryItem({ name, todos, categroyId, clickedDate }) {
   return (
     <CategoryItemContainer>
       <CategoryHeader>
-        <CategoryTitle>{name}</CategoryTitle>
-        <Button onClick={newTodo}>할일추가➕</Button>
-        <Button onClick={deleteCategory}>목록삭제➖</Button>
+        <CategoryTitle>
+          {name}<PlusButton onClick={newTodo}>➕</PlusButton>
+        </CategoryTitle>
+        <DeleteCategoryButton onClick={deleteCategory}>삭제</DeleteCategoryButton>
       </CategoryHeader>
       {clickedCheck === true ? (
         <TodoInput
