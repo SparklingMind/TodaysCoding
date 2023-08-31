@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { apiInstance } from "../../utils/api";
 import "./DiaryWrite.css";
 
@@ -8,7 +8,7 @@ import MDEditor from "@uiw/react-md-editor";
 
 function DiaryWrite() {
   //날짜
-  const date = sessionStorage.getItem("clickedDate");
+  const date = useLocation().state.date;
 
   //글 제목
   const titleRef = useRef();
