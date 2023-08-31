@@ -8,9 +8,9 @@ export const CategoryHeader = styled.div`
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 10px;
+  padding: 7px 10px;
   background-color: #eee;
-  border-radius: 15px;
+  border-radius: 1px;
   margin-bottom: 10px;
 `;
 
