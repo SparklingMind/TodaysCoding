@@ -74,7 +74,7 @@ const Temp = styled.div`
   span, label {
     display: flex; 
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
     justify-content: center;
     border: 1px groove #E0E0E0;
     border-radius: 16px;

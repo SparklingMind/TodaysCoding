@@ -36,7 +36,6 @@ const ProfilePage = () => {
           profileImgUrl
         });
         setUploadedImage(data.profileImage);
-        console.log(response.data)
       })
       .catch((error) => {
         console.error("에러 발생", error);
@@ -45,9 +44,9 @@ const ProfilePage = () => {
 
   const handleUpload = (event) => {
     const uploadedFile = event.target.files[0];
+    console.log(uploadedFile)
     setUploadedImage(URL.createObjectURL(uploadedFile));
     setUploadedFile(uploadedFile);
-    console.log(uploadedFile)
   }
 
   const handleSave = () => {
@@ -55,6 +54,7 @@ const ProfilePage = () => {
     formData.append('nickname', data.nickname); 
     formData.append('aboutMe', data.aboutMe);
     formData.append('image', uploadedFile);
+    console.log(formData)
 
     axios.patch(url, formData, {
       headers: {
@@ -63,8 +63,8 @@ const ProfilePage = () => {
       },
     })
       .then((response) => {
+
         setUpdateModal(true);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error("error", error);
@@ -72,8 +72,24 @@ const ProfilePage = () => {
   }
 
   const basicImage = () => {
-    setUploadedImage("/profile.jpg");
-    setUploadedFile(null); // Clear uploadedFile
+    const imageUrl = "/profile.jpg";
+  
+    fetch(imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const file = new File([blob], 'profile.jpg', { type: blob.type });
+  
+        setUploadedImage(URL.createObjectURL(file));
+        setUploadedFile(file);
+  
+        setData(prevData => ({
+          ...prevData,
+          profileImgUrl: imageUrl
+        }));
+      })
+      .catch(error => {
+        console.error("에러 발생", error);
+      });
   };
 
   return (
@@ -90,8 +106,8 @@ const ProfilePage = () => {
       <ProfilePageStyle.ProfileImageContainer>
         <Col xs={6} md={4}>
           <Image id="profileImage" src={
-             uploadedImage||data.profileImgUrl||"/profile.jpg"
-            } roundedCircle alt="/profile.jpg" />
+             uploadedImage|| data.profileImgUrl || "/profile.jpg"
+           } roundedCircle alt="프로필 이미지" />
         </Col>
       </ProfilePageStyle.ProfileImageContainer>
       <ProfilePageStyle.Temp>

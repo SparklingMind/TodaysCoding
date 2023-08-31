@@ -24,8 +24,7 @@ const MyPage = () => {
         console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
       });
   }, []);
-  console.log(data);
-
+ 
   const nav = useNavigate();
   const handleHome = () => {
     nav("/");
