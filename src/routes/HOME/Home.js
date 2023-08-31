@@ -53,10 +53,6 @@ function Home() {
           sendDataToParent={handleDataFromCalendarFunc}
           style={{ flex: 1 }}
         />
-        {/* <CalendarFunc
-          sendDataToParent={handleDataFromCalendarFunc}
-          style={{ flex: 1 }}
-        /> */}
         <TodoComponent clickedDate={date} style={{ flex: 1 }} />
         <DiaryHome date={date} style={{ flex: 1.2 }} />
       </AppSections>
