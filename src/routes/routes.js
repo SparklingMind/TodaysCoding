@@ -4,10 +4,14 @@ import LoginPage from "./HOMEPAGE/LoginPage";
 import SignUpPage from "./HOMEPAGE/SignUpPage";
 import MyPage from "./MYPAGE/MyPage";
 import Search from "./SEARCH/Search";
+import Store from "./STORE/Store";
 import DiaryWrite from "../components/diary/DiaryWrite";
 import DiaryView from "../components/diary/DiaryView";
-import UserInfo from "./MYPAGE/UserInfo/UserInfo"; 
-import Profile from "./MYPAGE/UserInfo/Profile/Profile";
+import UserInfoPage from "./MYPAGE/UserInfoPage/UserInfoPage";
+import ProfilePage from "./MYPAGE/UserInfoPage/ProfilePage/ProfilePage";
+import WithdrawPage from "./MYPAGE/UserInfoPage/WithdrawPage/WithdrawPage";
+import ChangePasswordPage from "./MYPAGE/UserInfoPage/ChangePasswordPage/ChangePasswordPage";
+import DiaryEdit from "../components/diary/DiaryEdit";
 
 export const ROUTE = {
   HOMEPAGE: {
@@ -35,6 +39,11 @@ export const ROUTE = {
     link: "/search",
     element: Search,
   },
+  STORE:{
+    path: "/store",
+    link: "/store",
+    element: Store,
+  },
   MYPAGE: {
     path: "/mypage",
     link: "/mypage",
@@ -50,15 +59,31 @@ export const ROUTE = {
     link: "/DiaryView",
     element: DiaryView,
   },
-  USERINFO : {
-    path: "/mypage/userInfo",
-    link: "/mypage/userInfo",
-    element: UserInfo,
+  USERINFO: {
+    path: "/mypage/userinfo",
+    link: "/mypage/userinfo",
+    element: UserInfoPage,
+  },
+  DIARYEDIT: {
+    path: "/DiaryEdit",
+    link: "/DiaryEdit",
+    element: DiaryEdit,
   },
   PROFILE: {
-    path: "/mypage/userInfo/profile",
-    link: "/mypage/userInfo/profile",
-    element: Profile,
+    path: "/mypage/userinfo/profile",
+    link: "/mypage/userinfo//profile",
+    element: ProfilePage,
+  },
+  WITHDRAW: {
+    path: "/mypage/userinfo/withdraw",
+    link: "/mypage/userinfo/withdraw",
+    element: WithdrawPage,
+  },
+
+  CHANGEPASSWORD: {
+    path: "/mypage/userinfo/changepassword",
+    link: "/mypage/userinfo/changepassword",
+    element: ChangePasswordPage,
   },
 };
 

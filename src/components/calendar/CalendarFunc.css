@@ -1,22 +1,46 @@
 .wrap {
-  padding: 15px 20px 0;
-  width: 33%;
+  padding: 20px;
+  position: relative;
+  /* width: 33%; */
   height: auto;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  flex-direction: column; /* 자식 요소를 세로로 배열 */
+  
 }
 
 .EmojiSelection {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.openEmojiPicker {
+  position: absolute;
+  right: 5%;
+  background-color: #ffffff; /* 버튼 배경색 */
+  border: none; /* 테두리 제거 */
+  color: rgb(84, 84, 84); /* 글자색 */
+  font-size:  40px; /* 글자 크기 */
+}
+
+.EmojiPickerContainer {
+  position: absolute;
+  top: 50%;  /* 중앙에 위치하도록 top 값을 조절 */
+  left: 50%;  /* 중앙에 위치하도록 left 값을 조절 */
+  transform: translate(-50%, -50%);  /* 중앙 정렬 보정 */
+  z-index: 1000;  /* 다른 요소 위에 나타나게 하는 z-index */
+}
+
 /* Calendar */
 .react-calendar {
-  width: 400px;
-  max-width: 100%;
+  width: auto;
+  height: auto;
   background: white;
   border: none;
   line-height: 1.125em;
+  font-family: fontMedium;
 }
 
 .react-calendar--doubleView {
@@ -51,6 +75,7 @@
 .react-calendar button:enabled:hover {
   cursor: pointer;
 }
+
 
 .react-calendar__navigation {
   display: flex;
@@ -110,7 +135,7 @@
   padding: 10px 6.6667px;
   background: none;
   text-align: center;
-  line-height: 16px;
+  line-height: 30px;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
