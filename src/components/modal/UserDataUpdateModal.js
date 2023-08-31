@@ -43,7 +43,7 @@ function UserDataUpdateModal(props) {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={handleMypage}>확인</Button>
+        <Button onClick={handleMypage}>확인</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -8,25 +8,19 @@ import Image from 'react-bootstrap/Image';
 
 
 const ProfilePage = () => {
-  
+
   const token = localStorage.getItem("token");
   const url = `http://34.64.151.119/api/users`;
 
   const [data, setData] = useState({
     nickname: "",
     aboutMe: "",
-    profileImage: "" // 프로필 이미지 URL 추가
+    profileImgUrl: ""
   })
 
   const [updateModal, setUpdateModal] = useState(false);
-  const [uploadedFile, setUploadFile] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
-
-  const handleUpload = (event) => {
-    const uploadedFile = event.target.files[0];
-    setUploadedImage(URL.createObjectURL(uploadedFile));
-    setUploadFile(uploadedFile);
-  } 
 
   useEffect(() => {
     axios.get(url, {
@@ -35,48 +29,68 @@ const ProfilePage = () => {
       },
     })
       .then((response) => {
-        const { nickname, aboutMe, profileImage } = response.data;
-        setData({ nickname, aboutMe, profileImage }); // 프로필 이미지 URL 추가
-        setUploadedImage(profileImage); // 프로필 이미지 URL 설정
+        const { nickname, aboutMe, profileImgUrl } = response.data;
+        setData({
+          nickname,
+          aboutMe,
+          profileImgUrl
+        });
+        setUploadedImage(data.profileImage);
       })
       .catch((error) => {
         console.error("에러 발생", error);
       });
   }, []);
 
-const handleSave = async () => {
-  const formData = new FormData();
-  formData.append('nickname', data.nickname); 
-  formData.append('aboutMe', data.aboutMe);
-  formData.append('image', uploadedFile);   
+  const handleUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    console.log(uploadedFile)
+    setUploadedImage(URL.createObjectURL(uploadedFile));
+    setUploadedFile(uploadedFile);
+  }
 
-  try {
-    const response = await axios.patch(url, formData, {
+  const handleSave = () => {
+    const formData = new FormData();
+    formData.append('nickname', data.nickname); 
+    formData.append('aboutMe', data.aboutMe);
+    formData.append('image', uploadedFile);
+    console.log(formData)
+
+    axios.patch(url, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data',
       },
-    });
+    })
+      .then((response) => {
 
-    console.log('데이터 및 이미지 업로드 성공', response.data);
-    setUpdateModal(true);
-  } catch (error) {
-    console.error('데이터 및 이미지 업로드 실패', error);
+        setUpdateModal(true);
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
   }
 
-  axios.patch(url, data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  })
-    .then((response) => {
-      setUpdateModal(true)
-    })
-    .catch((error) => {
-      console.error("에러 발생", error);
-    });
-};
+  const basicImage = () => {
+    const imageUrl = "/profile.jpg";
+  
+    fetch(imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const file = new File([blob], 'profile.jpg', { type: blob.type });
+  
+        setUploadedImage(URL.createObjectURL(file));
+        setUploadedFile(file);
+  
+        setData(prevData => ({
+          ...prevData,
+          profileImgUrl: imageUrl
+        }));
+      })
+      .catch(error => {
+        console.error("에러 발생", error);
+      });
+  };
 
   return (
     <ProfilePageStyle.Container>
@@ -91,11 +105,16 @@ const handleSave = async () => {
       <ProfilePageStyle.Container>
       <ProfilePageStyle.ProfileImageContainer>
         <Col xs={6} md={4}>
-          <Image id="profileImage" src={uploadedImage || '/profile.jpg'} roundedCircle alt="프로필 이미지" />
+          <Image id="profileImage" src={
+             uploadedImage|| data.profileImgUrl || "/profile.jpg"
+           } roundedCircle alt="프로필 이미지" />
         </Col>
-          <label htmlFor="fileInput">이미지 업로드</label>
-        <ProfilePageStyle.ImageInput id="fileInput" type="file" accept="image/*" onChange={handleUpload} />
       </ProfilePageStyle.ProfileImageContainer>
+      <ProfilePageStyle.Temp>
+          <span onClick={basicImage}>기본 이미지로 변경</span>
+          <label htmlFor="fileInput">이미지 업로드</label>
+          <ProfilePageStyle.ImageInput id="fileInput" type="file" accept="image/*" onChange={handleUpload} />
+        </ProfilePageStyle.Temp>
     </ProfilePageStyle.Container>
       <ProfilePageStyle.Input
         type="text"

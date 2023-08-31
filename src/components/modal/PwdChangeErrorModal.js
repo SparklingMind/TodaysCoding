@@ -27,7 +27,7 @@ function PwdChangeErrorModal(props) {
         <p style={{
             margin:"10px auto"
         }}>
-          잠시 후 다시 시도해 주세요.
+          비밀번호를 확인해주세요.
         </p>
       </Modal.Body>
       <Modal.Footer>

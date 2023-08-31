@@ -28,6 +28,7 @@ const Button = styled.button`
 `;
 
 const ProfileImageContainer = styled.div`
+  
   width: 130px;
   height: 130px;
   border-radius: 50%;
@@ -40,15 +41,7 @@ const ProfileImageContainer = styled.div`
     height: 130px;
   }
 
-  label {
-    display: flex; 
-    cursor: pointer;
-    margin-top: 20px;
-    justify-content: center;
-    border: 1px groove #E0E0E0;
-    border-radius: 16px;
-    background: #E0E0E0;
-  }
+
   `;
 
   const ImageInput = styled.input`
@@ -73,6 +66,27 @@ const Textarea = styled.textarea`
   resize: vertical;
 `;
 
+const Temp = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span, label {
+    display: flex; 
+    cursor: pointer;
+    margin-top: 20px;
+    justify-content: center;
+    border: 1px groove #E0E0E0;
+    border-radius: 16px;
+    background: #E0E0E0;
+    padding: 0 10px;
+  }
+
+  span {
+    margin-top: 0px;
+  }
+`
+
 export const ProfilePageStyle = {
     Container,
     Header,
@@ -81,5 +95,6 @@ export const ProfilePageStyle = {
     ProfileImageContainer,
     Input,
     Textarea,
-    ImageInput
+    ImageInput,
+    Temp
 }
