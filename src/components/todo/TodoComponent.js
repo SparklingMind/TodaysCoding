@@ -28,7 +28,7 @@ function TodoComponent({ clickedDate }) {
     };
 
     fetchData(); // 비동기 함수 실행
-  }, [clickedDate]);
+  }, [data]);
 
   //모달창
   // 하위 컴포넌트로 전달할 함수
@@ -54,7 +54,11 @@ function TodoComponent({ clickedDate }) {
         </ModalOverlay>
       )}
 
-      <CategoryList clickedDate={clickedDate} data={data} categoryId={_id} />
+      {data === [] ? (
+        <div>추가한 카테고리가 없습니다.</div>
+      ) : (
+        <CategoryList clickedDate={clickedDate} data={data} categoryId={_id} />
+      )}
     </TodoContainer>
   );
 }
