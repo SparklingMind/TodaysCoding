@@ -10,7 +10,7 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 100%;
   margin-bottom: 30px;
   align-items: center;
 `;
