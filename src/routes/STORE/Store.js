@@ -5,7 +5,7 @@ import Nav from "../../components/nav/Nav";
 
 const Container = styled.div`
   text-align: center;
-  width: 50%;
+  width: 60%;
   flex-direction: column;
   padding: 40px 40px 150px 40px;
   align-items: center;

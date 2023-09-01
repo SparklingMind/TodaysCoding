@@ -25,9 +25,9 @@ const UpperContainer = styled.div`
 const LowerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
-  min-width: 400px;
-  max-width: 500px;
+  width: 70%;
+  min-width: 550px;
+  max-width: 700px;
   margin: 0 auto;
 `;
 
@@ -47,9 +47,9 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto 150px;
-  width: 45%;
-  min-width: 380px;
-  max-width: 480px;
+  width: 70%;
+  min-width: 550px;
+  max-width: 700px;
 
   .idLabel,
   .pwdLabel,

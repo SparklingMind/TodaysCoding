@@ -3,9 +3,9 @@ import styled from "styled-components"
 const Logo = styled.div`
     display: flex;
     justify-content: center;
-    margin:20vh auto 3vh auto;
-    width: 20vh;
-    height: 20vh;
+    margin: 15vh auto 3vh auto;
+    width: 40vh;
+    height: 40vh;
     cursor: pointer;
 `
 const UpperContainer = styled.div`
@@ -29,7 +29,8 @@ const UpperContainer = styled.div`
     }
 `
 const LowerContainer = styled.div`
-    width: 15%;
+    width: 40vh;
+    height: 15vh;
     margin: 0 auto;
 `
 const ButtonContainer = styled.div`
