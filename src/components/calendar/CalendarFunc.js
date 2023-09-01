@@ -8,13 +8,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BiMehBlank } from "react-icons/bi";
 import { apiInstance } from "../../utils/api";
 
-function CalendarFunc({ sendDataToParent }) {
-  const [value, onChange] = useState(new Date());
-  const [clickedDate, setClickedDate] = useState(); // 선택한 날짜를 저장할 상태
+function CalendarFunc({ sendDataToParent, date }) {
   const [selectedEmoji, setSelectedEmoji] = useState(); //선택한 이모지를 저장할 상태
   const [showPicker, setShowPicker] = useState(false);
-  const endOfMonth = moment(clickedDate).endOf("month").format("YYYYMMDD"); //클릭한 날짜 달의 마지막날짜
-  const startOfMonth = moment(clickedDate).startOf("month").format("YYYYMMDD"); //매월 1일
+  const endOfMonth = moment(date).endOf("month").format("YYYYMMDD"); //클릭한 날짜 달의 마지막날짜
+  const startOfMonth = moment(date).startOf("month").format("YYYYMMDD"); //매월 1일
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [fetchedData, setFetchedData] = useState(); // patch로 받아온 데이터(선택한 날짜에 저장된 이모지)
@@ -30,7 +28,6 @@ function CalendarFunc({ sendDataToParent }) {
   //클라이언트가 클릭한 날짜 clickedDate에 저장
   const saveDate = (date) => {
     const onClickDayClickedDate = moment(date).format("YYYYMMDD");
-    setClickedDate(onClickDayClickedDate);
     // 클릭한 날짜를 상위 컴포넌트로 전달
     sendDataToParent(onClickDayClickedDate);
   };
@@ -54,13 +51,13 @@ function CalendarFunc({ sendDataToParent }) {
   }, [fetchedData]); //sendDataToServer함수 호출을 통해 변경된 fetchedData 값이 변하면 실행
 
   // 클라이언트에서 선택한 날짜와 이모지를 서버로 전송
-  const sendDataToServer = async (clickedDate, selectedEmoji) => {
+  const sendDataToServer = async (selectedEmoji) => {
     setLoading(true);
     setError(null);
-    if (clickedDate && selectedEmoji) {
+    if (date && selectedEmoji) {
       // patch 요청 전송
       const patch = {
-        date: clickedDate,
+        date: date,
         emoji: selectedEmoji,
       };
       try {
@@ -85,7 +82,8 @@ function CalendarFunc({ sendDataToParent }) {
   };
   // sendDataToServer()를 원하는 시점에 호출하여 데이터를 받아오기.
   useEffect(() => {
-    sendDataToServer(clickedDate, selectedEmoji);
+    // date
+    sendDataToServer(selectedEmoji);
   }, [selectedEmoji]); // 이모지를 새로 선택할 때 마다 호출.
 
   // 각 날짜별로 이모지 추가
@@ -108,7 +106,13 @@ function CalendarFunc({ sendDataToParent }) {
     <div className="wrap" style={{ float: "left" }}>
       <div className="EmojiSelection">
         <span style={{ fontSize: 50 }}>{selectedEmojiSave}</span>
-        <button className="openEmojiPicker" onClick={() => setShowPicker(!showPicker)}> + </button>
+        <button
+          className="openEmojiPicker"
+          onClick={() => setShowPicker(!showPicker)}
+        >
+          {" "}
+          +{" "}
+        </button>
       </div>
       {showPicker && (
         <div className="EmojiPickerContainer">
@@ -117,15 +121,16 @@ function CalendarFunc({ sendDataToParent }) {
       )}
       <Calendar
         onClickDay={saveDate}
-        onChange={onChange}
-        value={value}
+        // todo: date에 "-"" 추가하기
+        value={
+          date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6, 8)
+        }
         locale="en"
         formatDay={(locale, date) => moment(date).format("D")}
         tileContent={addEmoji}
       />
     </div>
   );
-  
 }
 
 export default CalendarFunc;
