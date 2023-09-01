@@ -4,7 +4,6 @@ import CalendarFunc from "../../components/calendar/CalendarFunc.js";
 import DiaryHome from "../../components/diary/DiaryHome";
 import TodoComponent from "../../components/todo/TodoComponent";
 import styled from "styled-components";
-import axios from "axios";
 import Nav from "../../components/nav/Nav";
 
 const AppSections = styled.div`
@@ -30,10 +29,10 @@ function Home() {
   const year = today.getFullYear();
   const month = ("0" + (today.getMonth() + 1)).slice(-2);
   const day = ("0" + today.getDate()).slice(-2);
-  const formattedToday = year + month + day;
+  const formattedToday = year + +month + +day;
 
   //선택한 날짜 세션스토리지에 저장
-  const dateInSessionStorage = sessionStorage.getItem("clickedDate");
+  const dateInSessionStorage = localStorage.getItem("clickedDate");
   const [date, setDate] = useState(
     dateInSessionStorage ? dateInSessionStorage : formattedToday
   );
@@ -41,7 +40,7 @@ function Home() {
   // 하위 컴포넌트로 전달할 함수
   const handleDataFromCalendarFunc = (data) => {
     setDate(data); // 받은 데이터를 상태에 업데이트
-    sessionStorage.setItem("clickedDate", data);
+    localStorage.setItem("clickedDate", data);
   };
 
   return (
@@ -50,6 +49,7 @@ function Home() {
       {/* 하위 컴포넌트에 함수를 props로 전달 */}
       <AppSections>
         <CalendarFunc
+          date={date}
           sendDataToParent={handleDataFromCalendarFunc}
           style={{ flex: 1 }}
         />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { InputContainer, Input, SaveButton } from "./Styles/TodoInputStyles";
 import { apiInstance } from "../../utils/api";
 
-function TodoInput({ sendDataToParent, categroyId, clickedDate }) {
+function TodoInput({ sendDataToParent, categroyId, clickedDate, todoChanger }) {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(); //카테고리 아이템으로 넘길 값
   const [addTodoList, setAddTodoList] = useState();
   const [error, setError] = useState(null);
@@ -34,7 +34,7 @@ function TodoInput({ sendDataToParent, categroyId, clickedDate }) {
           // 서버 응답이 실패인 경우
           setError("Failed to fetch data");
         }
-        console.log(addTodoList); //응답 데이터를 설정
+        // console.log(addTodoList); //응답 데이터를 설정
       } catch (error) {
         console.error("에러발생:", error);
       }
@@ -49,7 +49,15 @@ function TodoInput({ sendDataToParent, categroyId, clickedDate }) {
         type="text"
         placeholder="새로운 할 일을 입력하세요"
       />
-      <SaveButton onClick={handleButtonClick}>저장</SaveButton>
+      <SaveButton
+        onClick={async () => {
+          handleButtonClick();
+          const response = await apiInstance.get(`/api/todos/${clickedDate}`);
+          todoChanger(response.data);
+        }}
+      >
+        저장
+      </SaveButton>
     </InputContainer>
   );
 }

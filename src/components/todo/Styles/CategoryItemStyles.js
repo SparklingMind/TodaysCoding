@@ -5,32 +5,45 @@ export const CategoryItemContainer = styled.div`
 `;
 
 export const CategoryHeader = styled.div`
-  display: inline-flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 7px 10px;
-  background-color: #eee;
-  border-radius: 1px;
+  padding: 0;
   margin-bottom: 10px;
 `;
 
 export const CategoryTitle = styled.h2`
   margin: 0;
-  padding: 0;
+  padding: 7px;
   font-size: 1.5em;
   font-family: "fontMedium";
   font-weight: 600;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 5px;
 `;
 
-export const Button = styled.button`
+export const PlusButton = styled.button`
   background-color: transparent;
   font-faminly: "fontLight";
   margin-left: 5px;
-  font-size: 10pt;
+  font-size: 1em;
   border: none;
   cursor: pointer;
   color: #888;
   &:hover {
     color: #555;
-  }
-`;
+`
+
+export const DeleteCategoryButton = styled.button`
+  background-color: transparent;
+  font-faminly: "fontLight";
+  padding: 5px 7px;
+  margin-left: 5px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  background-color: #4f4f4f;
+  color: #fff;
+  border-radius: 5px;
+`
