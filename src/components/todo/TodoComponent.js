@@ -11,7 +11,7 @@ import {
 
 function TodoComponent({ clickedDate }) {
   const [data, setData] = useState([]); // get으로 받아온 데이터(카테고리 조회)
-  console.log("Todocompo", data);
+  // console.log("Todocompo", data);
   const [_id, _setId] = useState([]); //서버에서 온 _id값 저장할 상태
   const [_name, _setName] = useState([]); //카테고리 이름을 저장할 상태
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // 카테고리 모달의 열림/닫힘 상태를 관리
