@@ -9,7 +9,7 @@ import {
   PlusButton,
   DeleteCategoryButton,
 } from "./Styles/CategoryItemStyles";
-function CategoryItem({ name, todos, categroyId, clickedDate }) {
+function CategoryItem({ name, todos, categroyId, clickedDate, todoChanger }) {
   // console.log("categoryItems", todos);
   const [todoData, setTodoData] = useState(todos); //+버튼 클릭할때 값 상태
   const [clickedCheck, setClickedCheck] = useState(false); //+버튼 클릭할때 값 상태
@@ -74,15 +74,17 @@ function CategoryItem({ name, todos, categroyId, clickedDate }) {
           sendDataToParent={handleDataFromChild}
           categroyId={categroyId}
           clickedDate={clickedDate}
+          todoChanger={todoChanger}
         />
       ) : null}
       <ul style={{ paddingLeft: "10px" }}>
-        {todos.map((todo) => (
+        {todoData.map((todo) => (
           <TodoItem
             clickedDate={clickedDate}
             _id={todo._id}
             text={todo.text}
             completed={todo.completed}
+            todoChanger={todoChanger}
           />
         ))}
       </ul>

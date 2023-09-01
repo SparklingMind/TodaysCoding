@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CategoryItem from "./CategoryItem";
 
-function CategoryList({ data, clickedDate }) {
+function CategoryList({ data, clickedDate, todoChanger }) {
   // data를 로컬 상태로 관리
   const [categoryData, setCategoryData] = useState(data);
 
@@ -20,6 +20,7 @@ function CategoryList({ data, clickedDate }) {
           name={category.categoryName}
           todos={category.todos}
           clickedDate={clickedDate}
+          todoChanger={todoChanger}
         />
       ))}
     </div>

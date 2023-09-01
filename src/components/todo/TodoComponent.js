@@ -60,7 +60,12 @@ function TodoComponent({ clickedDate }) {
       {data.length === 0 ? (
         <div>추가한 카테고리가 없습니다.</div>
       ) : (
-        <CategoryList clickedDate={clickedDate} data={data} categoryId={_id} />
+        <CategoryList
+          clickedDate={clickedDate}
+          data={data}
+          categoryId={_id}
+          todoChanger={setData}
+        />
       )}
     </TodoContainer>
   );
