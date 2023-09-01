@@ -22,7 +22,7 @@ align-items: center;
 const Title = styled.div`
   display: flex;
   margin: 50px auto 0;
-  width: 35%;
+  width: 40%;
   
   h4 {
     font-size: 18px;
@@ -43,7 +43,7 @@ const MainContents = styled.div`
   justify-content: center;
 
   .customInput {
-    width:300px;
+    width: 100%;
     margin-bottom: 20px;
   }
 `
@@ -53,6 +53,7 @@ const ButtonContainer = styled.div`
   margin: 40px auto;
   justify-content: center;
 `
+
 
 const ChangePasswordPage = () => {
   const [currentData, setCurrentData] = useState({
@@ -134,6 +135,7 @@ const ChangePasswordPage = () => {
       </Title>
       <UnderLine />
       <MainContents>
+        <div style ={{width: "40%"}}>
         <Form className="form">
           <Form.Group className="pwdInput">
             <Form.Label className="pwdLabel">비밀번호</Form.Label>
@@ -151,6 +153,7 @@ const ChangePasswordPage = () => {
             autoComplete="off" onChange={handleNewPassWord} />
           </Form.Group>
         </Form>
+        </div>
       </MainContents>
       <ButtonContainer>
         <Button id="SignUpButton" variant="primary" onClick={passwordChange}>

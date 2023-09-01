@@ -24,9 +24,10 @@
   transition: all 0.3s ease; /* 모든 속성에 0.3초의 transition 효과 적용 */
 }
 
-.navWrap div:hover {
-  color: #9aa0ab; 
-  transform: scale(1.1); /* 호버 시 아이콘과 텍스트를 약간 확대 */
+.navWrap div:hover,
+.navWrap div.selected {
+  color: #007bff;  /* 원하는 파란색 코드 */
+  transform: scale(1.1);
 }
 
 .navWrap div span {
