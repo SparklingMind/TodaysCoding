@@ -14,7 +14,6 @@ function CategoryItem({ name, todos, categroyId, clickedDate, todoChanger }) {
   const [todoData, setTodoData] = useState(todos); //+버튼 클릭할때 값 상태
   const [clickedCheck, setClickedCheck] = useState(false); //+버튼 클릭할때 값 상태
   const [todos_id, setTodos_id] = useState(); //todos의 id 값만 내보낼 값
-  const [categoryDelete, setCategoryDelete] = useState(false); //카테고리 삭제 후 저장되는 데이터 상태
 
   //+버튼 클릭하면 TodoInput 창 띄우고, todos에 있는 _id 값 props로 내보내기
   const newTodo = () => {
@@ -37,7 +36,6 @@ function CategoryItem({ name, todos, categroyId, clickedDate, todoChanger }) {
         .delete(`/api/users/categories/${categroyId}`, {})
         .then((response) => {
           // console.log(response);
-          setCategoryDelete(true); // 카테고리 삭제 상태를 업데이트
         })
         .catch((error) => {
           console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
@@ -63,9 +61,25 @@ function CategoryItem({ name, todos, categroyId, clickedDate, todoChanger }) {
       <CategoryHeader>
         <CategoryTitle>
           {name}
-          <PlusButton onClick={newTodo}>➕</PlusButton>
+          <PlusButton
+            onClick={async () => {
+              newTodo();
+              const response = await apiInstance.get(
+                `/api/todos/${clickedDate}`
+              );
+              todoChanger(response.data);
+            }}
+          >
+            ➕
+          </PlusButton>
         </CategoryTitle>
-        <DeleteCategoryButton onClick={deleteCategory}>
+        <DeleteCategoryButton
+          onClick={async () => {
+            deleteCategory();
+            const response = await apiInstance.get(`/api/todos/${clickedDate}`);
+            todoChanger(response.data);
+          }}
+        >
           삭제
         </DeleteCategoryButton>
       </CategoryHeader>
