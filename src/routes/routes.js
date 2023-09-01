@@ -1,4 +1,4 @@
-import Home from "./HOME/Home";
+import Home from "./HOME/Home ";
 import HomePage from "./HOMEPAGE/HomePage";
 import LoginPage from "./HOMEPAGE/LoginPage";
 import SignUpPage from "./HOMEPAGE/SignUpPage";
@@ -39,7 +39,7 @@ export const ROUTE = {
     link: "/search",
     element: Search,
   },
-  STORE:{
+  STORE: {
     path: "/store",
     link: "/store",
     element: Store,

@@ -52,6 +52,8 @@ function TodoComponent({ clickedDate }) {
             <CategoryModal
               sendDataToParent={handleDataFromChild}
               categoryName={_name}
+              todoChanger={setData}
+              clickedDate={clickedDate}
             ></CategoryModal>
           </ModalContent>
         </ModalOverlay>
