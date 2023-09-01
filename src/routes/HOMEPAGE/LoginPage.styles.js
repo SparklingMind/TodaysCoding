@@ -29,7 +29,7 @@ const UpperContainer = styled.div`
     }
 `
 const LowerContainer = styled.div`
-    width: 15%;
+    width: 25%;
     margin: 0 auto;
 `
 const ButtonContainer = styled.div`

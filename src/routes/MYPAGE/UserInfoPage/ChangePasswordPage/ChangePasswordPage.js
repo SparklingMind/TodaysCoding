@@ -57,8 +57,8 @@ const ButtonContainer = styled.div`
 const ChangePasswordPage = () => {
   const [currentData, setCurrentData] = useState({
     currentPassword: "",
-    confirmCurrentPassword: "",
-    newPassword: ""
+    newPassword: "",
+    confirmNewPassword: ""
   })
 
   const [newData, setNewData] = useState({
@@ -112,9 +112,9 @@ const ChangePasswordPage = () => {
   }
 
   const handleConfirmPassWord = (event) => {
-    setCurrentData((prevData) => ({
+    setNewData((prevData) => ({
       ...prevData,
-      confirmCurrentPassword: event.target.value
+      confirmNewPassword: event.target.value
     }))
   }
 
@@ -140,15 +140,15 @@ const ChangePasswordPage = () => {
             <Form.Control className="customInput" type="password" placeholder="비밀번호" 
             autoComplete="off" onChange={handlePassword} />
           </Form.Group>
-          <Form.Group className="pwdConfirmInput">
-            <Form.Label className="pwdConfirmLabel">비밀번호 확인</Form.Label>
-            <Form.Control className="customInput" type="password" placeholder="비밀번호" 
-            autoComplete="off" onChange={handleConfirmPassWord} />
-          </Form.Group>
           <Form.Group className="newPwdInput">
             <Form.Label className="newPwdLabel">새로운 비밀번호</Form.Label>
             <Form.Control className="customInput" type="password" placeholder="비밀번호" 
             autoComplete="off" onChange={handleNewPassWord} />
+          </Form.Group>
+                    <Form.Group className="pwdConfirmInput">
+            <Form.Label className="pwdConfirmLabel">비밀번호 확인</Form.Label>
+            <Form.Control className="customInput" type="password" placeholder="비밀번호" 
+            autoComplete="off" onChange={handleConfirmPassWord} />
           </Form.Group>
         </Form>
       </MainContents>
