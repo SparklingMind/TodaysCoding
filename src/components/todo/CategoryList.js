@@ -13,7 +13,7 @@ function CategoryList({ data, clickedDate }) {
   console.log("data", data);
   return (
     <div>
-      {data.map((category, index) => (
+      {categoryData.map((category, index) => (
         <CategoryItem
           key={category.categoryId}
           categroyId={category.categoryId}

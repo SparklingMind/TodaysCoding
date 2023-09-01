@@ -34,7 +34,7 @@ function TodoInput({ sendDataToParent, categroyId, clickedDate }) {
           // 서버 응답이 실패인 경우
           setError("Failed to fetch data");
         }
-        console.log(addTodoList); //응답 데이터를 설정
+        // console.log(addTodoList); //응답 데이터를 설정
       } catch (error) {
         console.error("에러발생:", error);
       }

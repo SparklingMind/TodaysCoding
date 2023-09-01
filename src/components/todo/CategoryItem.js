@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
 import { apiInstance } from "../../utils/api";
@@ -10,7 +10,8 @@ import {
   DeleteCategoryButton,
 } from "./Styles/CategoryItemStyles";
 function CategoryItem({ name, todos, categroyId, clickedDate }) {
-  console.log("categoryItems", todos);
+  // console.log("categoryItems", todos);
+  const [todoData, setTodoData] = useState(todos); //+버튼 클릭할때 값 상태
   const [clickedCheck, setClickedCheck] = useState(false); //+버튼 클릭할때 값 상태
   const [todos_id, setTodos_id] = useState(); //todos의 id 값만 내보낼 값
   const [categoryDelete, setCategoryDelete] = useState(false); //카테고리 삭제 후 저장되는 데이터 상태
@@ -35,7 +36,7 @@ function CategoryItem({ name, todos, categroyId, clickedDate }) {
       apiInstance
         .delete(`/api/users/categories/${categroyId}`, {})
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           setCategoryDelete(true); // 카테고리 삭제 상태를 업데이트
         })
         .catch((error) => {
@@ -53,13 +54,20 @@ function CategoryItem({ name, todos, categroyId, clickedDate }) {
     setClickedCheck(data);
   };
 
+  useEffect(() => {
+    setTodoData(todos);
+  }, [todos]);
+
   return (
     <CategoryItemContainer>
       <CategoryHeader>
         <CategoryTitle>
-          {name}<PlusButton onClick={newTodo}>➕</PlusButton>
+          {name}
+          <PlusButton onClick={newTodo}>➕</PlusButton>
         </CategoryTitle>
-        <DeleteCategoryButton onClick={deleteCategory}>삭제</DeleteCategoryButton>
+        <DeleteCategoryButton onClick={deleteCategory}>
+          삭제
+        </DeleteCategoryButton>
       </CategoryHeader>
       {clickedCheck === true ? (
         <TodoInput
@@ -70,7 +78,12 @@ function CategoryItem({ name, todos, categroyId, clickedDate }) {
       ) : null}
       <ul style={{ paddingLeft: "10px" }}>
         {todos.map((todo) => (
-          <TodoItem clickedDate={clickedDate} _id={todo._id} text={todo.text} />
+          <TodoItem
+            clickedDate={clickedDate}
+            _id={todo._id}
+            text={todo.text}
+            completed={todo.completed}
+          />
         ))}
       </ul>
     </CategoryItemContainer>
