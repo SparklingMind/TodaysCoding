@@ -29,7 +29,7 @@ function Home() {
   const year = today.getFullYear();
   const month = ("0" + (today.getMonth() + 1)).slice(-2);
   const day = ("0" + today.getDate()).slice(-2);
-  const formattedToday = year + +month + +day;
+  const formattedToday = year + month + day;
 
   //선택한 날짜 세션스토리지에 저장
   const dateInSessionStorage = localStorage.getItem("clickedDate");

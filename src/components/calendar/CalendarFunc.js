@@ -9,6 +9,13 @@ import { BiMehBlank } from "react-icons/bi";
 import { apiInstance } from "../../utils/api";
 
 function CalendarFunc({ sendDataToParent, date }) {
+  const dateString = date.toString();
+  const formattedDate =
+    dateString.slice(0, 4) +
+    "-" +
+    dateString.slice(4, 6) +
+    "-" +
+    dateString.slice(6, 8);
   const [selectedEmoji, setSelectedEmoji] = useState(); //선택한 이모지를 저장할 상태
   const [showPicker, setShowPicker] = useState(false);
   const endOfMonth = moment(date).endOf("month").format("YYYYMMDD"); //클릭한 날짜 달의 마지막날짜
@@ -122,9 +129,7 @@ function CalendarFunc({ sendDataToParent, date }) {
       <Calendar
         onClickDay={saveDate}
         // todo: date에 "-"" 추가하기
-        value={
-          date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6, 8)
-        }
+        value={formattedDate}
         locale="en"
         formatDay={(locale, date) => moment(date).format("D")}
         tileContent={addEmoji}
