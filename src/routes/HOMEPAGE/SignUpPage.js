@@ -32,7 +32,7 @@ const SignUpPage = () => {
     signUpModal: false,
   });
 
-  const [userInfo, setUserInfo] = useState({
+  const [userData, setUserData] = useState({
     name: "",
     id: "",
     email: "",
@@ -41,11 +41,17 @@ const SignUpPage = () => {
     birthDate: "",
     aboutMe: "자기소개를 입력해보세요.",
     password: "",
-    passwordConfirm: "",
   });
 
-  const [validate, setValidate] = useState({
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    nameCheck: false,
+    id: "",
     idChecked: false,
+    password: "",
+    confirmPassword: "",
+    passwordChecked: false,
+    email: "",
     emailTested: true,
     emailChecked: false,
   });
@@ -59,12 +65,28 @@ const SignUpPage = () => {
     signUpModal,
   } = modals;
 
+  const handleNameCheck = (event) => {
+    const newName = event.target.value;
+
+    if (newName.length >= 2) {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        name: newName,
+        nameCheck: true,
+      }));
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        name: newName,
+      }));
+    }
+  };
+
   const handleIdCheck = () => {
-    const url = `http://34.64.151.119/api/users/register/${userInfo.id}`;
+    const url = `http://34.64.151.119/api/users/register/${userData.id}`;
     const requestData = {
-      id: userInfo.id,
+      id: userData.id,
     };
-    if (userInfo.id.length === 0) {
+    if (userData.id.length === 0) {
       setModals((prevModals) => ({
         ...prevModals,
         emptyModal: true,
@@ -80,8 +102,8 @@ const SignUpPage = () => {
             ...prevModals,
             duplicatedModal: true,
           }));
-          setValidate((preState) => ({
-            ...preState,
+          setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
             idChecked: false,
           }));
         } else {
@@ -89,8 +111,8 @@ const SignUpPage = () => {
             ...prevModals,
             checkedModal: true,
           }));
-          setValidate((preState) => ({
-            ...preState,
+          setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
             idChecked: true,
           }));
         }
@@ -104,47 +126,113 @@ const SignUpPage = () => {
       });
   };
 
-  const onChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name === "email") {
-      if (value.length >= 8) {
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        const newEmailTested = emailPattern.test(value);
-        setValidate((prevState) => ({
-          ...prevState,
-          emailTested: newEmailTested,
-          emailChecked: newEmailTested,
-        }));
-      } else {
-        setValidate((prevState) => ({
-          ...prevState,
-          emailTested: true,
-          emailChecked: false,
-        }));
-      }
-    }
+  const handleId = (event) => {
+    const newId = event.target.value;
     setUserInfo((prevUserInfo) => ({
       ...prevUserInfo,
-      [name]: value,
+      id: newId,
     }));
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      id: newId,
+    }));
+  };
+
+  const handlePassWord = (event) => {
+    const newPassword = event.target.value;
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      password: newPassword,
+    }));
+    setUserData((PrevUserData) => ({
+      ...PrevUserData,
+      password: newPassword,
+    }));
+    if (newPassword === userInfo.confirmPassword) {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        passwordChecked: true,
+      }));
+    }
+  };
+
+  const handleConfirmPassWord = (event) => {
+    const newConfirmPassword = event.target.value;
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      confirmPassword: newConfirmPassword,
+    }));
+    if (userData.password === newConfirmPassword) {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        passwordChecked: true,
+      }));
+    }
+  };
+
+  const handleEmailChange = (event) => {
+    const inputEmail = event.target.value;
+
+    if (inputEmail.length >= 8) {
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      const newEmailTested = emailPattern.test(inputEmail);
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        email: inputEmail,
+        emailTested: newEmailTested,
+        emailChecked: newEmailTested,
+      }));
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        email: inputEmail,
+      }));
+    } else {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        email: "",
+        emailTested: true,
+        emailChecked: false,
+      }));
+    }
   };
 
   const handleGender = (selectedOption) => {
     if (selectedOption) {
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        gender: selectedOption.value,
+      }));
     }
   };
+  const handleBirth = (event) => {
+    const selectedBirth = event.target.value;
+    const birthWithoutHyphens = selectedBirth.replace(/-/g, "");
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      birthDate: birthWithoutHyphens,
+    }));
+  };
 
+  const handleNickname = (event) => {
+    const newNickname = event.target.value;
+    setUserData((prevData) => ({
+      ...prevData,
+      nickname: newNickname,
+    }));
+  };
   const signUpCheck = () => {
-    if (userInfo.password !== userInfo.passwordConfirm) return false;
-    if (!validate.idChecked) return false;
+    return (
+      userInfo.idChecked && userInfo.passwordChecked && userInfo.emailChecked
+    );
   };
 
   const handleSignUp = () => {
+    const jsonUserData = JSON.stringify(userData);
+    console.log(jsonUserData);
     const url = "http://34.64.151.119/api/users/register";
 
     axios
-      .post(url, userInfo, {
+      .post(url, jsonUserData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -190,10 +278,9 @@ const SignUpPage = () => {
                 id="userIdInput"
                 className="customInput"
                 type="text"
-                name="id"
                 placeholder="아이디"
                 ref={idInput}
-                onChange={onChange}
+                onChange={handleId}
               />
               <Button
                 id="idCheckButton"
@@ -210,9 +297,8 @@ const SignUpPage = () => {
             <Form.Control
               className="customInput"
               type="password"
-              name="password"
               placeholder="비밀번호"
-              onChange={onChange}
+              onChange={handlePassWord}
             />
           </Form.Group>
           <Form.Group className="pwdInput">
@@ -220,9 +306,8 @@ const SignUpPage = () => {
             <Form.Control
               className="customInput"
               type="password"
-              name="passwordConfirm"
               placeholder="비밀번호 확인"
-              onChange={onChange}
+              onChange={handleConfirmPassWord}
             />
             {userInfo.password === userInfo.confirmPassword ? (
               ""
@@ -238,11 +323,10 @@ const SignUpPage = () => {
               <SignUpPageStyles.IdContainer>
                 <Form.Control
                   id="userNameInput"
-                  name="name"
                   className="customInput"
                   type="text"
                   placeholder="이름"
-                  onChange={onChange}
+                  onChange={handleNameCheck}
                 />
               </SignUpPageStyles.IdContainer>
             </Form.Group>
@@ -251,11 +335,10 @@ const SignUpPage = () => {
               <SignUpPageStyles.IdContainer>
                 <Form.Control
                   id="userNickNameInput"
-                  name="nickname"
                   className="customInput"
                   type="text"
                   placeholder="닉네임"
-                  onChange={onChange}
+                  onChange={handleNickname}
                 />
               </SignUpPageStyles.IdContainer>
             </Form.Group>
@@ -277,21 +360,21 @@ const SignUpPage = () => {
               <Form.Label className="birthLabel">생년월일</Form.Label>
               <Form.Control
                 className="birthInput"
-                name="birthdate"
                 type="date"
                 placeholder="생년월일"
-                onChange={onChange}
+                onChange={handleBirth}
               />
             </Form.Group>
             <Form.Label className="emailLabel">이메일</Form.Label>
             <Form.Control
               className="customInput"
               type="email"
-              name="email"
               placeholder="이메일"
-              onChange={onChange}
+              onChange={handleEmailChange}
             />
-            {!validate.emailTested && (
+            {userInfo.emailTested ? (
+              ""
+            ) : (
               <SignUpPageStyles.VerifyEmail>
                 이메일 형식이 올바르지 않습니다.
               </SignUpPageStyles.VerifyEmail>
