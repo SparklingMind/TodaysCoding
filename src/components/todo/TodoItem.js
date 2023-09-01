@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TodoContent, TodoFunc, Button } from "./Styles/TodoItemStyles";
 import { apiInstance } from "../../utils/api";
 
-function TodoItem({ _id, text, completed }) {
-  console.log("TodoItem", _id, text);
+function TodoItem({ _id, text, completed, todoChanger, clickedDate }) {
   //사용자가 등록한 todo 목록
   const [todoList, setTodoList] = useState(text);
   const [fetchedTodo, setFetchedTodo] = useState(); //투두 수정 요청을 통해 받아온 데이터 저장할 상태
@@ -97,8 +96,28 @@ function TodoItem({ _id, text, completed }) {
       </TodoContent>
       <TodoFunc>
         <span>
-          <Button onClick={sendTodoListToServer}>수정</Button>
-          <Button onClick={deleteTodoListToServer}>삭제</Button>
+          <Button
+            onClick={async () => {
+              sendTodoListToServer();
+              const response = await apiInstance.get(
+                `/api/todos/${clickedDate}`
+              );
+              todoChanger(response.data);
+            }}
+          >
+            수정
+          </Button>
+          <Button
+            onClick={async () => {
+              deleteTodoListToServer();
+              const response = await apiInstance.get(
+                `/api/todos/${clickedDate}`
+              );
+              todoChanger(response.data);
+            }}
+          >
+            삭제
+          </Button>
         </span>
       </TodoFunc>
     </div>
