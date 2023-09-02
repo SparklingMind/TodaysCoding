@@ -1,95 +1,77 @@
-import React, { useState } from "react";
-import { ModalOverlayStyles, ModalContentStyles } from "./CategoryModalStyles";
+import React, { useState, useEffect } from "react";
+import { apiInstance } from "../../utils/api";
+import {
+  ModalOverlayStyles,
+  ModalContentStyles,
+} from "./Styles/CategoryModalStyles";
 
-function CategoryModal({ categories, setCategories, onClose }) {
-  // 카테고리 추가를 위한 상태
-  const [newCategory, setNewCategory] = useState(""); // 새 카테고리 이름 입력을 위한 상태
-  const [editingCategory, setEditingCategory] = useState(null); // 현재 편집 중인 카테고리를 관리하는 상태
-  const [newCategoryName, setNewCategoryName] = useState(""); // 편집 중인 카테고리의 새로운 이름을 관리하는 상태
+function CategoryModal({ sendDataToParent, todoChanger, clickedDate }) {
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(); //TodoComponent로 넘길 값
+  const [newCategory, setNewCategory] = useState(""); //사용자가 추가하는 새 카테고리 input 값
+  const [error, setError] = useState();
 
-  function handleAddCategory() {
-    if (newCategory) {
-      setCategories([...categories, { name: newCategory, todos: [] }]);
-      setNewCategory("");
+  //카테고리 추가 버튼 누르면 input 내용 서버로 전송
+  //put 요청 보내는 함수
+  const addCategoryListToServer = async () => {
+    // 카테고리 추가
+    const addCategoryList = {
+      categoryName: newCategory,
+    };
+    try {
+      const response = await apiInstance.put(
+        `/api/users/categories`,
+        addCategoryList
+      );
+      if (response.status >= 200 && response.status < 300) {
+        // 서버 응답이 성공인 경우
+        setNewCategory(response.data); // 받아온 데이터를 상태에 업데이트
+      } else {
+        // 서버 응답이 실패인 경우
+        setError("Failed to fetch data");
+      }
+      // console.log(newCategory); //응답 데이터를 설정
+    } catch (error) {
+      console.error("에러발생:", error);
     }
-  }
+  };
 
-  // 카테고리를 편집 모드로 변경하기 위한 함수
-  function handleEdit(category) {
-    setEditingCategory(category);
-    setNewCategoryName(category.name);
-  }
-
-  // 편집된 카테고리를 저장하기 위한 함수
-  function handleSaveEditedCategory() {
-    const updatedCategories = categories.map((cat) =>
-      cat === editingCategory ? { ...cat, name: newCategoryName } : cat
-    );
-    setCategories(updatedCategories);
-    setEditingCategory(null); // 편집 모드 종료
-  }
-
-  // 카테고리를 삭제하기 위한 함수
-  function handleDelete(category) {
-    const filteredCategories = categories.filter((cat) => cat !== category); // 삭제하려는 카테고리를 제외한 리스트 생성
-    setCategories(filteredCategories);
-  }
-
-  // 카테고리의 대표색을 변경하기 위한 함수
-  function handleColorChange(e, category) {
-    const updatedCategories = categories.map((cat) =>
-      cat === category ? { ...cat, color: e.target.value } : cat
-    );
-    setCategories(updatedCategories);
-  }
+  //모달창 닫기
+  const handleButtonClick = () => {
+    // 하위 컴포넌트에서 상위 컴포넌트로 데이터 전달
+    setIsCategoryModalOpen(!isCategoryModalOpen);
+    sendDataToParent(isCategoryModalOpen);
+    addCategoryListToServer(); // 카테고리 추가 요청 보내기
+  };
 
   return (
     <ModalOverlayStyles>
       <ModalContentStyles>
-        {/* 각 카테고리에 대하여 */}
-        {/* 카테고리 추가 부분 */}
         <div>
           <input
-            value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             placeholder="새 카테고리"
           />
-          <button onClick={handleAddCategory}>카테고리 추가</button>
+          <button
+            onClick={async () => {
+              handleButtonClick();
+              const response = await apiInstance.get(
+                `/api/todos/${clickedDate}`
+              );
+              todoChanger(response.data);
+            }}
+          >
+            카테고리 추가
+          </button>
         </div>
-        {categories.map((category) => (
-          <div key={category.name}>
-            {editingCategory === category ? ( // 편집 중인 카테고리일 경우
-              <>
-                {/* 새로운 카테고리 이름을 입력하는 필드 */}
-                <input
-                  value={newCategoryName}
-                  onChange={(e) => setNewCategoryName(e.target.value)}
-                />
-                {/* 변경된 이름을 저장하는 버튼 */}
-                <button onClick={handleSaveEditedCategory}>저장</button>
-              </>
-            ) : (
-              <>
-                {/* 카테고리 이름 표시 */}
-                <span>{category.name}</span>
-                <div className="button-group">
-                  {/* 해당 카테고리를 편집 모드로 변경하는 버튼 */}
-                  <button onClick={() => handleEdit(category)}>편집</button>
-                  {/* 해당 카테고리를 삭제하는 버튼 */}
-                  <button onClick={() => handleDelete(category)}>삭제</button>
-                  {/* 카테고리 대표색을 선택하는 컬러 피커
-                      <input 
-                        type="color" 
-                        value={category.color || '#FFFFFF'}
-                        onChange={(e) => handleColorChange(e, category)}
-                      /> */}
-                </div>
-              </>
-            )}
-          </div>
-        ))}
-        {/* 모달을 닫는 버튼 */}
-        <button onClick={onClose}>닫기</button>
+        <button
+          onClick={async () => {
+            handleButtonClick();
+            const response = await apiInstance.get(`/api/todos/${clickedDate}`);
+            todoChanger(response.data);
+          }}
+        >
+          닫기
+        </button>
       </ModalContentStyles>
     </ModalOverlayStyles>
   );

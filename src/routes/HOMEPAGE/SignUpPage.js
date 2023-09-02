@@ -1,142 +1,296 @@
-import { useEffect, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
+import SignUpPageStyles from "./SignUpPage.styles";
+import { Button } from "react-bootstrap";
+import Select from "react-select";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-
-const UpperContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 100px;
-  margin-top: 10vh;
-
-  h1 {
-    font-size: 45px;
-    letter-spacing: 0px;
-    cursor: pointer;
-    &:hover {
-      color: gray;
-      transition: color 0.3s ease;
-    }
-  }
-
-  h1 > a {
-    text-decoration: inherit;
-    color: inherit;
-  }
-`;
-const LowerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const Sign = styled.span`
-  display: flex;
-  justify-content: center;
-  width: 70%;
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const Underline = styled.div`
-  border-top: 2px solid gray;
-  width: 40%;
-  margin: 20px auto;
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  .idInput {
-    width: 70%;
-  }
-
-  .idLabel,
-  .pwdLabel,
-  .pwdConfirmLabel,
-  .emailLabel {
-    display: flex;
-    margin-left: 10px;
-    margin-top: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    color: gray;
-  }
-
-  .customInput::placeholder {
-    font-size: 12px;
-  }
-
-  .form {
-    margin: 0 auto;
-    width: 20%;
-    position: relative;
-  }
-  .customInput {
-    max-width: 100% !important;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  margin-top: 20px;
-  padding: 10px 50px;
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-`;
-
-const VerifyPwd = styled.div`
-  color: red;
-  font-size: 12px;
-  margin: 5px 10px auto;
-`;
+import IdEmptyModal from "../../components/modal/IdEmptyModal";
+import IdCheckedModal from "../../components/modal/IdCheckedModal";
+import IdDuplicatedModal from "../../components/modal/IdDuplicatedModal";
+import SignUpCompleteModal from "../../components/modal/SignUpCompleteModal";
+import SignUpFailModal from "../../components/modal/SignUpFailModal";
+import SignUpErrorModal from "../../components/modal/SignUpErrorModal";
+import axios from "axios";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const handleHome = () => {
     navigate("/");
   };
-  const [pwd, setPwd] = useState("");
-  const [confirmPwd, setConfirmPwd] = useState("");
-  const [email, setEmail] = useState("");
-  const [isEmailValid, setEmailValid] = useState(true);
+
+  const idInput = useRef(null);
+  useEffect(() => {
+    idInput.current.focus();
+  }, []);
+
+  const [modals, setModals] = useState({
+    emptyModal: false,
+    checkedModal: false,
+    duplicatedModal: false,
+    signUpFailModal: false,
+    signUpErrorModal: false,
+    signUpModal: false,
+  });
+
+  const [userData, setUserData] = useState({
+    name: "",
+    id: "",
+    email: "",
+    nickname: "",
+    gender: "",
+    birthDate: "",
+    aboutMe: "자기소개를 입력해보세요.",
+    password: "",
+  });
+
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    nameCheck: false,
+    id: "",
+    idChecked: false,
+    password: "",
+    confirmPassword: "",
+    passwordChecked: false,
+    email: "",
+    emailTested: true,
+    emailChecked: false,
+  });
+
+  const {
+    emptyModal,
+    checkedModal,
+    duplicatedModal,
+    signUpFailModal,
+    signUpErrorModal,
+    signUpModal,
+  } = modals;
+
+  const handleNameCheck = (event) => {
+    const newName = event.target.value;
+
+    if (newName.length >= 2) {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        name: newName,
+        nameCheck: true,
+      }));
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        name: newName,
+      }));
+    }
+  };
+
+  const handleIdCheck = () => {
+    const url = `http://34.64.151.119/api/users/register/${userData.id}`;
+    const requestData = {
+      id: userData.id,
+    };
+    if (userData.id.length === 0) {
+      setModals((prevModals) => ({
+        ...prevModals,
+        emptyModal: true,
+      }));
+      return;
+    }
+    axios
+      .post(url, requestData)
+      .then((response) => {
+        const responseMessage = response.data.message;
+        if (responseMessage === "다른 아이디를 사용해주세요.") {
+          setModals((prevModals) => ({
+            ...prevModals,
+            duplicatedModal: true,
+          }));
+          setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
+            idChecked: false,
+          }));
+        } else {
+          setModals((prevModals) => ({
+            ...prevModals,
+            checkedModal: true,
+          }));
+          setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
+            idChecked: true,
+          }));
+        }
+      })
+      .catch((error) => {
+        setModals((prevModals) => ({
+          ...prevModals,
+          signUpErrorModal: true,
+        }));
+        console.error("아이디 중복 확인 오류:", error);
+      });
+  };
+
+  const handleId = (event) => {
+    const newId = event.target.value;
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      id: newId,
+    }));
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      id: newId,
+    }));
+  };
 
   const handlePassWord = (event) => {
-    setPwd(event.target.value);
+    const newPassword = event.target.value;
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      password: newPassword,
+    }));
+    setUserData((PrevUserData) => ({
+      ...PrevUserData,
+      password: newPassword,
+    }));
+    if (newPassword === userInfo.confirmPassword) {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        passwordChecked: true,
+      }));
+    }
   };
 
   const handleConfirmPassWord = (event) => {
-    setConfirmPwd(event.target.value);
+    const newConfirmPassword = event.target.value;
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      confirmPassword: newConfirmPassword,
+    }));
+    if (userData.password === newConfirmPassword) {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        passwordChecked: true,
+      }));
+    }
   };
 
   const handleEmailChange = (event) => {
     const inputEmail = event.target.value;
-    setEmail(inputEmail);
 
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    setEmailValid(emailPattern.test(inputEmail));
+    if (inputEmail.length >= 8) {
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      const newEmailTested = emailPattern.test(inputEmail);
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        email: inputEmail,
+        emailTested: newEmailTested,
+        emailChecked: newEmailTested,
+      }));
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        email: inputEmail,
+      }));
+    } else {
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        email: "",
+        emailTested: true,
+        emailChecked: false,
+      }));
+    }
+  };
+
+  const handleGender = (selectedOption) => {
+    if (selectedOption) {
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        gender: selectedOption.value,
+      }));
+    }
+  };
+  const handleBirth = (event) => {
+    const selectedBirth = event.target.value;
+    const birthWithoutHyphens = selectedBirth.replace(/-/g, "");
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      birthDate: birthWithoutHyphens,
+    }));
+  };
+
+  const handleNickname = (event) => {
+    const newNickname = event.target.value;
+    setUserData((prevData) => ({
+      ...prevData,
+      nickname: newNickname,
+    }));
+  };
+  const signUpCheck = () => {
+    return (
+      userInfo.idChecked && userInfo.passwordChecked && userInfo.emailChecked
+    );
+  };
+
+  const handleSignUp = () => {
+    const jsonUserData = JSON.stringify(userData);
+    console.log(jsonUserData);
+    const url = "http://34.64.151.119/api/users/register";
+
+    axios
+      .post(url, jsonUserData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.data.success === true) {
+          setModals((prevModals) => ({
+            ...prevModals,
+            signUpModal: true,
+          }));
+        } else {
+          setModals((prevModals) => ({
+            ...prevModals,
+            signUpErrorModal: true,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error("요청 에러", err);
+        setModals((prevModals) => ({
+          ...prevModals,
+          signUpErrorModal: true,
+          signUpModal: false,
+        }));
+      });
   };
 
   return (
     <div>
-      <UpperContainer>
+      <SignUpPageStyles.UpperContainer>
         <h1 onClick={handleHome}>오늘도 코딩</h1>
-      </UpperContainer>
-      <LowerContainer>
-        <Sign>회원가입</Sign>
-        <Underline></Underline>
-      </LowerContainer>
-      <MainContainer>
+      </SignUpPageStyles.UpperContainer>
+      <SignUpPageStyles.LowerContainer>
+        <SignUpPageStyles.Sign>회원가입</SignUpPageStyles.Sign>
+        <SignUpPageStyles.Underline></SignUpPageStyles.Underline>
+      </SignUpPageStyles.LowerContainer>
+      <SignUpPageStyles.MainContainer>
         <Form className="form">
           <Form.Group className="idInput">
             <Form.Label className="idLabel">아이디</Form.Label>
-            <Form.Control
-              className="customInput"
-              type="text"
-              placeholder="아이디"
-            />
+            <SignUpPageStyles.IdContainer>
+              <Form.Control
+                id="userIdInput"
+                className="customInput"
+                type="text"
+                placeholder="아이디"
+                ref={idInput}
+                onChange={handleId}
+              />
+              <Button
+                id="idCheckButton"
+                style={{ width: "90px", height: "40px" }}
+                variant="primary"
+                onClick={handleIdCheck}
+              >
+                중복 확인
+              </Button>
+            </SignUpPageStyles.IdContainer>
           </Form.Group>
           <Form.Group className="pwdInput">
             <Form.Label className="pwdLabel">비밀번호</Form.Label>
@@ -144,6 +298,7 @@ const SignUpPage = () => {
               className="customInput"
               type="password"
               placeholder="비밀번호"
+              onChange={handlePassWord}
             />
           </Form.Group>
           <Form.Group className="pwdInput">
@@ -154,13 +309,62 @@ const SignUpPage = () => {
               placeholder="비밀번호 확인"
               onChange={handleConfirmPassWord}
             />
-            {pwd === confirmPwd ? (
+            {userInfo.password === userInfo.confirmPassword ? (
               ""
             ) : (
-              <VerifyPwd>비밀번호가 일치하지 않습니다.</VerifyPwd>
+              <SignUpPageStyles.VerifyPwd>
+                비밀번호가 일치하지 않습니다.
+              </SignUpPageStyles.VerifyPwd>
             )}
           </Form.Group>
           <Form.Group className="emailInput">
+            <Form.Group className="idInput">
+              <Form.Label className="idLabel">이름</Form.Label>
+              <SignUpPageStyles.IdContainer>
+                <Form.Control
+                  id="userNameInput"
+                  className="customInput"
+                  type="text"
+                  placeholder="이름"
+                  onChange={handleNameCheck}
+                />
+              </SignUpPageStyles.IdContainer>
+            </Form.Group>
+            <Form.Group className="nicknameInput">
+              <Form.Label className="nicknameLabel">닉네임</Form.Label>
+              <SignUpPageStyles.IdContainer>
+                <Form.Control
+                  id="userNickNameInput"
+                  className="customInput"
+                  type="text"
+                  placeholder="닉네임"
+                  onChange={handleNickname}
+                />
+              </SignUpPageStyles.IdContainer>
+            </Form.Group>
+            <Form.Group className="genderInput">
+              <Form.Label className="genderLabel">성별</Form.Label>
+              <SignUpPageStyles.IdContainer>
+                <Select
+                  className="customSelect"
+                  onChange={handleGender}
+                  options={[
+                    { value: "", label: "성별을 선택해주세요." },
+                    { value: "남성", label: "남성" },
+                    { value: "여성", label: "여성" },
+                  ]}
+                />
+              </SignUpPageStyles.IdContainer>
+            </Form.Group>
+            <Form.Group className="birthInput">
+              <Form.Label className="birthLabel">생년월일</Form.Label>
+              <Form.Control
+                className="birthInput"
+                type="date"
+                placeholder="생년월일"
+                onChange={handleBirth}
+              />
+            </Form.Group>
             <Form.Label className="emailLabel">이메일</Form.Label>
             <Form.Control
               className="customInput"
@@ -168,49 +372,84 @@ const SignUpPage = () => {
               placeholder="이메일"
               onChange={handleEmailChange}
             />
-            {isEmailValid
-              ? ""
-              : "<VerifyEmail>이메일 형식이 올바르지 않습니다.</VerifyEmail>"}
+            {userInfo.emailTested ? (
+              ""
+            ) : (
+              <SignUpPageStyles.VerifyEmail>
+                이메일 형식이 올바르지 않습니다.
+              </SignUpPageStyles.VerifyEmail>
+            )}
           </Form.Group>
-          <ButtonContainer>
-            <LoginButton />
-          </ButtonContainer>
+          <SignUpPageStyles.ButtonContainer>
+            <Button
+              style={{ width: "100px", height: "50px" }}
+              id="SignUpButton"
+              variant="primary"
+              onClick={() => {
+                if (!signUpCheck()) {
+                  setModals((prevModals) => ({
+                    ...prevModals,
+                    signUpFailModal: true,
+                  }));
+                } else {
+                  handleSignUp();
+                }
+              }}
+            >
+              가입하기
+            </Button>
+          </SignUpPageStyles.ButtonContainer>
         </Form>
-      </MainContainer>
+      </SignUpPageStyles.MainContainer>
+      <div>
+        <IdEmptyModal
+          show={emptyModal}
+          onHide={() =>
+            setModals((prevModals) => ({ ...prevModals, emptyModal: false }))
+          }
+        />
+        <IdCheckedModal
+          show={checkedModal}
+          onHide={() =>
+            setModals((prevModals) => ({ ...prevModals, checkedModal: false }))
+          }
+        />
+        <IdDuplicatedModal
+          show={duplicatedModal}
+          onHide={() =>
+            setModals((prevModals) => ({
+              ...prevModals,
+              duplicatedModal: false,
+            }))
+          }
+        />
+        <SignUpFailModal
+          show={signUpFailModal}
+          onHide={() =>
+            setModals((prevModals) => ({
+              ...prevModals,
+              signUpFailModal: false,
+            }))
+          }
+        />
+        <SignUpErrorModal
+          show={signUpErrorModal}
+          onHide={() =>
+            setModals((prevModals) => ({
+              ...prevModals,
+              signUpErrorModal: false,
+            }))
+          }
+        />
+        <SignUpCompleteModal
+          show={signUpModal}
+          onHide={() =>
+            setModals((prevModals) => ({ ...prevModals, signUpModal: false }))
+          }
+        />
+      </div>
     </div>
   );
 };
-
-function LoginButton() {
-  const [isLoading, setLoading] = useState(false);
-
-  useEffect(() => {
-    function simulateNetworkRequest() {
-      return new Promise((resolve) => setTimeout(resolve, 2000));
-    }
-
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
-
-  const handleClick = () => setLoading(true);
-
-  return (
-    <Button
-      variant="primary"
-      disabled={isLoading}
-      onClick={!isLoading ? handleClick : null}
-      style={{
-        marginTop: "20px",
-        padding: "10px 50px",
-      }}
-    >
-      가입하기
-    </Button>
-  );
-}
 
 export default SignUpPage;

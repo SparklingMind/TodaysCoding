@@ -1,188 +1,105 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TodoInput from "./TodoInput";
-import styled from "styled-components";
+import TodoItem from "./TodoItem";
+import { apiInstance } from "../../utils/api";
+import {
+  CategoryItemContainer,
+  CategoryHeader,
+  CategoryTitle,
+  PlusButton,
+  DeleteCategoryButton,
+} from "./Styles/CategoryItemStyles";
+function CategoryItem({ name, todos, categroyId, clickedDate, todoChanger }) {
+  // console.log("categoryItems", todos);
+  const [todoData, setTodoData] = useState(todos); //+버튼 클릭할때 값 상태
+  const [clickedCheck, setClickedCheck] = useState(false); //+버튼 클릭할때 값 상태
+  const [todos_id, setTodos_id] = useState(); //todos의 id 값만 내보낼 값
 
-// styled-components를 사용해 각 UI 요소의 스타일 정의
-const CategoryItemContainer = styled.div`
-  margin-top: 20px;
-`;
-
-const CategoryHeader = styled.div`
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 10px;
-  background-color: #eee;
-  border-radius: 15px;
-  margin-bottom: 10px;
-`;
-
-const CategoryTitle = styled.h2`
-  margin: 0;
-  padding: 0;
-  font-size: 1.5em;
-  font-family: "fontMedium";
-  font-weight: 600;
-`;
-
-const Button = styled.button`
-  background-color: transparent;
-  font-faminly: "fontLight";
-  margin-left: 5px;
-  font-size: 10pt;
-  border: none;
-  cursor: pointer;
-  color: #888;
-  &:hover {
-    color: #555;
-  }
-`;
-
-const TodoContent = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const TodoItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
-  font-family: "fontMedium";
-`;
-
-// CategoryItem 컴포넌트 정의
-function CategoryItem({ category, categories, setCategories }) {
-  // 할 일 입력 부분을 보여줄지 결정하는 변수
-  const [isInputVisible, setInputVisible] = useState(false);
-  // 수정 중인 할 일의 인덱스와 텍스트를 저장하는 상태 변수
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [editingText, setEditingText] = useState("");
-
-  // 체크박스를 클릭했을 때 할 일의 완료 상태를 바꾸는 함수
-  const handleCheck = (index) => {
-    setCategories((prevCategories) => {
-      return prevCategories.map((cat) => {
-        if (cat.name === category.name) {
-          const updatedTodos = cat.todos.map((todo, todoIndex) => {
-            if (todoIndex === index) {
-              return { ...todo, completed: !todo.completed };
-            }
-            return todo;
-          });
-
-          updatedTodos.sort((a, b) => {
-            if (a.completed !== b.completed) {
-              return a.completed ? 1 : -1;
-            }
-            // 원래 순서대로 정렬 (undefined 값 처리 추가)
-            return (a.originalIndex || 0) - (b.originalIndex || 0);
-          });
-
-          return { ...cat, todos: updatedTodos };
-        } else {
-          return cat;
-        }
-      });
-    });
+  //+버튼 클릭하면 TodoInput 창 띄우고, todos에 있는 _id 값 props로 내보내기
+  const newTodo = () => {
+    setClickedCheck(!clickedCheck);
+    for (let i = 0; i < todos.length; i++) {
+      setTodos_id(todos[i]._id);
+    }
   };
 
-  // "수정" 버튼 클릭시 수정 모드로 진입
-  // 할 일의 텍스트와 해당 항목의 인덱스를 상태에 저장
-  const handleStartEditing = (index, text) => {
-    setEditingIndex(index);
-    setEditingText(text);
+  //-버튼 클릭하면 경고창 띄우고 카테고리 뭉텅이 삭제
+  const deleteCategory = () => {
+    if (
+      window.confirm(
+        "카테고리 목록을 삭제하시겠습니까?\n포함되어 있던 할일들은 모두 사라집니다."
+      )
+    ) {
+      alert("삭제되었습니다.");
+      // del요청 카테고리 삭제
+      apiInstance
+        .delete(`/api/users/categories/${categroyId}`, {})
+        .then((response) => {
+          // console.log(response);
+        })
+        .catch((error) => {
+          console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
+        });
+    } else {
+      alert("취소합니다.");
+    }
   };
 
-  // 수정된 내용을 저장하고 수정 모드를 종료하는 함수
-  const handleEdit = (index) => {
-    setEditingIndex(null);
-    setCategories((prevCategories) => {
-      return prevCategories.map((cat) => {
-        if (cat.name === category.name) {
-          const updatedTodos = [...cat.todos];
-          updatedTodos[index].text = editingText;
-          return { ...cat, todos: updatedTodos };
-        } else {
-          return cat;
-        }
-      });
-    });
-    setEditingText("");
+  //사용자가 투두 새 등록을 하고 저장을 누르면 !clickedCheck
+  // 하위 컴포넌트로 전달할 함수
+  const handleDataFromChild = (data) => {
+    // 받은 데이터를 상태에 업데이트
+    setClickedCheck(data);
   };
 
-  // "삭제" 버튼을 클릭했을 때 해당 할 일 항목을 삭제하는 함수
-  const handleDelete = (index) => {
-    setCategories((prevCategories) => {
-      return prevCategories.map((cat) => {
-        if (cat.name === category.name) {
-          const updatedTodos = [...cat.todos];
-          updatedTodos.splice(index, 1);
-          return { ...cat, todos: updatedTodos };
-        } else {
-          return cat;
-        }
-      });
-    });
-  };
+  useEffect(() => {
+    setTodoData(todos);
+  }, [todos]);
 
   return (
     <CategoryItemContainer>
       <CategoryHeader>
-        <CategoryTitle>{category.name}</CategoryTitle>
-        {/* "+" 버튼 클릭으로 isInputVisible의 값을 반전
-        새로운 할 일을 입력할 수 있는 부분을 표시하거나 숨김 */}
-        <Button onClick={() => setInputVisible(!isInputVisible)}>➕</Button>
+        <CategoryTitle>
+          {name}
+          <PlusButton
+            onClick={async () => {
+              newTodo();
+              const response = await apiInstance.get(
+                `/api/todos/${clickedDate}`
+              );
+              todoChanger(response.data);
+            }}
+          >
+            ➕
+          </PlusButton>
+        </CategoryTitle>
+        <DeleteCategoryButton
+          onClick={async () => {
+            deleteCategory();
+            const response = await apiInstance.get(`/api/todos/${clickedDate}`);
+            todoChanger(response.data);
+          }}
+        >
+          삭제
+        </DeleteCategoryButton>
       </CategoryHeader>
-
-      {/* isInputVisible 상태가 true일 경우에만 TodoInput 컴포넌트를 표시 */}
-      {isInputVisible && (
+      {clickedCheck === true ? (
         <TodoInput
-          category={category}
-          categories={categories}
-          setCategories={setCategories}
-          setInputVisible={setInputVisible}
+          sendDataToParent={handleDataFromChild}
+          categroyId={categroyId}
+          clickedDate={clickedDate}
+          todoChanger={todoChanger}
         />
-      )}
-
-      {/* map 함수를 사용해 각 할 일 항목을 순회하며 UI 요소 생성 */}
-      <ul style={{ paddingLeft: "20px" }}>
-        {category.todos.map((todo, index) => (
-          <TodoItem key={index} completed={todo.completed}>
-            <TodoContent>
-              {/* 체크박스 클릭시 handleCheck 함수 실행 */}
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => handleCheck(index)}
-                style={{ marginRight: "20px" }}
-              />
-
-              {/* 수정 중인 항목이면 입력 필드 표시, 그렇지 않으면 텍스트 표시 */}
-              {editingIndex === index ? (
-                <input
-                  value={editingText}
-                  onChange={(e) => setEditingText(e.target.value)}
-                />
-              ) : (
-                todo.text
-              )}
-            </TodoContent>
-
-            {/* 수정 버튼과 삭제 버튼 표시 */}
-            <span>
-              {editingIndex === index ? (
-                <Button onClick={() => handleEdit(index)}>저장</Button>
-              ) : (
-                <Button onClick={() => handleStartEditing(index, todo.text)}>
-                  수정
-                </Button>
-              )}
-
-              <Button onClick={() => handleDelete(index)}>삭제</Button>
-            </span>
-          </TodoItem>
+      ) : null}
+      <ul style={{ paddingLeft: "10px" }}>
+        {todoData.map((todo) => (
+          <TodoItem
+            clickedDate={clickedDate}
+            _id={todo._id}
+            text={todo.text}
+            completed={todo.completed}
+            todoChanger={todoChanger}
+          />
         ))}
       </ul>
     </CategoryItemContainer>

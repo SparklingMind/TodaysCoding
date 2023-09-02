@@ -1,128 +1,76 @@
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import { MyPageStyle } from "./MyPage.style";
+import { ROUTE } from "../../routes/routes";
 import { Link } from "react-router-dom";
-
-const UpperContainer = styled.div`
-  margin-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  #logoImage {
-    width: 50px;
-    height: 50px;
-  }
-
-  span {
-    margin-top: 10px;
-    font-weight: 600;
-  }
-`;
-
-const LowerContainer = styled.div`
-  display: flex;
-  width: 50%;
-  margin: 30px auto;
-`;
-
-const ProfileWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  border: 1px ridge gray;
-  width: 100%;
-  height: 120px;
-
-  #profileImage {
-    margin-left: 30px;
-    width: 80px;
-    height: 80px;
-  }
-  #userName {
-    margin-left: 30px;
-    font-weight: 600;
-  }
-`;
-const MainContainer = styled.div`
-  display: flex;
-  margin: 0 auto;
-  flex-direction: column;
-  width: 50%;
-`;
-
-const UpperLine = styled.div`
-  disply: flex;
-  border: 1px solid black;
-  height: 1px;
-  width: 100%;
-`;
-const LowerLine = styled.div`
-  disply: flex;
-  border: 1px solid black;
-  height: 1px;
-  width: 100%;
-`;
-
-const ListWrapper = styled.div`
-  display: flex;
-  height: 250px;
-  ul {
-    margin-top: 30px;
-    line-height: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    list-style: none;
-    text-align: left;
-  }
-`;
-
-const UnderLine = styled.div`
-  border-bottom: 1px solid #d5d5d5;
-  height: 10px;
-  width: 48vw;
-`;
-
-const SplitLine = styled.div`
-  height: 1px;
-  width: 100%;
-  border-top: 1px solid gray;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;  // 밑줄 제거
-  color: inherit;  // 부모 요소의 색상을 상속받음
-  &:hover {
-    text-decoration: none;  // 마우스 오버 시 밑줄이 나타나지 않도록 설정
-  }
-`;
+import { apiInstance } from "../../utils/api";
+import Nav from "../../components/nav/Nav";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
+  const [data, setData] = useState({
+    name: "",
+    nickname: "",
+    profileImgUrl: ""
+  }); 
+
+  useEffect(() => {
+    apiInstance
+      .get("/api/users", {})
+      .then((response) => {
+        const { name, nickname, profileImgUrl } = response.data
+        setData(response.data); // get 데이터를 상태에 저장
+      })
+      .catch((error) => {
+        console.error("데이터를 가져오는 중에 오류가 발생했습니다.:", error);
+      });
+  }, []);
+ 
+  const nav = useNavigate();
+  const handleHome = () => {
+    nav("/");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    handleHome();
+  };
+
   return (
-    <div>
-      <UpperContainer>
-        <img id="logoImage" src="/logo.jpg" alt="로고" />
-        <span>오늘도 코딩</span>
-      </UpperContainer>
-      <LowerContainer>
-        <ProfileWrapper>
-          <img id="profileImage" src="/profile.jpg" />
-          <span id="userName">홍길동(아무개)</span>
-        </ProfileWrapper>
-      </LowerContainer>
-      <MainContainer>
-        <UpperLine></UpperLine>
-        <ListWrapper>
+    <div style={{ paddingBottom: "150px" }}>
+      <MyPageStyle.UpperContainer>
+        <img id="logoImage" src="/main-logo.png" alt="로고" />
+      </MyPageStyle.UpperContainer>
+      <MyPageStyle.LowerContainer>
+        <MyPageStyle.ProfileWrapper>
+          <img id="profileImage" src={data.profileImgUrl || "/profile.jpg"} />
+          {/* 데이터가 있으면 name표시 */}
+          <span id="userName">
+            {data?.name}({data?.nickname})
+          </span>
+        </MyPageStyle.ProfileWrapper>
+      </MyPageStyle.LowerContainer>
+      <MyPageStyle.MainContainer>
+        <MyPageStyle.UpperLine />
+        <MyPageStyle.ListWrapper>
           <ul>
-            <li><StyledLink to="/mypage/userinfo">회원정보</StyledLink></li>
-            <UnderLine />
+            <Link to={ROUTE.USERINFO.link}>
+              <li>회원정보</li>
+            </Link>
+            <MyPageStyle.UnderLine />
             <li>공지사항</li>
-            <UnderLine />
+            <MyPageStyle.UnderLine />
             <li>버전</li>
-            <UnderLine />
-            <li>설정</li>
+            <MyPageStyle.UnderLine />
+            <Link to={`/mypage/setting/darkmode`}>
+              <li>설정</li>
+            </Link>
+            <MyPageStyle.UnderLine />
+            <li onClick={handleLogout}>로그아웃</li>
           </ul>
-        </ListWrapper>
-        <SplitLine />
-      </MainContainer>
+        </MyPageStyle.ListWrapper>
+        <MyPageStyle.SplitLine />
+      </MyPageStyle.MainContainer>
+      <Nav></Nav>
     </div>
   );
 };

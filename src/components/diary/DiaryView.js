@@ -1,37 +1,75 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { apiInstance } from "../../utils/api";
 import "./DiaryView.css";
 
 //마크다운 에디터
 import MDEditor from "@uiw/react-md-editor";
+import DiaryDelete from "./DiaryDelete";
 
 function DiaryView() {
-  const postId = `64e70623f96fe9e693428c65`;
-  const [diaryTitle, setDiaryTitle] = useState("");
-  const [diaryContent, setDiaryContent] = useState("");
+  //게시글 아이디
+  const postId = useLocation().state.postId;
 
-  const viewDiary = async () => {
-    const res = await axios.get(`http://34.64.151.119/api/posts/${postId}`, {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OWE2Y2VmYTZmNjdiZjc0MTZhYzAiLCJpYXQiOjE2OTI4MzQ0NTQsImV4cCI6MTcwMDYxMDQ1NH0.IXDlGN3E_OmlKteegULvlDtMsyb_wF59_vJgH6LJuww`,
-      },
-    });
-    setDiaryTitle(res.data.title);
-    setDiaryContent(res.data.content);
-    console.log(diaryTitle);
+  // 삭제 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
   };
 
-  viewDiary();
+  //리액트 라우터 돔
+  const navigate = useNavigate();
+
+  const [post, setPost] = useState({
+    diaryTitle: "",
+    diaryContent: "",
+  });
+
+  const viewDiary = async () => {
+    try {
+      const res = await apiInstance.get(`/api/posts/${postId}`);
+      setPost({ diaryTitle: res.data.title, diaryContent: res.data.content });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    viewDiary();
+  }, []);
+
+  // [목록] 버튼 클릭 시
+  const handleListBtn = (e) => {
+    e.preventDefault();
+    navigate("/home");
+  };
 
   return (
     <section className="diary-view-wrap">
       <div className="diary-view-box">
-        <h2 className="diary-view-title">{diaryTitle}</h2>
-        <MDEditor.Markdown className="diary-viewer" source={diaryContent} />
+        <h2 className="diary-view-title">{post.diaryTitle}</h2>
+        <div data-color-mode="light">
+          <div className="wmde-markdown-var"></div>
+          <MDEditor.Markdown
+            className="diary-viewer"
+            source={post.diaryContent}
+          />
+        </div>
         <div className="diary-view-btns">
-          <button type="button">목록</button>
-          <button type="submit">수정</button>
-          <button type="submit">삭제</button>
+          <button type="button" onClick={handleListBtn}>
+            목록
+          </button>
+          <Link to={`/DiaryEdit`} state={{ postId: postId }}>
+            <button type="button">수정</button>
+          </Link>
+          <button type="button" onClick={showModal}>
+            삭제
+          </button>
+          {modalOpen && (
+            <DiaryDelete setModalOpen={setModalOpen} postId={postId} />
+          )}
         </div>
       </div>
     </section>

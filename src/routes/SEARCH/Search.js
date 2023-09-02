@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./Search.css";
+import Nav from "../../components/nav/Nav";
+
 function Search() {
   const [inputValue, setInputValue] = useState("");
 
@@ -22,6 +24,7 @@ function Search() {
         <div>☑️todo</div>
         <div>☑️todo</div>
       </div>
+      <Nav></Nav>
     </div>
   );
 }
